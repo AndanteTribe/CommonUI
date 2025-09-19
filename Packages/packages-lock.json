@@ -1,5 +1,12 @@
 {
   "dependencies": {
+    "com.github-glitchenzo.nugetforunity": {
+      "version": "https://github.com/GlitchEnzo/NuGetForUnity.git?path=/src/NuGetForUnity",
+      "depth": 0,
+      "source": "git",
+      "dependencies": {},
+      "hash": "a7c6b49a0141a5bff9b1983e38137522ef61977d"
+    },
     "com.unity.burst": {
       "version": "1.8.19",
       "depth": 2,
@@ -159,6 +166,19 @@
     },
     "jp.andantetribe.commonui": {
       "version": "file:jp.andantetribe.commonui",
+      "depth": 0,
+      "source": "embedded",
+      "dependencies": {}
+    },
+    "jp.andantetribe.utils": {
+      "version": "https://github.com/AndanteTribe/Utils.git?path=src/Utils.Unity/Packages/jp.andantetribe.utils",
+      "depth": 0,
+      "source": "git",
+      "dependencies": {},
+      "hash": "8146f6865ff66b90bc96938e04926f43a2f9ce7f"
+    },
+    "nuget-packages": {
+      "version": "file:nuget-packages",
       "depth": 0,
       "source": "embedded",
       "dependencies": {}
