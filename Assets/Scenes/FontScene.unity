@@ -176,7 +176,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: "<size=18pix>\u79C1\u306E\u540D\u524D\u306FANEHATA\uFF01\u60AA\u3044\u30C7\u30B6\u30A4\u30CA\u30FC\u3058\u3083\u306A\u3044\u3088\uFF01</size><size=12pix>\u3060\u304B\u3089\u60AA\u3044\u30C7\u30B6\u30A4\u30CA\u30FC\u3058\u3083\u306A\u3044\u3063\u3066\u2026</size>\n<size=30pix>\u60AA\u3044\u30C7\u30B6\u30A4\u30CA\u30FC\u3058\u3083\u306A\u3044\u3063\u3066\uFF01</size>\n"
+  m_text: "\u79C1\u306E\u540D\u524D\u306FANEHATA\uFF01\u60AA\u3044\u30C7\u30B6\u30A4\u30CA\u30FC\u3058\u3083\u306A\u3044\u3088\uFF01<size=12pix>\u3060\u304B\u3089\u60AA\u3044\u30C7\u30B6\u30A4\u30CA\u30FC\u3058\u3083\u306A\u3044\u3063\u3066\u2026</size>\n<size=30pix>\u60AA\u3044\u30C7\u30B6\u30A4\u30CA\u30FC\u3058\u3083\u306A\u3044\u3063\u3066\uFF01</size>\n"
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 12ecaf19eba8ef44c93ea5442fa3edb8, type: 2}
   m_sharedMaterial: {fileID: -516054816639747401, guid: 12ecaf19eba8ef44c93ea5442fa3edb8, type: 2}
@@ -203,8 +203,8 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 20
-  m_fontSizeBase: 20
+  m_fontSize: 18
+  m_fontSizeBase: 18
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
@@ -693,7 +693,8 @@ PrefabInstance:
       value: TextBase
       objectReference: {fileID: 0}
     m_RemovedComponents: []
-    m_RemovedGameObjects: []
+    m_RemovedGameObjects:
+    - {fileID: 5467269378047015239, guid: a1043216254964728b6dc48528fe9a95, type: 3}
     m_AddedGameObjects:
     - targetCorrespondingSourceObject: {fileID: 1326875933101668640, guid: a1043216254964728b6dc48528fe9a95, type: 3}
       insertIndex: -1
