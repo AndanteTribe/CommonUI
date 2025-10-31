@@ -48,7 +48,7 @@ namespace AndanteTribe.CommonUI.Editor
 
                 if (canvas != null && rect != Rect.zero)
                 {
-                    Debug.Log($"Rect計算結果をコピーしました: Size={rect.size}");
+                    Debug.Log("Rect計算結果: Size=" + rect.size.ToString());
                 }
                 else
                 {
