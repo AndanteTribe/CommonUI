@@ -1,3 +1,5 @@
+using UnityEngine;
+
 namespace CommonUI.Tutorial.Models
 {
     /// <summary>
@@ -8,11 +10,13 @@ namespace CommonUI.Tutorial.Models
         /// <summary>
         /// 長方形
         /// </summary>
+        [InspectorName("長方形")]
         Rectangle,
 
         /// <summary>
         /// 円形
         /// </summary>
+        [InspectorName("円形")]
         Circle
     }
 }

@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using UnityEngine;
+
 namespace CommonUI.Tutorial.Models
 {
     ///<summary>
@@ -18,16 +19,16 @@ namespace CommonUI.Tutorial.Models
         /// <summary>
         /// 垂直方向に対してどれくらいずらすか
         /// </summary>
-        public ValueKinds RadiusVerticalPos => _radiusVerticalPos;
+        public ValueKinds RadiusVerticalOffset => _radiusVerticalOffset;
         [SerializeField]
-        private ValueKinds _radiusVerticalPos;
+        private ValueKinds _radiusVerticalOffset;
 
         /// <summary>
         /// 水平方向に対してどれくらいずらすか
         /// </summary>
-        public ValueKinds RadiusHorizontalPos => _radiusHorizontalPos;
+        public ValueKinds RadiusHorizontalOffset => _radiusHorizontalOffset;
         [SerializeField]
-        private ValueKinds _radiusHorizontalPos;
+        private ValueKinds _radiusHorizontalOffset;
 
         /// <summary>
         /// 表示するテキストモデルの一覧

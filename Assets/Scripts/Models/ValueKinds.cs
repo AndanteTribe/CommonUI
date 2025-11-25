@@ -20,43 +20,43 @@ namespace CommonUI.Tutorial.Models
         Small = 100,
 
         /// <summary>
-        ///　200pxズラす
+        /// 200pxズラす
         /// </summary>
         [InspectorName("+200")]
         Medium = 200,
 
         /// <summary>
-        ///　300pxズラす
+        /// 300pxズラす
         /// </summary>
         [InspectorName("+300")]
         Large = 300,
 
         /// <summary>
-        ///　400pxズラす
+        /// 400pxズラす
         /// </summary>
         [InspectorName("+400")]
         VeryLarge = 400,
 
         /// <summary>
-        ///　-100pxズラす
+        /// -100pxズラす
         /// </summary>
         [InspectorName("-100")]
         NegativeSmall = -100,
 
         /// <summary>
-        ///　-200pxズラす
+        /// -200pxズラす
         /// </summary>
         [InspectorName("-200")]
         NegativeMedium = -200,
 
         /// <summary>
-        ///　-300pxズラす
+        /// -300pxズラす
         /// </summary>
         [InspectorName("-300")]
         NegativeLarge = -300,
 
         /// <summary>
-        ///　-400pxズラす
+        /// -400pxズラす
         /// </summary>
         [InspectorName("-400")]
         NegativeVeryLarge = -400
