@@ -3,9 +3,9 @@ using UnityEngine;
 
 namespace CommonUI.Tutorial.Models
 {
-    ///<summary>
+    /// <summary>
     /// テキストボックスのモデル
-    ///</summary>
+    /// </summary>
     [System.Serializable]
     public class TextBoxModel
     {

@@ -2,9 +2,9 @@ using UnityEngine;
 
 namespace CommonUI.Tutorial.Models
 {
-    ///<summary>
+    /// <summary>
     /// 座標をどれくらいズラすか
-    ///</summary>
+    /// </summary>
     public enum ValueKinds : int
     {
         /// <summary>

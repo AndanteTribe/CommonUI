@@ -4,6 +4,9 @@ using CommonUI.Tutorial.Models;
 
 namespace CommonUI.Tutorial
 {
+    /// <summary>
+    /// テキストボックスのPresenter
+    /// </summary>
     public class TextBoxPresenter : MonoBehaviour
     {
         /// <summary>
@@ -16,6 +19,6 @@ namespace CommonUI.Tutorial
         /// テキストボックスのマスターデータ
         /// </summary>
         [SerializeField]
-        private TextBoxMasterData _textDatas;
+        private TextBoxMasterData _textData;
     }
 }

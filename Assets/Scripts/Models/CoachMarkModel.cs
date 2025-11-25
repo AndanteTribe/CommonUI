@@ -2,7 +2,7 @@ using UnityEngine;
 
 namespace CommonUI.Tutorial.Models
 {
-    ///<summary>
+    /// <summary>
     /// コーチマークの形や半径を設定するモデル
     /// </summary>
     [System.Serializable]
