@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 using TMPro;
 using CommonUI.Tutorial.Models;
@@ -57,52 +58,49 @@ namespace CommonUI.Tutorial
             switch (textPosition)
             {
                 case TextPositions.TopLeft:
-                    _textBoxRectTransform.anchorMax = new Vector2(0, 1);
-                    _textBoxRectTransform.anchorMin = new Vector2(0, 1);
-                    _textBoxRectTransform.pivot = new Vector2(0, 1);
+                    _textBoxRectTransform.anchorMax = TutorialConstants.TextBoxPositions.TopLeftVector;
+                    _textBoxRectTransform.anchorMin = TutorialConstants.TextBoxPositions.TopLeftVector;
+                    _textBoxRectTransform.pivot = TutorialConstants.TextBoxPositions.TopLeftVector;
                     break;
                 case TextPositions.TopCenter:
-                    _textBoxRectTransform.anchorMax = new Vector2(0.5f, 1);
-                    _textBoxRectTransform.anchorMin = new Vector2(0.5f, 1);
-                    _textBoxRectTransform.pivot = new Vector2(0.5f, 1);
+                    _textBoxRectTransform.anchorMax = TutorialConstants.TextBoxPositions.TopCenterVector;
+                    _textBoxRectTransform.anchorMin = TutorialConstants.TextBoxPositions.TopCenterVector;
+                    _textBoxRectTransform.pivot = TutorialConstants.TextBoxPositions.TopCenterVector;
                     break;
                 case TextPositions.TopRight:
-                    _textBoxRectTransform.anchorMax = new Vector2(1, 1);
-                    _textBoxRectTransform.anchorMin = new Vector2(1, 1);
-                    _textBoxRectTransform.pivot = new Vector2(1, 1);
+                    _textBoxRectTransform.anchorMax = TutorialConstants.TextBoxPositions.TopRightVector;
+                    _textBoxRectTransform.anchorMin = TutorialConstants.TextBoxPositions.TopRightVector;
+                    _textBoxRectTransform.pivot = TutorialConstants.TextBoxPositions.TopRightVector;
                     break;
                 case TextPositions.MiddleLeft:
-                    _textBoxRectTransform.anchorMax = new Vector2(0, 0.5f);
-                    _textBoxRectTransform.anchorMin = new Vector2(0, 0.5f);
-                    _textBoxRectTransform.pivot = new Vector2(0, 0.5f);
+                    _textBoxRectTransform.anchorMax = TutorialConstants.TextBoxPositions.MiddleLeftVector;
+                    _textBoxRectTransform.anchorMin = TutorialConstants.TextBoxPositions.MiddleLeftVector;
+                    _textBoxRectTransform.pivot = TutorialConstants.TextBoxPositions.MiddleLeftVector;
                     break;
                 case TextPositions.MiddleCenter:
-                    _textBoxRectTransform.anchorMax = new Vector2(0.5f, 0.5f);
-                    _textBoxRectTransform.anchorMin = new Vector2(0.5f, 0.5f);
-                    _textBoxRectTransform.pivot = new Vector2(0.5f, 0.5f);
+                    _textBoxRectTransform.anchorMax = TutorialConstants.TextBoxPositions.MiddleCenterVector;
+                    _textBoxRectTransform.anchorMin = TutorialConstants.TextBoxPositions.MiddleCenterVector;
+                    _textBoxRectTransform.pivot = TutorialConstants.TextBoxPositions.MiddleCenterVector;
                     break;
                 case TextPositions.MiddleRight:
-                    _textBoxRectTransform.anchorMax = new Vector2(1, 0.5f);
-                    _textBoxRectTransform.anchorMin = new Vector2(1, 0.5f);
-                    _textBoxRectTransform.pivot = new Vector2(1, 0.5f);
+                    _textBoxRectTransform.anchorMax = TutorialConstants.TextBoxPositions.MiddleRightVector;
+                    _textBoxRectTransform.anchorMin = TutorialConstants.TextBoxPositions.MiddleRightVector;
+                    _textBoxRectTransform.pivot = TutorialConstants.TextBoxPositions.MiddleRightVector;
                     break;
                 case TextPositions.BottomLeft:
-                    _textBoxRectTransform.anchorMax = Vector2.zero;
-                    _textBoxRectTransform.anchorMin = Vector2.zero;
-                    _textBoxRectTransform.pivot = Vector2.zero;
+                    _textBoxRectTransform.anchorMax = TutorialConstants.TextBoxPositions.BottomLeftVector;
+                    _textBoxRectTransform.anchorMin = TutorialConstants.TextBoxPositions.BottomLeftVector;
+                    _textBoxRectTransform.pivot = TutorialConstants.TextBoxPositions.BottomLeftVector;
                     break;
                 case TextPositions.BottomCenter:
-                    _textBoxRectTransform.anchorMax = new Vector2(0.5f, 0);
-                    _textBoxRectTransform.anchorMin = new Vector2(0.5f, 0);
-                    _textBoxRectTransform.pivot = new Vector2(0.5f, 0);
+                    _textBoxRectTransform.anchorMax = TutorialConstants.TextBoxPositions.BottomCenterVector;
+                    _textBoxRectTransform.anchorMin = TutorialConstants.TextBoxPositions.BottomCenterVector;
+                    _textBoxRectTransform.pivot = TutorialConstants.TextBoxPositions.BottomCenterVector;
                     break;
                 case TextPositions.BottomRight:
-                    _textBoxRectTransform.anchorMax = new Vector2(1, 0);
-                    _textBoxRectTransform.anchorMin = new Vector2(1, 0);
-                    _textBoxRectTransform.pivot = new Vector2(1, 0);
-                    break;
-                default:
-                    Debug.LogError("入力が正しくないです。");
+                    _textBoxRectTransform.anchorMax = TutorialConstants.TextBoxPositions.BottomRightVector;
+                    _textBoxRectTransform.anchorMin = TutorialConstants.TextBoxPositions.BottomRightVector;
+                    _textBoxRectTransform.pivot = TutorialConstants.TextBoxPositions.BottomRightVector;
                     break;
             }
         }
