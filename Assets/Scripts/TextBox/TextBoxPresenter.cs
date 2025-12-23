@@ -58,7 +58,6 @@ namespace CommonUI.Tutorial
 
         private void Update()
         {
-
             //クリックしたら次のモデルを参照し、SetPositionを実行させる
             if (Input.GetMouseButtonDown(0))
             {
@@ -191,10 +190,9 @@ namespace CommonUI.Tutorial
                 Vector3 screenPosition = Camera.main.WorldToScreenPoint(targetObject.transform.position);
                 _coachMaskRect.position = screenPosition;
 
-                // モデルに関係なく円形で対応する
+                // RectTransformがない場合、モデルに関係なく円形で対応する
                 _coachMaskRect.GetComponent<UnityEngine.UI.Image>().sprite = _coachMarkSprites[1];
                 _coachMaskRect.sizeDelta = Vector2.one * model.Radius;
-
             }
         }
     }
