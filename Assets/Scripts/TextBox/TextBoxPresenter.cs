@@ -37,22 +37,22 @@ namespace CommonUI.Tutorial
         /// マスクのRectTransform
         /// </summary>
         [SerializeField]
-        private RectTransform _coachMaskRect;
+        private CoachMarkView _coachMaskView;
 
         /// <summary>
-        /// 画像の配列
+        /// UI表示をするカメラ
         /// </summary>
         [SerializeField]
-        private Sprite[] _coachMarkSprites;
+        private Camera _uiCamera;
 
-        [SerializeField]
-        private RectTransform[] _coachMarkAnim;
-
+        /// <summary>
+        ///
+        /// </summary>
+        private Vector3[] _corners = new Vector3[4];
         private void Start()
         {
             _index = 0;
             SetPosition(_textData.Models[_index].Position);
-            SetCoachMarkShape(_textData.Models[_index].Models[0].CoachMark.Shape);
             SetCoachMark(_textData.Models[_index].Models[0].CoachMark);
         }
 
@@ -62,7 +62,6 @@ namespace CommonUI.Tutorial
             if (Input.GetMouseButtonDown(0))
             {
                 SetPosition(_textData.Models[_index].Position);
-                SetCoachMarkShape(_textData.Models[_index].Models[0].CoachMark.Shape);
                 SetCoachMark(_textData.Models[_index].Models[0].CoachMark);
                 _index++;
             }
@@ -126,46 +125,29 @@ namespace CommonUI.Tutorial
         }
 
         /// <summary>
-        /// コーチマークの形を設定する
-        /// </summary>
-        /// <param name="model"> 設定するモデル </param>
-        private void SetCoachMarkShape(ShapeKinds model)
-        {
-            switch (model)
-            {
-                case ShapeKinds.Rectangle:
-                    _coachMaskRect.GetComponent<UnityEngine.UI.Image>().sprite = _coachMarkSprites[0];
-                    break;
-                case ShapeKinds.Circle:
-                    _coachMaskRect.GetComponent<UnityEngine.UI.Image>().sprite = _coachMarkSprites[1];
-                    break;
-            }
-        }
-
-        /// <summary>
-        /// コーチマークの位置・形・サイズを設定する
+        /// コーチマークの位置・サイズを設定する
         /// </summary>
         /// <param name="model">元となるモデル</param>
         private void SetCoachMark(CoachMarkModel model)
         {
             // 指定された名前のオブジェクトを探す
-            GameObject targetObject = GameObject.Find(model.TargetObjectName);
+            var targetObject = GameObject.Find(model.TargetObjectName);
 
             // オブジェクトが見つからなかった場合はエラーログを出力して終了
             if (!targetObject)
             {
-                Debug.LogError("指定されたオブジェクトが見つかりませんでした: " + model.TargetObjectName);
-                return;
+                throw new NotImplementedException("見つかってねぇぞ");
             }
 
             // 対象のゲームオブジェクトにRectTransformがある場合
             if (targetObject.TryGetComponent<RectTransform>(out var targetRect))
             {
-                // 対象のゲームオブジェクトの4端のワールド座標を取得し、その中心を計算。その結果を座標に当てはめる。
-                var corners = new Vector3[4];
-                targetRect.GetWorldCorners(corners);
-                Vector3 targetPosition = (corners[0] + corners[2]) / 2;
-                _coachMaskRect.position = targetPosition;
+                // 対象のゲームオブジェクトの4端のワールド座標を取得し、中心を計算。その結果を座標に当てはめる。
+                targetRect.GetWorldCorners(_corners);
+                var targetPosition = (_corners[0] + _corners[2]) / 2;
+                _coachMaskView.RectTransform.position = targetPosition;
+
+                _coachMaskView.SetSprite(model.Shape);
 
                 // モデルの形によってマスクの形を変更する
                 switch (model.Shape)
@@ -174,12 +156,14 @@ namespace CommonUI.Tutorial
                     case ShapeKinds.Rectangle:
                         var targetWidth = targetRect.sizeDelta.x + model.Radius;
                         var targetHeight = targetRect.sizeDelta.y + model.Radius;
-                        _coachMaskRect.sizeDelta = new Vector2(targetWidth, targetHeight);
+                        _coachMaskView.RectTransform.SetSizeWithCurrentAnchors(RectTransform.Axis.Horizontal, targetWidth);
+                        _coachMaskView.RectTransform.SetSizeWithCurrentAnchors(RectTransform.Axis.Vertical, targetHeight);
                         break;
 
                     // 円形の場合はモデルの半径の大きさに合わせる
                     case ShapeKinds.Circle:
-                        _coachMaskRect.sizeDelta = Vector2.one * model.Radius;
+                        _coachMaskView.RectTransform.SetSizeWithCurrentAnchors(RectTransform.Axis.Horizontal, model.Radius);
+                        _coachMaskView.RectTransform.SetSizeWithCurrentAnchors(RectTransform.Axis.Vertical, model.Radius);
                         break;
                 }
             }
@@ -187,12 +171,13 @@ namespace CommonUI.Tutorial
             else
             {
                 // オブジェクトの場所からUIの位置を計算する。計算した結果にUIを位置させる。
-                Vector3 screenPosition = Camera.main.WorldToScreenPoint(targetObject.transform.position);
-                _coachMaskRect.position = screenPosition;
+                var screenPosition = _uiCamera.WorldToScreenPoint(targetObject.transform.position);
+                _coachMaskView.RectTransform.position = screenPosition;
 
                 // RectTransformがない場合、モデルに関係なく円形で対応する
-                _coachMaskRect.GetComponent<UnityEngine.UI.Image>().sprite = _coachMarkSprites[1];
-                _coachMaskRect.sizeDelta = Vector2.one * model.Radius;
+                _coachMaskView.SetSprite(ShapeKinds.Circle);
+                _coachMaskView.RectTransform.SetSizeWithCurrentAnchors(RectTransform.Axis.Horizontal, model.Radius);
+                _coachMaskView.RectTransform.SetSizeWithCurrentAnchors(RectTransform.Axis.Vertical, model.Radius);
             }
         }
     }
