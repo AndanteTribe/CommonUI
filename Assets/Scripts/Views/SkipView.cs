@@ -36,7 +36,7 @@ namespace CommonUI.Tutorial.Views
 
         void IPointerDownHandler.OnPointerDown(PointerEventData __)
         {
-            _cts = new CancellationTokenSource();
+            _cts ??= new CancellationTokenSource();
             AnimateFrame(1);
             _ = SkipAsync(_cts.Token);
         }
@@ -73,7 +73,6 @@ namespace CommonUI.Tutorial.Views
             var distance = Math.Abs(target - current);
             return _duration * distance;
         }
-
 
         private async Awaitable SkipAsync(CancellationToken token)
         {
