@@ -1,5 +1,4 @@
 using System;
-using System.Collections;
 using System.Threading;
 using LitMotion;
 using LitMotion.Extensions;
@@ -43,7 +42,11 @@ namespace CommonUI.Tutorial.Views
 
         void IPointerDownHandler.OnPointerDown(PointerEventData __)
         {
-            _cts ??= new CancellationTokenSource();
+            if (_cts != null)
+            {
+                return;
+            }
+            _cts = new CancellationTokenSource();
             AnimateFrame(1);
             _ = SkipAsync(_cts.Token);
         }
@@ -101,6 +104,14 @@ namespace CommonUI.Tutorial.Views
             _cts = null;
         }
 
-        private void OnDestroy() => CancelSkip();
+        private void OnDestroy()
+        {
+            if (_handle.IsActive())
+            {
+                _handle.Cancel();
+            }
+            _handle.Cancel();
+            CancelSkip();
+        }
     }
 }
