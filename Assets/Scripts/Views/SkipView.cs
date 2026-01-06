@@ -4,14 +4,14 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
-namespace Views
+namespace CommonUI.Tutorial.Views
 {
     public class SkipView : MonoBehaviour, IPointerUpHandler, IPointerDownHandler, IPointerExitHandler
     {
         /// <summary>
         /// スキップまでに長押しする時間
         /// </summary>
-        [SerializeField, Tooltip("スキップが完了するのにかかる時間")]
+        [SerializeField, Tooltip("スキップまでに長押しする時間")]
         private float _duration;
 
         /// <summary>
