@@ -9,22 +9,25 @@ using UnityEngine.UI;
 
 namespace CommonUI.Tutorial.Views
 {
-    public class SkipView : MonoBehaviour, IPointerUpHandler, IPointerDownHandler, IPointerExitHandler
+    /// <summary>
+    /// 長押ししたらゲージがたまるボタン.
+    /// </summary>
+    [RequireComponent(typeof(Image))]
+    public class SkipButton : MonoBehaviour, IPointerUpHandler, IPointerDownHandler, IPointerExitHandler
     {
         /// <summary>
-        /// スキップまでに長押しする秒数
+        /// スキップまでに長押しする秒数.
         /// </summary>
         [SerializeField, Tooltip("スキップまでに長押しする秒数")]
         private float _duration;
 
         /// <summary>
-        /// 長押し時にたまるゲージ
+        /// 長押し時にたまるゲージ.
         /// </summary>
-        [SerializeField]
         private Image _frame;
 
         /// <summary>
-        /// スキップ時に発火するイベント
+        /// スキップ時に発火するイベント.
         /// </summary>
         public event Action OnSkip;
 
@@ -32,7 +35,11 @@ namespace CommonUI.Tutorial.Views
 
         private CancellationTokenSource _cts;
 
-        private void Start() => _frame.fillAmount = 0;
+        private void Start()
+        {
+            _frame = GetComponent<Image>();
+            _frame.fillAmount = 0;
+        }
 
         void IPointerDownHandler.OnPointerDown(PointerEventData __)
         {
