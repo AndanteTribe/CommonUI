@@ -1,5 +1,8 @@
 using System;
 using System.Collections;
+using System.Threading;
+using LitMotion;
+using LitMotion.Extensions;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
@@ -25,53 +28,57 @@ namespace CommonUI.Tutorial.Views
         /// </summary>
         public event Action OnSkip;
 
-        private float _timestamp;
-        private bool _isHolding;
+        private MotionHandle _handle;
+
         private Coroutine _coroutine;
 
-        private void Start() => _frame.fillAmount = 0;
+        private void Start()
+        {
+            OnSkip += () => Debug.Log("Skip");
+            _frame.fillAmount = 0;
+        }
 
         public void OnPointerDown(PointerEventData eventData)
         {
-            _isHolding = true;
-            _coroutine ??= StartCoroutine(FrameController());
+            AnimateFrame(1);
+            _coroutine = StartCoroutine(Skip());
         }
 
-        public void OnPointerUp(PointerEventData eventData) => _isHolding = false;
-
-        public void OnPointerExit(PointerEventData eventData) => _isHolding = false;
-
-        private IEnumerator FrameController()
+        public void OnPointerUp(PointerEventData eventData)
         {
-            while (_isHolding || _frame.fillAmount >= 0)
+            if (_coroutine == null)
             {
-                var rate = Time.deltaTime / _duration;
-                if (_isHolding)
-                {
-                    _frame.fillAmount += rate;
-
-                    // ゲージがいっぱいになったら完了処理
-                    if (_frame.fillAmount >= 1.0f)
-                    {
-                        Complete();
-                        yield break;
-                    }
-                }
-                else
-                {
-                    _frame.fillAmount -= rate;
-                }
-
-                yield return null;
+                return;
             }
+            StopCoroutine(_coroutine);
+            _coroutine = null;
+            AnimateFrame(0);
         }
 
-        private void Complete()
+        public void OnPointerExit(PointerEventData eventData) => OnPointerUp(eventData);
+
+        private void AnimateFrame(float target)
         {
+            if (_handle.IsActive())
+            {
+                _handle.Cancel();
+            }
+
+            var current = _frame.fillAmount;
+            var distance = Mathf.Abs(target - current);
+            var animDuration = _duration * distance;
+
+            _handle = LMotion.Create(current, target, animDuration)
+                .BindToFillAmount(_frame)
+                .AddTo(this);
+        }
+
+        private IEnumerator Skip()
+        {
+            var time = _duration * (1.0f - _frame.fillAmount);
+            yield return new WaitForSeconds(time);
             OnSkip?.Invoke();
             _frame.fillAmount = 0;
-            _isHolding = false;
-            _coroutine = null;
         }
     }
 }
