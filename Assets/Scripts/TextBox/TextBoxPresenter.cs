@@ -136,7 +136,7 @@ namespace CommonUI.Tutorial
             // オブジェクトが見つからなかった場合はエラーログを出力して終了
             if (!targetObject)
             {
-                throw new NotImplementedException("見つかってねぇぞ");
+                throw new NotImplementedException("対象のオブジェクトが見つかりませんでした");
             }
 
             // 対象のゲームオブジェクトにRectTransformがある場合
@@ -147,6 +147,7 @@ namespace CommonUI.Tutorial
                 var targetPosition = (_corners[0] + _corners[2]) / 2;
                 _coachMaskView.RectTransform.position = targetPosition;
 
+                // コーチマークの形をモデルに合わせて変更する
                 _coachMaskView.SetSprite(model.Shape);
 
                 // モデルの形によってマスクの形を変更する
