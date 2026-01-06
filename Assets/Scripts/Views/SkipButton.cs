@@ -110,7 +110,6 @@ namespace CommonUI.Tutorial.Views
             {
                 _handle.Cancel();
             }
-            _handle.Cancel();
             CancelSkip();
         }
     }
