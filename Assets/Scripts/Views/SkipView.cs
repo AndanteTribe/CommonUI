@@ -12,9 +12,9 @@ namespace CommonUI.Tutorial.Views
     public class SkipView : MonoBehaviour, IPointerUpHandler, IPointerDownHandler, IPointerExitHandler
     {
         /// <summary>
-        /// スキップまでに長押しする時間
+        /// スキップまでに長押しする秒数
         /// </summary>
-        [SerializeField, Tooltip("スキップまでに長押しする時間")]
+        [SerializeField, Tooltip("スキップまでに長押しする秒数")]
         private float _duration;
 
         /// <summary>
@@ -30,32 +30,28 @@ namespace CommonUI.Tutorial.Views
 
         private MotionHandle _handle;
 
-        private Coroutine _coroutine;
+        private CancellationTokenSource _cts;
 
-        private void Start()
-        {
-            OnSkip += () => Debug.Log("Skip");
-            _frame.fillAmount = 0;
-        }
+        private void Start() => _frame.fillAmount = 0;
 
-        public void OnPointerDown(PointerEventData eventData)
+        void IPointerDownHandler.OnPointerDown(PointerEventData __)
         {
+            _cts = new CancellationTokenSource();
             AnimateFrame(1);
-            _coroutine = StartCoroutine(Skip());
+            _ = SkipAsync(_cts.Token);
         }
 
-        public void OnPointerUp(PointerEventData eventData)
+        void IPointerUpHandler.OnPointerUp(PointerEventData _)
         {
-            if (_coroutine == null)
-            {
-                return;
-            }
-            StopCoroutine(_coroutine);
-            _coroutine = null;
+            CancelSkip();
             AnimateFrame(0);
         }
 
-        public void OnPointerExit(PointerEventData eventData) => OnPointerUp(eventData);
+        void IPointerExitHandler.OnPointerExit(PointerEventData _)
+        {
+            CancelSkip();
+            AnimateFrame(0);
+        }
 
         private void AnimateFrame(float target)
         {
@@ -64,21 +60,41 @@ namespace CommonUI.Tutorial.Views
                 _handle.Cancel();
             }
 
-            var current = _frame.fillAmount;
-            var distance = Mathf.Abs(target - current);
-            var animDuration = _duration * distance;
+            var animDuration = GetAnimDuration(target);
 
-            _handle = LMotion.Create(current, target, animDuration)
+            _handle = LMotion.Create(_frame.fillAmount, target, animDuration)
                 .BindToFillAmount(_frame)
                 .AddTo(this);
         }
 
-        private IEnumerator Skip()
+        private float GetAnimDuration(float target)
+        {
+            var current = _frame.fillAmount;
+            var distance = Math.Abs(target - current);
+            return _duration * distance;
+        }
+
+
+        private async Awaitable SkipAsync(CancellationToken token)
         {
             var time = _duration * (1.0f - _frame.fillAmount);
-            yield return new WaitForSeconds(time);
+
+            await Awaitable.WaitForSecondsAsync(time, token);
             OnSkip?.Invoke();
             _frame.fillAmount = 0;
         }
+
+        private void CancelSkip()
+        {
+            if (_cts == null)
+            {
+                return;
+            }
+            _cts.Cancel();
+            _cts.Dispose();
+            _cts = null;
+        }
+
+        private void OnDestroy() => CancelSkip();
     }
 }
