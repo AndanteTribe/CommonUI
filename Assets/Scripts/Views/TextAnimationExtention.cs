@@ -1,3 +1,4 @@
+using System;
 using System.Threading;
 using LitMotion;
 using LitMotion.Extensions;
@@ -12,21 +13,21 @@ namespace CommonUI.Tutorial.Views
     public static class TextAnimationExtention
     {
         /// <summary>
-        /// 文字送りさせるメソッド.
+        /// 1文字ずつ表示させるメソッド.
         /// </summary>
-        /// <param name="tmp">文字送りさせる対象.</param>
-        /// <param name="text">文字送りさせたいテキスト.</param>
-        /// <param name="speed">表示にかかる1文字あたりの時間.</param>
-        /// <param name="token">キャンセルトークン.</param>
-        public static async Awaitable Animate(this TextMeshProUGUI tmp, string text, float speed, CancellationToken token)
+        /// <param name="textMeshProUGUI">文字送りさせる対象.</param>
+        /// <param name="value">文字送りさせたいテキスト.</param>
+        /// <param name="interval">表示にかかる1文字あたりの秒.</param>
+        /// <param name="cancellationToken">キャンセルトークン.</param>
+        public static async Awaitable AnimateTextAsync(this TextMeshProUGUI textMeshProUGUI, string value, TimeSpan interval, CancellationToken cancellationToken)
         {
-            tmp.text = text;
-            tmp.maxVisibleCharacters = 0;
+            textMeshProUGUI.text = value;
+            textMeshProUGUI.maxVisibleCharacters = 0;
 
-            await LMotion.Create(0, text.Length, text.Length * speed)
+            await LMotion.Create(0, value.Length, value.Length * (float)interval.TotalSeconds)
                 .WithEase(Ease.Linear)
-                .BindToMaxVisibleCharacters(tmp)
-                .ToAwaitable(CancelBehavior.Complete, token);
+                .BindToMaxVisibleCharacters(textMeshProUGUI)
+                .ToAwaitable(CancelBehavior.Complete, cancellationToken);
         }
     }
 }
