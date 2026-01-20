@@ -19,12 +19,11 @@ namespace CommonUI.Tutorial.Views
         /// <param name="value">文字送りさせたいテキスト.</param>
         /// <param name="interval">表示にかかる1文字あたりの秒.</param>
         /// <param name="cancellationToken">キャンセルトークン.</param>
-        public static async Awaitable AnimateTextAsync(this TextMeshProUGUI textMeshProUGUI, string value, TimeSpan interval, CancellationToken cancellationToken)
+        public static Awaitable AnimateTextAsync(this TextMeshProUGUI textMeshProUGUI, string value, TimeSpan interval, CancellationToken cancellationToken)
         {
             textMeshProUGUI.text = value;
-            textMeshProUGUI.maxVisibleCharacters = 0;
 
-            await LMotion.Create(0, value.Length, value.Length * (float)interval.TotalSeconds)
+            return LMotion.Create(0, value.Length, value.Length * (float)interval.TotalSeconds)
                 .WithEase(Ease.Linear)
                 .BindToMaxVisibleCharacters(textMeshProUGUI)
                 .ToAwaitable(CancelBehavior.Complete, cancellationToken);
