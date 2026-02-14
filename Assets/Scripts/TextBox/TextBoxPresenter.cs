@@ -46,7 +46,7 @@ namespace CommonUI.Tutorial
         private Camera _uiCamera;
 
         /// <summary>
-        ///
+        /// UIの位置を取得しておくフィールド
         /// </summary>
         private Vector3[] _corners = new Vector3[4];
         private void Start()
@@ -54,6 +54,7 @@ namespace CommonUI.Tutorial
             _index = 0;
             SetPosition(_textData.Models[_index].Position);
             SetCoachMark(_textData.Models[_index].Models[0].CoachMark);
+            SetLocalPosition(_textData.Models[_index]);
         }
 
         private void Update()
@@ -63,6 +64,7 @@ namespace CommonUI.Tutorial
             {
                 SetPosition(_textData.Models[_index].Position);
                 SetCoachMark(_textData.Models[_index].Models[0].CoachMark);
+                SetLocalPosition(_textData.Models[_index]);
                 _index++;
             }
         }
@@ -73,6 +75,9 @@ namespace CommonUI.Tutorial
         /// <param name="textPosition">テキストボックスをどこに配置するか指定したもの</param>
         private void SetPosition(TextPositions textPosition)
         {
+            // CoachMarkがズレてしまうため、anchoredPositionを初期化
+            _textBoxRectTransform.anchoredPosition = Vector3.zero;
+
             // anchorとpivotを調節して,指定した位置に配置させる
             switch (textPosition)
             {
@@ -145,6 +150,7 @@ namespace CommonUI.Tutorial
                 // 対象のゲームオブジェクトの4端のワールド座標を取得し、中心を計算。その結果を座標に当てはめる。
                 targetRect.GetWorldCorners(_corners);
                 var targetPosition = (_corners[0] + _corners[2]) / 2;
+
                 _coachMaskView.RectTransform.position = targetPosition;
 
                 // コーチマークの形をモデルに合わせて変更する
@@ -180,6 +186,34 @@ namespace CommonUI.Tutorial
                 _coachMaskView.RectTransform.SetSizeWithCurrentAnchors(RectTransform.Axis.Horizontal, model.Radius);
                 _coachMaskView.RectTransform.SetSizeWithCurrentAnchors(RectTransform.Axis.Vertical, model.Radius);
             }
+        }
+
+        /// <summary>
+        /// コーチマークから相対座標を設定する
+        /// </summary>
+        /// <param name="model">テキストボックスモデル</param>
+        private void SetLocalPosition(TextBoxModel model)
+        {
+            // 両方ともZeroならば相対座標の設定は行わない。
+            if (model.RadiusHorizontalOffset == ValueKinds.Zero &&
+                model.RadiusVerticalOffset == ValueKinds.Zero) return;
+
+            // コーチマークの座標を取得し、中心座標を計算する。
+            _coachMaskView.RectTransform.GetWorldCorners(_corners);
+            var targetPosition = (_corners[0] + _corners[2]) / 2;
+
+            // テキストボックスの座標をコーチマークの中心に合わせる。
+            _textBoxRectTransform.position = targetPosition;
+
+            // コーチマークとテキストボックスの中心を合わせるため、テキストボックスの4端のワールド座標を取得し、中心を計算する。
+            _textBoxRectTransform.GetWorldCorners(_corners);
+            var textBoxPosition = (_corners[0] + _corners[2]) / 2;
+
+            // コーチマークの中心とテキストボックスの中心の差分を計算する。
+            var offset = targetPosition - textBoxPosition;
+
+            // 差分と指定したズレの分ズラす。
+            _textBoxRectTransform.position += offset + new Vector3((float)model.RadiusHorizontalOffset, (float)model.RadiusVerticalOffset, 0);
         }
     }
 }
