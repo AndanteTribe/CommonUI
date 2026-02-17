@@ -11,26 +11,26 @@ namespace CommonUI.Tutorial
     public class CoachMarkView: MonoBehaviour
     {
         [SerializeField, Tooltip("Imageコンポーネント")]
-        private Image _image;
+        private Image _maskImage;
 
-        private RectTransform _rectTransform;
         /// <summary>
-        /// 位置
+        /// マスクの位置
         /// </summary>
-        public RectTransform RectTransform => _rectTransform;
+        public RectTransform MaskRectTransform => _maskImage.rectTransform;
 
         [SerializeField, Tooltip("円コーチマークの画像")]
         private Sprite _circleCoachMarkSprite;
+        /// <summary>
+        /// 円コーチマークの画像
+        /// </summary>
         public Sprite CircleCoachMarkSprite => _circleCoachMarkSprite;
 
         [SerializeField, Tooltip("長方形コーチマークの画像")]
         private Sprite _rectangleCoachMarkSprite;
+        /// <summary>
+        /// 長方形コーチマークの画像
+        /// </summary>
         public Sprite RectangleCoachMarkSprite => _rectangleCoachMarkSprite;
-
-        private void Start()
-        {
-            _rectTransform = (RectTransform)_image.transform;
-        }
 
         /// <summary>
         /// コーチマークの形を設定する
@@ -41,10 +41,10 @@ namespace CommonUI.Tutorial
             switch (kind)
             {
                 case ShapeKinds.Rectangle:
-                    _image.sprite = RectangleCoachMarkSprite;
+                    _maskImage.sprite = RectangleCoachMarkSprite;
                     break;
                 case ShapeKinds.Circle:
-                    _image.sprite = CircleCoachMarkSprite;
+                    _maskImage.sprite = CircleCoachMarkSprite;
                     break;
             }
         }

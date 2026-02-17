@@ -135,7 +135,7 @@ namespace CommonUI.Tutorial
                 targetRect.GetWorldCorners(_corners);
                 var targetPosition = (_corners[0] + _corners[2]) / 2;
 
-                _coachMaskView.RectTransform.position = targetPosition;
+                _coachMaskView.MaskRectTransform.position = targetPosition;
 
                 // コーチマークの形をモデルに合わせて変更する
                 _coachMaskView.SetSprite(model.Shape);
@@ -147,14 +147,14 @@ namespace CommonUI.Tutorial
                     case ShapeKinds.Rectangle:
                         var targetWidth = targetRect.sizeDelta.x + model.Radius;
                         var targetHeight = targetRect.sizeDelta.y + model.Radius;
-                        _coachMaskView.RectTransform.SetSizeWithCurrentAnchors(RectTransform.Axis.Horizontal, targetWidth);
-                        _coachMaskView.RectTransform.SetSizeWithCurrentAnchors(RectTransform.Axis.Vertical, targetHeight);
+                        _coachMaskView.MaskRectTransform.SetSizeWithCurrentAnchors(RectTransform.Axis.Horizontal, targetWidth);
+                        _coachMaskView.MaskRectTransform.SetSizeWithCurrentAnchors(RectTransform.Axis.Vertical, targetHeight);
                         return;
 
                     // 円形の場合はモデルの半径の大きさに合わせる
                     case ShapeKinds.Circle:
-                        _coachMaskView.RectTransform.SetSizeWithCurrentAnchors(RectTransform.Axis.Horizontal, model.Radius);
-                        _coachMaskView.RectTransform.SetSizeWithCurrentAnchors(RectTransform.Axis.Vertical, model.Radius);
+                        _coachMaskView.MaskRectTransform.SetSizeWithCurrentAnchors(RectTransform.Axis.Horizontal, model.Radius);
+                        _coachMaskView.MaskRectTransform.SetSizeWithCurrentAnchors(RectTransform.Axis.Vertical, model.Radius);
                         return;
                 }
             }
@@ -162,12 +162,12 @@ namespace CommonUI.Tutorial
             // RectTransformがない場合
             // オブジェクトの場所からUIの位置を計算する。計算した結果にUIを位置させる。
             var screenPosition = Camera.main.WorldToScreenPoint(targetObject.transform.position);
-            _coachMaskView.RectTransform.position = screenPosition;
+            _coachMaskView.MaskRectTransform.position = screenPosition;
 
             // RectTransformがない場合、モデルに関係なく円形で対応する
             _coachMaskView.SetSprite(ShapeKinds.Circle);
-            _coachMaskView.RectTransform.SetSizeWithCurrentAnchors(RectTransform.Axis.Horizontal, model.Radius);
-            _coachMaskView.RectTransform.SetSizeWithCurrentAnchors(RectTransform.Axis.Vertical, model.Radius);
+            _coachMaskView.MaskRectTransform.SetSizeWithCurrentAnchors(RectTransform.Axis.Horizontal, model.Radius);
+            _coachMaskView.MaskRectTransform.SetSizeWithCurrentAnchors(RectTransform.Axis.Vertical, model.Radius);
         }
 
         /// <summary>
@@ -184,7 +184,7 @@ namespace CommonUI.Tutorial
             }
 
             // コーチマークの座標を取得し、中心座標を計算する。
-            _coachMaskView.RectTransform.GetWorldCorners(_corners);
+            _coachMaskView.MaskRectTransform.GetWorldCorners(_corners);
             var targetPosition = (_corners[0] + _corners[2]) / 2;
 
             // テキストボックスの座標をコーチマークの中心に合わせる。
