@@ -31,7 +31,6 @@ namespace CommonUI.Tutorial.Models
         [InspectorName("左中央")]
         MiddleLeft,
 
-
         /// <summary>
         /// 中央
         /// </summary>
