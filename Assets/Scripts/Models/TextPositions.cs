@@ -1,64 +1,45 @@
 using UnityEngine;
+using CommonUI.Tutorial;
 
 namespace CommonUI.Tutorial.Models
 {
-    /// <summary>
-    /// テキストボックスの位置
-    /// </summary>
+    [Tooltip("テキストボックスの位置")]
     public enum TextPositions : byte
     {
-        /// <summary>
-        /// 左上
-        /// </summary>
+        [Tooltip("左上")]
         [InspectorName("左上")]
         TopLeft,
 
-        /// <summary>
-        /// 中央上
-        /// </summary>
+        [Tooltip("中央上")]
         [InspectorName("中央上")]
         TopCenter,
 
-        /// <summary>
-        /// 右上
-        /// </summary>
+        [Tooltip("右上")]
         [InspectorName("右上")]
         TopRight,
 
-        /// <summary>
-        /// 左中央
-        /// </summary>
+        [Tooltip("左中央")]
         [InspectorName("左中央")]
         MiddleLeft,
 
 
-        /// <summary>
-        /// 中央
-        /// </summary>
+        [Tooltip("中央")]
         [InspectorName("中央")]
         MiddleCenter,
 
-        /// <summary>
-        /// 右中央
-        /// </summary>
+        [Tooltip("右中央")]
         [InspectorName("右中央")]
         MiddleRight,
 
-        /// <summary>
-        /// 左下
-        /// </summary>
+        [Tooltip("左下")]
         [InspectorName("左下")]
         BottomLeft,
 
-        /// <summary>
-        /// 中心下
-        /// </summary>
+        [Tooltip("中心下")]
         [InspectorName("中央下")]
         BottomCenter,
 
-        /// <summary>
-        /// 右下
-        /// </summary>
+        [Tooltip("右下")]
         [InspectorName("右下")]
         BottomRight
     }

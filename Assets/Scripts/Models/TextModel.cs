@@ -1,32 +1,24 @@
 using UnityEngine;
+using CommonUI.Tutorial;
 
 namespace CommonUI.Tutorial.Models
 {
-    /// <summary>
-    /// テキストを設定するためのモデル
-    /// </summary>
-    [System.Serializable]
+    [System.Serializable, Tooltip("テキストを設定するためのモデル")]
     public class TextModel
     {
-        /// <summary>
-        /// 表示させるテキスト
-        /// </summary>
+        [Tooltip("表示させるテキスト")]
         public string Text => _text;
-        [TextArea, SerializeField]
+        [TextArea, SerializeField, Tooltip("表示させるテキスト（内部）")]
         private string _text;
 
-        /// <summary>
-        /// テキスト表示中に使うコーチマークのモデル
-        /// </summary>
+        [Tooltip("テキスト表示中に使うコーチマークのモデル")]
         public CoachMarkModel CoachMark => _coachMark;
-        [SerializeField]
+        [SerializeField, Tooltip("テキスト表示中に使うコーチマークのモデル（内部）")]
         private CoachMarkModel _coachMark;
 
-        /// <summary>
-        /// テキストボックスを配置する対象のオブジェクトの名前
-        /// </summary>
+        [Tooltip("テキストボックスを配置する対象のオブジェクトの名前")]
         public string TargetObjectName => _targetObjectName;
-        [SerializeField]
+        [SerializeField, Tooltip("テキストボックスを配置する対象のオブジェクトの名前（内部）")]
         private string _targetObjectName;
     }
 }

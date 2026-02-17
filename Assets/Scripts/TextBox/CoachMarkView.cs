@@ -5,30 +5,28 @@ using UnityEngine.UI;
 
 namespace CommonUI.Tutorial
 {
-    /// <summary>
-    /// コーチマークのビュー
-    /// </summary>
+    [RequireComponent(typeof(UnityEngine.RectTransform)), Tooltip("コーチマークのビュー")]
     public class CoachMarkView: MonoBehaviour
     {
-        /// <summary>
-        /// Imageコンポーネント
-        /// </summary>
-        [SerializeField]
+        [SerializeField, Tooltip("Imageコンポーネント")]
         private Image _image;
 
-        /// <summary>
-        /// 位置
-        /// </summary>
         private RectTransform _rectTransform;
+        [Tooltip("位置")]
         public RectTransform RectTransform => _rectTransform;
 
-        /// <summary>
-        /// コーチマークの画像配列
-        /// </summary>
-        [SerializeField]
-        private Sprite[] _coachMarkSprite;
+        [Tooltip("円コーチマークの画像")]
+        public Sprite CircleCoachMarkSprite => _circleCoachMarkSprite;
+        [SerializeField, Tooltip("円コーチマークの画像(内部)")]
+        private Sprite _circleCoachMarkSprite;
 
-        public void Awake()
+        [Tooltip("矩形コーチマークの画像")]
+        public Sprite RectangleCoachMarkSprite => _rectangleCoachMarkSprite;
+        [SerializeField, Tooltip("長方形コーチマークの画像(内部)")]
+        private Sprite _rectangleCoachMarkSprite;
+
+
+        private void Start()
         {
             _rectTransform = (RectTransform)_image.transform;
         }
@@ -42,10 +40,10 @@ namespace CommonUI.Tutorial
             switch (kind)
             {
                 case ShapeKinds.Rectangle:
-                    _image.sprite = _coachMarkSprite[0];
+                    _image.sprite = RectangleCoachMarkSprite;
                     break;
                 case ShapeKinds.Circle:
-                    _image.sprite = _coachMarkSprite[1];
+                    _image.sprite = CircleCoachMarkSprite;
                     break;
             }
         }

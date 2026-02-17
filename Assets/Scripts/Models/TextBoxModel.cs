@@ -1,40 +1,30 @@
 using System.Collections.Generic;
 using UnityEngine;
+using CommonUI.Tutorial;
 
 namespace CommonUI.Tutorial.Models
 {
-    /// <summary>
-    /// テキストボックスのモデル
-    /// </summary>
-    [System.Serializable]
+    [System.Serializable, Tooltip("テキストボックスのモデル")]
     public class TextBoxModel
     {
-        /// <summary>
-        /// 大まかな位置を指定させる
-        /// </summary>
+        [Tooltip("大まかな位置を指定させる")]
         public TextPositions Position => _position;
-        [SerializeField]
+        [SerializeField, Tooltip("大まかな位置（内部）")]
         private TextPositions _position;
 
-        /// <summary>
-        /// 垂直方向に対してどれくらいずらすか
-        /// </summary>
+        [Tooltip("垂直方向に対してどれくらいずらすか")]
         public ValueKinds RadiusVerticalOffset => _radiusVerticalOffset;
-        [SerializeField]
+        [SerializeField, Tooltip("垂直方向に対してどれくらいずらすか（内部）")]
         private ValueKinds _radiusVerticalOffset;
 
-        /// <summary>
-        /// 水平方向に対してどれくらいずらすか
-        /// </summary>
+        [Tooltip("水平方向に対してどれくらいずらすか")]
         public ValueKinds RadiusHorizontalOffset => _radiusHorizontalOffset;
-        [SerializeField]
+        [SerializeField, Tooltip("水平方向に対してどれくらいずらすか（内部）")]
         private ValueKinds _radiusHorizontalOffset;
 
-        /// <summary>
-        /// 表示するテキストモデルの一覧
-        /// </summary>
+        [Tooltip("表示するテキストモデルの一覧")]
         public IReadOnlyList<TextModel> Models => _models;
-        [SerializeField]
+        [SerializeField, Tooltip("表示するテキストモデルの一覧（内部）")]
         private TextModel[] _models;
     }
 }
