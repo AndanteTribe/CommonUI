@@ -1,5 +1,4 @@
 using UnityEngine;
-using CommonUI.Tutorial;
 
 namespace CommonUI.Tutorial.Models
 {

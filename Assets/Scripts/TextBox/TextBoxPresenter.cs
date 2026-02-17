@@ -8,7 +8,7 @@ namespace CommonUI.Tutorial
     /// <summary>
     /// テキストボックスのPresenter
     /// </summary>
-    [RequireComponent(typeof(UnityEngine.RectTransform))]
+    [RequireComponent(typeof(RectTransform))]
     public class TextBoxPresenter : MonoBehaviour
     {
         [SerializeField, Tooltip("反映させるテキストボックス内のTMP")]

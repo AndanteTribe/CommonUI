@@ -1,5 +1,4 @@
 using UnityEngine;
-using CommonUI.Tutorial;
 
 namespace CommonUI.Tutorial.Models
 {
@@ -31,7 +30,6 @@ namespace CommonUI.Tutorial.Models
         /// </summary>
         [InspectorName("左中央")]
         MiddleLeft,
-
 
         /// <summary>
         /// 中央

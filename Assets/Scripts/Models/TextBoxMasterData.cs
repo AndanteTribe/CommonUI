@@ -1,6 +1,5 @@
 using System.Collections.Generic;
 using UnityEngine;
-using CommonUI.Tutorial;
 
 namespace CommonUI.Tutorial.Models
 {
@@ -12,6 +11,9 @@ namespace CommonUI.Tutorial.Models
     {
         [SerializeField, Tooltip("テキストボックスのモデル達")]
         private TextBoxModel[] _models;
+        /// <summary>
+        /// テキストボックスのモデル達
+        /// </summary>
         public IReadOnlyList<TextBoxModel> Models => _models;
     }
 }

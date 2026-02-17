@@ -1,6 +1,5 @@
 ﻿using CommonUI.Tutorial.Models;
 using UnityEngine;
-using UnityEngine.Rendering;
 using UnityEngine.UI;
 
 namespace CommonUI.Tutorial
@@ -8,7 +7,7 @@ namespace CommonUI.Tutorial
     /// <summary>
     /// コーチマークのビュー
     /// </summary>
-    [RequireComponent(typeof(UnityEngine.RectTransform))]
+    [RequireComponent(typeof(RectTransform))]
     public class CoachMarkView: MonoBehaviour
     {
         [SerializeField, Tooltip("Imageコンポーネント")]
@@ -24,11 +23,9 @@ namespace CommonUI.Tutorial
         private Sprite _circleCoachMarkSprite;
         public Sprite CircleCoachMarkSprite => _circleCoachMarkSprite;
 
-
         [SerializeField, Tooltip("長方形コーチマークの画像")]
         private Sprite _rectangleCoachMarkSprite;
         public Sprite RectangleCoachMarkSprite => _rectangleCoachMarkSprite;
-
 
         private void Start()
         {
