@@ -3,22 +3,22 @@ using CommonUI.Tutorial;
 
 namespace CommonUI.Tutorial.Models
 {
-    [System.Serializable, Tooltip("テキストを設定するためのモデル")]
+    /// <summary>
+    /// テキストを設定するためのモデル
+    /// </summary>
+    [System.Serializable]
     public class TextModel
     {
-        [Tooltip("表示させるテキスト")]
-        public string Text => _text;
-        [TextArea, SerializeField, Tooltip("表示させるテキスト（内部）")]
+        [TextArea, SerializeField, Tooltip("表示させるテキスト")]
         private string _text;
+        public string Text => _text;
 
-        [Tooltip("テキスト表示中に使うコーチマークのモデル")]
-        public CoachMarkModel CoachMark => _coachMark;
-        [SerializeField, Tooltip("テキスト表示中に使うコーチマークのモデル（内部）")]
+        [SerializeField, Tooltip("テキスト表示中に使うコーチマークのモデル")]
         private CoachMarkModel _coachMark;
+        public CoachMarkModel CoachMark => _coachMark;
 
-        [Tooltip("テキストボックスを配置する対象のオブジェクトの名前")]
-        public string TargetObjectName => _targetObjectName;
-        [SerializeField, Tooltip("テキストボックスを配置する対象のオブジェクトの名前（内部）")]
+        [SerializeField, Tooltip("テキストボックスを配置する対象のオブジェクトの名前")]
         private string _targetObjectName;
+        public string TargetObjectName => _targetObjectName;
     }
 }

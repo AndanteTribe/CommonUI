@@ -3,42 +3,62 @@ using CommonUI.Tutorial;
 
 namespace CommonUI.Tutorial.Models
 {
-    [Tooltip("座標をどれくらいズラすか")]
+    /// <summary>
+    /// 座標をどれくらいズラすか
+    /// </summary>
     public enum ValueKinds : int
     {
-        [Tooltip("ズラさない")]
+        /// <summary>
+        /// ズラさない
+        /// </summary>
         [InspectorName("0")]
         Zero = 0,
 
-        [Tooltip("100pxズラす")]
+        /// <summary>
+        /// 100pxズラす
+        /// </summary>
         [InspectorName("+100")]
         Small = 100,
 
-        [Tooltip("200pxズラす")]
+        /// <summary>
+        /// 200pxズラす
+        /// </summary>
         [InspectorName("+200")]
         Medium = 200,
 
-        [Tooltip("300pxズラす")]
+        /// <summary>
+        /// 300pxズラす
+        /// </summary>
         [InspectorName("+300")]
         Large = 300,
 
-        [Tooltip("400pxズラす")]
+        /// <summary>
+        /// 400pxズラす
+        /// </summary>
         [InspectorName("+400")]
         VeryLarge = 400,
 
-        [Tooltip("-100pxズラす")]
+        /// <summary>
+        /// -100pxズラす
+        /// </summary>
         [InspectorName("-100")]
         NegativeSmall = -100,
 
-        [Tooltip("-200pxズラす")]
+        /// <summary>
+        /// -200pxズラす
+        /// </summary>
         [InspectorName("-200")]
         NegativeMedium = -200,
 
-        [Tooltip("-300pxズラす")]
+        /// <summary>
+        /// -300pxズラす
+        /// </summary>
         [InspectorName("-300")]
         NegativeLarge = -300,
 
-        [Tooltip("-400pxズラす")]
+        /// <summary>
+        /// -400pxズラす
+        /// </summary>
         [InspectorName("-400")]
         NegativeVeryLarge = -400
     }

@@ -5,25 +5,29 @@ using UnityEngine.UI;
 
 namespace CommonUI.Tutorial
 {
-    [RequireComponent(typeof(UnityEngine.RectTransform)), Tooltip("コーチマークのビュー")]
+    /// <summary>
+    /// コーチマークのビュー
+    /// </summary>
+    [RequireComponent(typeof(UnityEngine.RectTransform))]
     public class CoachMarkView: MonoBehaviour
     {
         [SerializeField, Tooltip("Imageコンポーネント")]
         private Image _image;
 
         private RectTransform _rectTransform;
-        [Tooltip("位置")]
+        /// <summary>
+        /// 位置
+        /// </summary>
         public RectTransform RectTransform => _rectTransform;
 
-        [Tooltip("円コーチマークの画像")]
-        public Sprite CircleCoachMarkSprite => _circleCoachMarkSprite;
-        [SerializeField, Tooltip("円コーチマークの画像(内部)")]
+        [SerializeField, Tooltip("円コーチマークの画像")]
         private Sprite _circleCoachMarkSprite;
+        public Sprite CircleCoachMarkSprite => _circleCoachMarkSprite;
 
-        [Tooltip("矩形コーチマークの画像")]
-        public Sprite RectangleCoachMarkSprite => _rectangleCoachMarkSprite;
-        [SerializeField, Tooltip("長方形コーチマークの画像(内部)")]
+
+        [SerializeField, Tooltip("長方形コーチマークの画像")]
         private Sprite _rectangleCoachMarkSprite;
+        public Sprite RectangleCoachMarkSprite => _rectangleCoachMarkSprite;
 
 
         private void Start()

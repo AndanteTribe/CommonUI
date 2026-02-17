@@ -3,43 +3,63 @@ using CommonUI.Tutorial;
 
 namespace CommonUI.Tutorial.Models
 {
-    [Tooltip("テキストボックスの位置")]
+    /// <summary>
+    /// テキストボックスの位置
+    /// </summary>
     public enum TextPositions : byte
     {
-        [Tooltip("左上")]
+        /// <summary>
+        /// 左上
+        /// </summary>
         [InspectorName("左上")]
         TopLeft,
 
-        [Tooltip("中央上")]
+        /// <summary>
+        /// 中央上
+        /// </summary>
         [InspectorName("中央上")]
         TopCenter,
 
-        [Tooltip("右上")]
+        /// <summary>
+        /// 右上
+        /// </summary>
         [InspectorName("右上")]
         TopRight,
 
-        [Tooltip("左中央")]
+        /// <summary>
+        /// 左中央
+        /// </summary>
         [InspectorName("左中央")]
         MiddleLeft,
 
 
-        [Tooltip("中央")]
+        /// <summary>
+        /// 中央
+        /// </summary>
         [InspectorName("中央")]
         MiddleCenter,
 
-        [Tooltip("右中央")]
+        /// <summary>
+        /// 右中央
+        /// </summary>
         [InspectorName("右中央")]
         MiddleRight,
 
-        [Tooltip("左下")]
+        /// <summary>
+        /// 左下
+        /// </summary>
         [InspectorName("左下")]
         BottomLeft,
 
-        [Tooltip("中心下")]
+        /// <summary>
+        /// 中心下
+        /// </summary>
         [InspectorName("中央下")]
         BottomCenter,
 
-        [Tooltip("右下")]
+        /// <summary>
+        /// 右下
+        /// </summary>
         [InspectorName("右下")]
         BottomRight
     }

@@ -5,7 +5,10 @@ using CommonUI.Tutorial.Models;
 
 namespace CommonUI.Tutorial
 {
-    [RequireComponent(typeof(UnityEngine.RectTransform)), Tooltip("テキストボックスのPresenter")]
+    /// <summary>
+    /// テキストボックスのPresenter
+    /// </summary>
+    [RequireComponent(typeof(UnityEngine.RectTransform))]
     public class TextBoxPresenter : MonoBehaviour
     {
         [SerializeField, Tooltip("反映させるテキストボックス内のTMP")]
@@ -17,13 +20,17 @@ namespace CommonUI.Tutorial
         [SerializeField, Tooltip("テキストボックスのマスターデータ")]
         private TextBoxMasterData _textData;
 
-        [Tooltip("現在のtextModelモデルの番号")]
-        private int _index = 0;
-
         [SerializeField, Tooltip("マスクのRectTransform")]
         private CoachMarkView _coachMaskView;
 
-        [Tooltip("UIの位置を取得しておくフィールド")]
+        /// <summary>
+        /// 現在のtextModelモデルの番号
+        /// </summary>
+        private int _index = 0;
+
+        /// <summary>
+        /// UIの位置を取得しておくフィールド
+        /// </summary>
         private readonly Vector3[] _corners = new Vector3[4];
 
         private void Start()
@@ -116,13 +123,13 @@ namespace CommonUI.Tutorial
             var targetObject = GameObject.Find(model.TargetObjectName);
 
             // オブジェクトが見つからなかった場合はエラーログを出力して終了
-            if (!targetObject)
+            if (targetObject != null)
             {
                 throw new NullReferenceException("対象のオブジェクトが見つかりませんでした. 指定したオブジェクト名: " + model.TargetObjectName);
             }
 
             // 対象のゲームオブジェクトにRectTransformがある場合
-            if (targetObject.transform is RectTransform targetRect && targetRect != null)
+            if (targetObject.transform is RectTransform targetRect)
             {
                 // 対象のゲームオブジェクトの4端のワールド座標を取得し、中心を計算。その結果を座標に当てはめる。
                 targetRect.GetWorldCorners(_corners);

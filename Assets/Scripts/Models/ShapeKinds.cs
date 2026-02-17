@@ -3,13 +3,21 @@ using CommonUI.Tutorial;
 
 namespace CommonUI.Tutorial.Models
 {
-    [Tooltip("コーチマークの形を設定する列挙型")]
+    /// <summary>
+    /// コーチマークの形を設定する列挙型
+    /// </summary>
     public enum ShapeKinds : byte
     {
-        [InspectorName("長方形"), Tooltip("長方形")]
+        /// <summary>
+        /// 長方形
+        /// </summary>
+        [InspectorName("長方形")]
         Rectangle,
 
-        [InspectorName("円形"), Tooltip("円形")]
+        /// <summary>
+        /// 円形
+        /// </summary>
+        [InspectorName("円形")]
         Circle
     }
 }

@@ -3,22 +3,24 @@ using CommonUI.Tutorial;
 
 namespace CommonUI.Tutorial.Models
 {
-    [System.Serializable, Tooltip("コーチマークの形や半径を設定するモデル")]
+    /// <summary>
+    /// コーチマークの形や半径を設定するモデル
+    /// </summary>
+    [System.Serializable]
     public class CoachMarkModel
     {
-        [Tooltip("コーチマークの形を指定するもの")]
-        public ShapeKinds Shape => _shape;
-        [SerializeField, Tooltip("コーチマークの形を指定するもの（内部）")]
+        [SerializeField, Tooltip("コーチマークの形を指定するもの")]
         private ShapeKinds _shape;
+        public ShapeKinds Shape => _shape;
 
-        [Tooltip("コーチマークの半径")]
-        public float Radius => _radius;
-        [SerializeField, Tooltip("コーチマークの半径（内部）")]
+
+        [SerializeField, Tooltip("コーチマークの半径")]
         private float _radius;
+        public float Radius => _radius;
 
-        [Tooltip("コーチマークの対象になるオブジェクトの名前")]
-        public string TargetObjectName => _targetObjectName;
-        [SerializeField, Tooltip("コーチマークの対象になるオブジェクトの名前（内部）")]
+
+        [SerializeField, Tooltip("コーチマークの対象になるオブジェクトの名前")]
         private string _targetObjectName;
+        public string TargetObjectName => _targetObjectName;
     }
 }

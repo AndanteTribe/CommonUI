@@ -4,13 +4,14 @@ using CommonUI.Tutorial;
 
 namespace CommonUI.Tutorial.Models
 {
-    [CreateAssetMenu(fileName = "TextBoxMaster", menuName = "Create Model/TextBoxMasterData", order = 0),
-     Tooltip("テキストボックスのマスタ―")]
+    /// <summary>
+    /// テキストボックスのマスタ―
+    /// </summary>
+    [CreateAssetMenu(fileName = "TextBoxMaster", menuName = "Create Model/TextBoxMasterData", order = 0)]
     public class TextBoxMasterData : ScriptableObject
     {
-        [Tooltip("テキストボックスのモデル達")]
-        public IReadOnlyList<TextBoxModel> Models => _models;
-        [SerializeField, Tooltip("テキストボックスのモデル達（内部）")]
+        [SerializeField, Tooltip("テキストボックスのモデル達")]
         private TextBoxModel[] _models;
+        public IReadOnlyList<TextBoxModel> Models => _models;
     }
 }
