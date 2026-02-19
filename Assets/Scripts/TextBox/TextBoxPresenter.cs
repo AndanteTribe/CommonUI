@@ -23,6 +23,9 @@ namespace CommonUI.Tutorial
         [SerializeField, Tooltip("マスクのRectTransform")]
         private CoachMarkView _coachMaskView;
 
+        [SerializeField, Tooltip("矩形のアニメーションフレーム")]
+        private RectangleFrame _rectangleFrame;
+
         /// <summary>
         /// 現在のtextModelモデルの番号
         /// </summary>
@@ -49,6 +52,9 @@ namespace CommonUI.Tutorial
                 SetBasePosition(_textData.Models[_index].Position);
                 SetCoachMark(_textData.Models[_index].Models[0].CoachMark);
                 AdjustPosition(_textData.Models[_index]);
+
+                _rectangleFrame.SetPosition(_coachMaskView.MaskRectTransform);
+                _rectangleFrame.SetSize(_coachMaskView.MaskRectTransform);
                 _index++;
             }
         }
