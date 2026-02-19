@@ -23,6 +23,9 @@ namespace CommonUI.Tutorial
         [SerializeField, Tooltip("マスクのRectTransform")]
         private CoachMarkView _coachMaskView;
 
+        [SerializeField, Tooltip("矩形のアニメーションフレーム")]
+        private RectangleFrame _rectangleFrame;
+
         /// <summary>
         /// 現在のtextModelモデルの番号
         /// </summary>
@@ -49,6 +52,9 @@ namespace CommonUI.Tutorial
                 SetBasePosition(_textData.Models[_index].Position);
                 SetCoachMark(_textData.Models[_index].Models[0].CoachMark);
                 AdjustPosition(_textData.Models[_index]);
+
+                _rectangleFrame.SetPosition(_coachMaskView.MaskRectTransform);
+                _rectangleFrame.SetSize(_coachMaskView.MaskRectTransform);
                 _index++;
             }
         }
@@ -123,7 +129,7 @@ namespace CommonUI.Tutorial
             var targetObject = GameObject.Find(model.TargetObjectName);
 
             // オブジェクトが見つからなかった場合はエラーログを出力して終了
-            if (targetObject != null)
+            if (targetObject == null)
             {
                 throw new NullReferenceException("対象のオブジェクトが見つかりませんでした. 指定したオブジェクト名: " + model.TargetObjectName);
             }
