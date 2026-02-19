@@ -123,7 +123,7 @@ namespace CommonUI.Tutorial
             var targetObject = GameObject.Find(model.TargetObjectName);
 
             // オブジェクトが見つからなかった場合はエラーログを出力して終了
-            if (targetObject != null)
+            if (targetObject == null)
             {
                 throw new NullReferenceException("対象のオブジェクトが見つかりませんでした. 指定したオブジェクト名: " + model.TargetObjectName);
             }
