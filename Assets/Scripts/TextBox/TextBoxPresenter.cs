@@ -2,6 +2,7 @@ using System;
 using UnityEngine;
 using TMPro;
 using CommonUI.Tutorial.Models;
+using CommonUI.Tutorial.Views;
 
 namespace CommonUI.Tutorial
 {
@@ -25,6 +26,9 @@ namespace CommonUI.Tutorial
 
         [SerializeField, Tooltip("矩形のアニメーションフレーム")]
         private RectangleFrame _rectangleFrame;
+
+        [SerializeField, Tooltip("円のアニメーションフレーム")]
+        private CircleFrame _circleFrame;
 
         /// <summary>
         /// 現在のtextModelモデルの番号
@@ -53,8 +57,17 @@ namespace CommonUI.Tutorial
                 SetCoachMark(_textData.Models[_index].Models[0].CoachMark);
                 AdjustPosition(_textData.Models[_index]);
 
-                _rectangleFrame.SetPosition(_coachMaskView.MaskRectTransform);
-                _rectangleFrame.SetSize(_coachMaskView.MaskRectTransform);
+                if (_rectangleFrame != null)
+                {
+                    _rectangleFrame.SetPosition(_coachMaskView.MaskRectTransform);
+                    _rectangleFrame.SetSize(_coachMaskView.MaskRectTransform);
+                }
+
+                if (_circleFrame != null)
+                {
+                    _circleFrame.SetPosition(_coachMaskView.MaskRectTransform);
+                    _circleFrame.SetSize(_coachMaskView.MaskRectTransform);
+                }
                 _index++;
             }
         }
