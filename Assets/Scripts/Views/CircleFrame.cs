@@ -39,7 +39,7 @@ namespace CommonUI.Tutorial.Views
         public void SetSize(RectTransform coachMarkPos)
         {
             // フレームの大きさを設定する。
-            // 円形の場合、サイズが決まっているので、コーチマークの大きさに合わせてscaleを変更する。
+            // 円形の場合、ParticleEffectで作成されているので、コーチマークの大きさに合わせてscaleを変更する。
             var width = coachMarkPos.rect.width;
             var height = coachMarkPos.rect.height;
 
