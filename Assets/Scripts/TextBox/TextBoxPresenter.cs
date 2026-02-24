@@ -1,7 +1,11 @@
 using System;
+using System.Collections.Generic;
+using System.Threading;
 using UnityEngine;
 using TMPro;
 using CommonUI.Tutorial.Models;
+using CommonUI.Tutorial.Views;
+using UnityEngine.Pool;
 
 namespace CommonUI.Tutorial
 {
@@ -10,42 +14,143 @@ namespace CommonUI.Tutorial
     /// </summary>
     public class TextBoxPresenter : MonoBehaviour
     {
-        /// <summary>
-        /// 反映させるテキストボックス内のTMP
-        /// </summary>
-        [SerializeField]
+        [SerializeField, Tooltip("反映させるテキストボックス内のTMP")]
         private TextMeshProUGUI _textMeshPro;
 
-        /// <summary>
-        /// テキストボックスのRectTransform
-        /// </summary>
-        [SerializeField]
+        [SerializeField, Tooltip("テキストボックスのRectTransform")]
         private RectTransform _textBoxRectTransform;
 
-        /// <summary>
-        /// テキストボックスのマスターデータ
-        /// </summary>
-        [SerializeField]
+        [SerializeField, Tooltip("テキストボックスのマスターデータ")]
         private TextBoxMasterData _textData;
 
         /// <summary>
         /// 現在のtextModelモデルの番号
         /// </summary>
-        private int _index = 0;
+        private int _modelIndex = 0;
+
+        [SerializeField]
+        private float _textAnimDurationSec = 0.1f;
+
+        [SerializeField]
+        private bool _isPinEnabled = true;
+
+        [SerializeField]
+        private ForwardingIcon _forwardingIcon;
+
+        [SerializeField]
+        private SkipButton _skipButton;
+
+        [SerializeField]
+        private PageDotPresenter _pageDotPresenter;
+
+        private int _totalPages;
+        private int _pageIndex;
+
+        private CancellationTokenSource _cts;
+
+        private bool _isTextAnimating;
 
         private void Start()
         {
-            _index = 0;
-            SetPosition(_textData.Models[_index].Position);
+            _cts = new CancellationTokenSource();
+
+            // スキップボタンの登録
+            _skipButton.OnSkip += OnSkip;
+
+            _modelIndex = 0;
+            LoadModel(_modelIndex);
         }
 
         private void Update()
         {
-            //クリックしたら次のモデルを参照し、SetPositionを実行させる
-            if (Input.GetMouseButtonDown(0))
+            if (Input.GetMouseButtonDown(0) || Input.GetKeyDown(KeyCode.RightArrow))
             {
-                SetPosition(_textData.Models[++_index].Position);
+                // 文字送り中にクリックされた場合は全文表示
+                if (_isTextAnimating)
+                {
+                    _cts.Cancel();
+                }
+                else
+                {
+                    // 次のページを表示する.
+                    if (_pageIndex < _totalPages - 1)
+                    {
+                        _pageIndex++;
+                        ResetToken();
+                        _ = ShowPage(_pageIndex);
+
+                        _pageDotPresenter.Next();
+                    }
+                    //
+                    else if (_modelIndex < _textData.Models.Count - 1)
+                    {
+                        _modelIndex++;
+                        LoadModel(_modelIndex);
+                    }
+                }
             }
+            // 戻るボタンで前のページ表示
+            if (Input.GetKeyDown(KeyCode.LeftArrow))
+            {
+                if (_pageIndex <= 0)
+                {
+                    return;
+                }
+                _pageIndex--;
+                _ = ShowPage(_pageIndex);
+                _pageDotPresenter.Prev();
+            }
+        }
+
+        /// <summary>
+        /// <see cref="modelIndex"/>番目のモデルを読み込む.
+        /// </summary>
+        /// <param name="modelIndex">モデルの番号</param>
+        private void LoadModel(int modelIndex)
+        {
+            var modelData = _textData.Models[modelIndex];
+            _totalPages = modelData.Models.Count;
+
+            _pageDotPresenter.Initialize(_totalPages);
+
+            SetPosition(modelData.Position);
+
+            _pageIndex = 0;
+
+            _ = ShowPage(_pageIndex);
+        }
+
+        private async Awaitable ShowPage(int pageIndex)
+        {
+            var text = _textData.Models[_modelIndex].Models[pageIndex].Text;
+            _isTextAnimating = true;
+            try
+            {
+                ResetToken();
+                await _textMeshPro.AnimateTextAsync(text, TimeSpan.FromSeconds(_textAnimDurationSec), _cts.Token);
+            }
+            finally
+            {
+                _isTextAnimating = false;
+                if (_isPinEnabled)
+                {
+                    ResetToken();
+                    _ = _forwardingIcon.PlayAnimAsync(_cts.Token);
+                }
+            }
+        }
+
+        private void OnSkip()
+        {
+            _modelIndex++;
+            LoadModel(_modelIndex);
+        }
+
+        private void ResetToken()
+        {
+            _cts?.Cancel();
+            _cts?.Dispose();
+            _cts =  new CancellationTokenSource();
         }
 
         /// <summary>
@@ -105,5 +210,12 @@ namespace CommonUI.Tutorial
             }
         }
 
+        private void OnDestroy()
+        {
+            _cts?.Cancel();
+            _cts?.Dispose();
+
+            _skipButton.OnSkip -= OnSkip;
+        }
     }
 }
