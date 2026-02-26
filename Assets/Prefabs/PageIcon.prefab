@@ -59,66 +59,66 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 913a1c963aec4c2180cad11c52064725, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _rectTransform: {fileID: 1777050857013435227}
-  _outlineRect: {fileID: 4319962227639993413}
-  _insideCircleRect: {fileID: 8086101061405989228}
-  _insideCircle: {fileID: 3081168121643890201}
+  _parts:
+    _pageIcon: {fileID: 1777050857013435227}
+    _insideCircle: {fileID: 3081168121643890201}
+    _outline: {fileID: 4319962227639993413}
   durationSec: 1
   _allStates:
-  - posX: 28
-    color:
+  - _posX: 28
+    _color:
       serializedVersion: 2
       rgba: 4281019179
-    insideCircleSize: 0
-    outlineSize: 0
-  - posX: 28
-    color:
+    _insideCircleSize: 0
+    _outlineSize: 0
+  - _posX: 28
+    _color:
       serializedVersion: 2
       rgba: 4281019179
-    insideCircleSize: 3.2
-    outlineSize: 4
-  - posX: 21
-    color:
+    _insideCircleSize: 3.2
+    _outlineSize: 4
+  - _posX: 21
+    _color:
+      serializedVersion: 2
+      rgba: 2829099
+    _insideCircleSize: 4.8
+    _outlineSize: 6
+  - _posX: 12
+    _color:
       serializedVersion: 2
       rgba: 4281019179
-    insideCircleSize: 4.8
-    outlineSize: 6
-  - posX: 12
-    color:
-      serializedVersion: 2
-      rgba: 4281019179
-    insideCircleSize: 6.4
-    outlineSize: 8
-  - posX: 0
-    color:
+    _insideCircleSize: 6.4
+    _outlineSize: 8
+  - _posX: 0
+    _color:
       serializedVersion: 2
       rgba: 4294967295
-    insideCircleSize: 10
-    outlineSize: 10
-  - posX: -12
-    color:
+    _insideCircleSize: 10
+    _outlineSize: 10
+  - _posX: -12
+    _color:
       serializedVersion: 2
-      rgba: 4290281532
-    insideCircleSize: 8
-    outlineSize: 8
-  - posX: -21
-    color:
+      rgba: 4289292836
+    _insideCircleSize: 8
+    _outlineSize: 8
+  - _posX: -21
+    _color:
       serializedVersion: 2
-      rgba: 4290281532
-    insideCircleSize: 6
-    outlineSize: 6
-  - posX: -28
-    color:
+      rgba: 4289292836
+    _insideCircleSize: 6
+    _outlineSize: 6
+  - _posX: -28
+    _color:
       serializedVersion: 2
-      rgba: 4290281532
-    insideCircleSize: 4
-    outlineSize: 4
-  - posX: -28
-    color:
+      rgba: 4289292836
+    _insideCircleSize: 4
+    _outlineSize: 4
+  - _posX: -28
+    _color:
       serializedVersion: 2
-      rgba: 4290281532
-    insideCircleSize: 0
-    outlineSize: 0
+      rgba: 4289292836
+    _insideCircleSize: 0
+    _outlineSize: 0
 --- !u!1 &2669054643050889387
 GameObject:
   m_ObjectHideFlags: 0
@@ -206,7 +206,7 @@ GameObject:
   - component: {fileID: 8605133424277681105}
   - component: {fileID: 3081168121643890201}
   m_Layer: 5
-  m_Name: Imagemain
+  m_Name: ImageMain
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

@@ -19,8 +19,6 @@ namespace CommonUI.Tutorial.Views
         [SerializeField]
         private RectTransform _rectTransform;
 
-        private void Start() => gameObject.SetActive(false);
-
         /// <summary>
         /// ピンのアニメーションを再生する.
         /// </summary>
