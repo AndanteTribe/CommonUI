@@ -1,11 +1,9 @@
 using System;
-using System.Collections.Generic;
 using System.Threading;
 using UnityEngine;
 using TMPro;
 using CommonUI.Tutorial.Models;
 using CommonUI.Tutorial.Views;
-using UnityEngine.Pool;
 
 namespace CommonUI.Tutorial
 {
@@ -162,8 +160,7 @@ namespace CommonUI.Tutorial
 
         private void OnSkip()
         {
-            _modelIndex++;
-            LoadModel(_modelIndex);
+            _textBoxRectTransform.gameObject.SetActive(false);
         }
 
         private void ResetToken()

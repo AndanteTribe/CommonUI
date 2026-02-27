@@ -1,9 +1,6 @@
 using System.Threading;
-using AndanteTribe.Utils.Unity;
 using CommonUI.Tutorial.Utility;
-using LitMotion;
 using UnityEngine;
-using UnityEngine.UI;
 
 namespace CommonUI.Tutorial.Views
 {

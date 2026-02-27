@@ -8,10 +8,10 @@ namespace CommonUI.Tutorial.Views
     public class ForwardingIcon : MonoBehaviour
     {
         [SerializeField]
-        private float _lowestPos = -73.246f;
+        private float _basePosX = -73.246f;
 
         [SerializeField]
-        private float _highestPos = -77.6f;
+        private float _amplitude = 4.354f;
 
         [SerializeField]
         private float _animDuration = 0.3f;
@@ -27,7 +27,7 @@ namespace CommonUI.Tutorial.Views
         {
             gameObject.SetActive(true);
 
-            await LMotion.Create(_lowestPos, _highestPos, _animDuration)
+            await LMotion.Create(_basePosX, _basePosX + _amplitude, _animDuration)
                 .WithLoops(-1, LoopType.Yoyo)
                 .WithEase(Ease.Linear)
                 .WithOnCancel(() => gameObject.SetActive(false))
