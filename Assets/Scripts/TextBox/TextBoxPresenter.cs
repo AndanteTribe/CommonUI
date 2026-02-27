@@ -43,6 +43,7 @@ namespace CommonUI.Tutorial
         private void Start()
         {
             _index = 0;
+
             SetBasePosition(_textData.Models[_index].Position);
             SetCoachMark(_textData.Models[_index].Models[0].CoachMark);
             AdjustPosition(_textData.Models[_index]);
@@ -57,17 +58,6 @@ namespace CommonUI.Tutorial
                 SetCoachMark(_textData.Models[_index].Models[0].CoachMark);
                 AdjustPosition(_textData.Models[_index]);
 
-                if (_rectangleFrame != null)
-                {
-                    _rectangleFrame.SetPosition(_coachMaskView.MaskRectTransform);
-                    _rectangleFrame.SetSize(_coachMaskView.MaskRectTransform);
-                }
-
-                if (_circleFrame != null)
-                {
-                    _circleFrame.SetPosition(_coachMaskView.MaskRectTransform);
-                    _circleFrame.SetSize(_coachMaskView.MaskRectTransform);
-                }
                 _index++;
             }
         }
@@ -133,7 +123,7 @@ namespace CommonUI.Tutorial
         }
 
         /// <summary>
-        /// コーチマークの位置・サイズを設定する
+        /// コーチマークの位置・サイズを設定し、アニメーションフレームを調整する
         /// </summary>
         /// <param name="model">元となるモデル</param>
         private void SetCoachMark(CoachMarkModel model)
@@ -168,12 +158,18 @@ namespace CommonUI.Tutorial
                         var targetHeight = targetRect.sizeDelta.y + model.Radius;
                         _coachMaskView.MaskRectTransform.SetSizeWithCurrentAnchors(RectTransform.Axis.Horizontal, targetWidth);
                         _coachMaskView.MaskRectTransform.SetSizeWithCurrentAnchors(RectTransform.Axis.Vertical, targetHeight);
+
+                        // アニメーションフレームを設定する
+                        SetAnimationFrame(model.Shape);
                         return;
 
                     // 円形の場合はモデルの半径の大きさに合わせる
                     case ShapeKinds.Circle:
                         _coachMaskView.MaskRectTransform.SetSizeWithCurrentAnchors(RectTransform.Axis.Horizontal, model.Radius);
                         _coachMaskView.MaskRectTransform.SetSizeWithCurrentAnchors(RectTransform.Axis.Vertical, model.Radius);
+
+                        // アニメーションフレームを設定する
+                        SetAnimationFrame(model.Shape);
                         return;
                 }
             }
@@ -187,6 +183,45 @@ namespace CommonUI.Tutorial
             _coachMaskView.SetSprite(ShapeKinds.Circle);
             _coachMaskView.MaskRectTransform.SetSizeWithCurrentAnchors(RectTransform.Axis.Horizontal, model.Radius);
             _coachMaskView.MaskRectTransform.SetSizeWithCurrentAnchors(RectTransform.Axis.Vertical, model.Radius);
+
+            // アニメーションフレームを設定する
+            SetAnimationFrame(ShapeKinds.Circle);
+        }
+
+        /// <summary>
+        /// コーチマークにアニメーションフレームを合わせる
+        /// </summary>
+        /// <param name="shape">フレームの形</param>
+        private void SetAnimationFrame(ShapeKinds shape)
+        {
+            // アニメーションフレームが設定されていない場合はエラーを出す
+            if (_rectangleFrame == null)
+            {
+                throw new NullReferenceException("矩形アニメーションフレームが設定されていません。");
+            }
+            if(_circleFrame == null)
+            {
+                throw new NullReferenceException("円形アニメーションフレームが設定されていません。");
+            }
+
+            switch (shape)
+            {
+                // 矩形の場合
+                case ShapeKinds.Rectangle:
+                    _rectangleFrame.gameObject.SetActive(true);
+                    _circleFrame.gameObject.SetActive(false);
+                    _rectangleFrame.SetPosition(_coachMaskView.MaskRectTransform);
+                    _rectangleFrame.SetSize(_coachMaskView.MaskRectTransform);
+                    break;
+
+                // 円形の場合
+                case ShapeKinds.Circle:
+                    _rectangleFrame.gameObject.SetActive(false);
+                    _circleFrame.gameObject.SetActive(true);
+                    _circleFrame.SetPosition(_coachMaskView.MaskRectTransform);
+                    _circleFrame.SetSize(_coachMaskView.MaskRectTransform);
+                    break;
+            }
         }
 
         /// <summary>
