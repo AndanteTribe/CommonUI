@@ -20,38 +20,86 @@ MonoBehaviour:
     - _text: 
       _coachMark:
         _shape: 0
-        _radius: 0
-        _targetObjectName: 
+        _radius: 50
+        _targetObjectName: Canvas/SafeArea/TextBaseLong
       _targetObjectName: 
   - _position: 1
-    _radiusVerticalOffset: 0
-    _radiusHorizontalOffset: 0
-    _models: []
+    _radiusVerticalOffset: 200
+    _radiusHorizontalOffset: -400
+    _models:
+    - _text: 
+      _coachMark:
+        _shape: 0
+        _radius: 200
+        _targetObjectName: Cube
+      _targetObjectName: 
   - _position: 2
-    _radiusVerticalOffset: 0
+    _radiusVerticalOffset: -400
     _radiusHorizontalOffset: 0
-    _models: []
+    _models:
+    - _text: 
+      _coachMark:
+        _shape: 0
+        _radius: 0
+        _targetObjectName: Canvas/SafeArea/TextBaseLong
+      _targetObjectName: 
   - _position: 3
-    _radiusVerticalOffset: 0
-    _radiusHorizontalOffset: 0
-    _models: []
+    _radiusVerticalOffset: -300
+    _radiusHorizontalOffset: 300
+    _models:
+    - _text: 
+      _coachMark:
+        _shape: 0
+        _radius: 0
+        _targetObjectName: Canvas/SafeArea/TextBaseLong
+      _targetObjectName: 
   - _position: 4
     _radiusVerticalOffset: 0
     _radiusHorizontalOffset: 0
-    _models: []
+    _models:
+    - _text: 
+      _coachMark:
+        _shape: 0
+        _radius: 0
+        _targetObjectName: Canvas/SafeArea/TextBaseLong
+      _targetObjectName: 
   - _position: 5
-    _radiusVerticalOffset: 0
+    _radiusVerticalOffset: 100
     _radiusHorizontalOffset: 0
-    _models: []
+    _models:
+    - _text: 
+      _coachMark:
+        _shape: 0
+        _radius: 0
+        _targetObjectName: Canvas/SafeArea/TextBaseLong
+      _targetObjectName: 
   - _position: 6
-    _radiusVerticalOffset: 0
+    _radiusVerticalOffset: 200
     _radiusHorizontalOffset: 0
-    _models: []
+    _models:
+    - _text: 
+      _coachMark:
+        _shape: 0
+        _radius: 0
+        _targetObjectName: Canvas/SafeArea/TextBaseLong
+      _targetObjectName: 
   - _position: 7
-    _radiusVerticalOffset: 0
+    _radiusVerticalOffset: 300
     _radiusHorizontalOffset: 0
-    _models: []
+    _models:
+    - _text: 
+      _coachMark:
+        _shape: 0
+        _radius: 0
+        _targetObjectName: Canvas/SafeArea/TextBaseLong
+      _targetObjectName: 
   - _position: 8
-    _radiusVerticalOffset: 0
+    _radiusVerticalOffset: 400
     _radiusHorizontalOffset: 0
-    _models: []
+    _models:
+    - _text: 
+      _coachMark:
+        _shape: 0
+        _radius: 0
+        _targetObjectName: Canvas/SafeArea/TextBaseLong
+      _targetObjectName: 

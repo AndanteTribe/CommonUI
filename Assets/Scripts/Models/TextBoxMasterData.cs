@@ -9,11 +9,11 @@ namespace CommonUI.Tutorial.Models
     [CreateAssetMenu(fileName = "TextBoxMaster", menuName = "Create Model/TextBoxMasterData", order = 0)]
     public class TextBoxMasterData : ScriptableObject
     {
+        [SerializeField, Tooltip("テキストボックスのモデル達")]
+        private TextBoxModel[] _models;
         /// <summary>
         /// テキストボックスのモデル達
         /// </summary>
         public IReadOnlyList<TextBoxModel> Models => _models;
-        [SerializeField]
-        private TextBoxModel[] _models;
     }
 }
