@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 5c5170c4cf9c4f8681fdfadd51d60994, type: 3}
-  m_Name: TextBoxMaster
+  m_Name: TextBoxMasterChara
   m_EditorClassIdentifier: 
   _models:
   - _position: 0
@@ -20,24 +20,30 @@ MonoBehaviour:
     - _text: aaaaaaa
       _coachMark:
         _shape: 0
-        _radius: 0
-        _targetObjectName: Canvas/TextBase/Textbase
+        _radius: 200
+        _targetObjectName: Canvas/SafeArea/TutorialChara/TextBase
       _targetObjectName: 
     - _text: bbbbbbbb
       _coachMark:
         _shape: 0
         _radius: 0
-        _targetObjectName: Canvas/TextBase/Textbase
+        _targetObjectName: Canvas/SafeArea/TutorialChara/TextBase
       _targetObjectName: 
   - _position: 1
     _radiusVerticalOffset: 200
     _radiusHorizontalOffset: -400
     _models:
-    - _text: 
+    - _text: "\u3053\u3053\u306BCube\u304C\u3042\u308B\u3088\u3002\n\u304B\u308F\u3044\u3044\u306D\u3002"
       _coachMark:
         _shape: 0
         _radius: 200
         _targetObjectName: Cube
+      _targetObjectName: 
+    - _text: "\u3042\u3042\u3042\u3042\u3042\u3042"
+      _coachMark:
+        _shape: 0
+        _radius: 200
+        _targetObjectName: Cube (1)
       _targetObjectName: 
   - _position: 2
     _radiusVerticalOffset: -400
@@ -47,7 +53,7 @@ MonoBehaviour:
       _coachMark:
         _shape: 0
         _radius: 0
-        _targetObjectName: Canvas/SafeArea/TextBaseLong
+        _targetObjectName: Canvas/SafeArea/TutorialChara/TextBase
       _targetObjectName: 
   - _position: 3
     _radiusVerticalOffset: -300
@@ -57,7 +63,7 @@ MonoBehaviour:
       _coachMark:
         _shape: 0
         _radius: 0
-        _targetObjectName: Canvas/SafeArea/TextBaseLong
+        _targetObjectName: Canvas/SafeArea/TutorialChara/TextBase
       _targetObjectName: 
   - _position: 4
     _radiusVerticalOffset: 0
@@ -67,7 +73,7 @@ MonoBehaviour:
       _coachMark:
         _shape: 0
         _radius: 0
-        _targetObjectName: Canvas/SafeArea/TextBaseLong
+        _targetObjectName: Canvas/SafeArea/TutorialChara/TextBase
       _targetObjectName: 
   - _position: 5
     _radiusVerticalOffset: 100
@@ -77,7 +83,7 @@ MonoBehaviour:
       _coachMark:
         _shape: 0
         _radius: 0
-        _targetObjectName: Canvas/SafeArea/TextBaseLong
+        _targetObjectName: Canvas/SafeArea/TutorialChara/TextBase
       _targetObjectName: 
   - _position: 6
     _radiusVerticalOffset: 200
@@ -87,7 +93,7 @@ MonoBehaviour:
       _coachMark:
         _shape: 0
         _radius: 0
-        _targetObjectName: Canvas/SafeArea/TextBaseLong
+        _targetObjectName: Canvas/SafeArea/TutorialChara/TextBase
       _targetObjectName: 
   - _position: 7
     _radiusVerticalOffset: 300
@@ -97,7 +103,7 @@ MonoBehaviour:
       _coachMark:
         _shape: 0
         _radius: 0
-        _targetObjectName: Canvas/SafeArea/TextBaseLong
+        _targetObjectName: Canvas/SafeArea/TutorialChara/TextBase
       _targetObjectName: 
   - _position: 8
     _radiusVerticalOffset: 400
@@ -107,5 +113,5 @@ MonoBehaviour:
       _coachMark:
         _shape: 0
         _radius: 0
-        _targetObjectName: Canvas/SafeArea/TextBaseLong
+        _targetObjectName: Canvas/SafeArea/TutorialChara/TextBase
       _targetObjectName: 

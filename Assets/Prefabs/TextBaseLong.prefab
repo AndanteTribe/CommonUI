@@ -311,6 +311,7 @@ GameObject:
   - component: {fileID: 501823915659907116}
   - component: {fileID: 2351063339582047159}
   - component: {fileID: 1174400324578007498}
+  - component: {fileID: 2465311680475642724}
   m_Layer: 5
   m_Name: TextfForwardingicon
   m_TagString: Untagged
@@ -375,6 +376,22 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
+--- !u!114 &2465311680475642724
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3416247077783477102}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 396c299fd01442f8ade59eac30d16cb8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _lowestPos: -73.246
+  _highestPos: -77.6
+  _animDuration: 0.3
+  _rectTransform: {fileID: 501823915659907116}
 --- !u!1 &5113252454375419720
 GameObject:
   m_ObjectHideFlags: 0
