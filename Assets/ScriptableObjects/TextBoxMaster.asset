@@ -17,11 +17,17 @@ MonoBehaviour:
     _radiusVerticalOffset: 0
     _radiusHorizontalOffset: 0
     _models:
-    - _text: 
+    - _text: aaaaaaa
       _coachMark:
         _shape: 0
-        _radius: 50
-        _targetObjectName: Canvas/SafeArea/TextBaseLong
+        _radius: 0
+        _targetObjectName: Canvas/TextBase/Textbase
+      _targetObjectName: 
+    - _text: bbbbbbbb
+      _coachMark:
+        _shape: 0
+        _radius: 0
+        _targetObjectName: Canvas/TextBase/Textbase
       _targetObjectName: 
   - _position: 1
     _radiusVerticalOffset: 200

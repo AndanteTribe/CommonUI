@@ -69,16 +69,11 @@ namespace CommonUI.Tutorial
         {
             _modelIndex = 0;
 
-            SetBasePosition(_textData.Models[_modelIndex].Position);
-            SetCoachMark(_textData.Models[_modelIndex].Models[0].CoachMark);
-            AdjustPosition(_textData.Models[_modelIndex]);
-
             _cts = new CancellationTokenSource();
 
             // スキップボタンの登録
             _skipButton.OnSkip += OnSkip;
 
-            _modelIndex = 0;
             LoadModel(_modelIndex);
         }
 
