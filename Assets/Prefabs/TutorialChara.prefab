@@ -29,10 +29,10 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 3891163870367668747}
-  - {fileID: 6108267148527508462}
   - {fileID: 5074624108242763283}
   - {fileID: 2851585270636532517}
   - {fileID: 1388940519858452750}
+  - {fileID: 6108267148527508462}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
@@ -407,6 +407,10 @@ PrefabInstance:
     - target: {fileID: 2056881928952798943, guid: db15671ee16df4c79979c4c185e3b840, type: 3}
       propertyPath: m_Name
       value: RingEffect
+      objectReference: {fileID: 0}
+    - target: {fileID: 2857725091544024714, guid: db15671ee16df4c79979c4c185e3b840, type: 3}
+      propertyPath: m_SortingLayer
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8465631261464717467, guid: db15671ee16df4c79979c4c185e3b840, type: 3}
       propertyPath: m_Pivot.x

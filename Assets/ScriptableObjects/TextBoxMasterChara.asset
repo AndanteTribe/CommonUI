@@ -21,13 +21,55 @@ MonoBehaviour:
       _coachMark:
         _shape: 0
         _radius: 200
-        _targetObjectName: Canvas/SafeArea/TutorialChara/TextBase
+        _targetObjectName: Canvas/SafeArea/Image
       _targetObjectName: 
     - _text: bbbbbbbb
       _coachMark:
         _shape: 0
         _radius: 0
-        _targetObjectName: Canvas/SafeArea/TutorialChara/TextBase
+        _targetObjectName: Canvas/SafeArea/Image
+      _targetObjectName: 
+    - _text: cccccccccccc
+      _coachMark:
+        _shape: 0
+        _radius: 0
+        _targetObjectName: Canvas/SafeArea/Image
+      _targetObjectName: 
+    - _text: ddddddddddddd
+      _coachMark:
+        _shape: 0
+        _radius: 0
+        _targetObjectName: Canvas/SafeArea/Image
+      _targetObjectName: 
+    - _text: eeeeeeeeeeeee
+      _coachMark:
+        _shape: 0
+        _radius: 0
+        _targetObjectName: Canvas/SafeArea/Image
+      _targetObjectName: 
+    - _text: fffffffffffff
+      _coachMark:
+        _shape: 0
+        _radius: 0
+        _targetObjectName: Canvas/SafeArea/Image
+      _targetObjectName: 
+    - _text: ggggggggggggg
+      _coachMark:
+        _shape: 0
+        _radius: 0
+        _targetObjectName: Canvas/SafeArea/Image
+      _targetObjectName: 
+    - _text: hhhhhhhhhhhhh
+      _coachMark:
+        _shape: 0
+        _radius: 0
+        _targetObjectName: Canvas/SafeArea/Image
+      _targetObjectName: 
+    - _text: iiiiiiiiiiiiiii
+      _coachMark:
+        _shape: 0
+        _radius: 0
+        _targetObjectName: Canvas/SafeArea/Image
       _targetObjectName: 
   - _position: 1
     _radiusVerticalOffset: 200
