@@ -79,7 +79,8 @@ namespace CommonUI.Tutorial
 
             _subtractImage.sprite = _submaskCircleSprite;
 
-            SetupRectTransform(centerX, centerY, diameter * 2f, diameter * 2f);
+            diameter = CalculateCenterSize(diameter);
+            SetupRectTransform(centerX, centerY, diameter, diameter);
             ApplySoftnessRange(paddingRatio, gradientRatio);
         }
 
@@ -136,7 +137,7 @@ namespace CommonUI.Tutorial
         }
 
         /// <summary>
-        /// Sliced Imageの「中央(ストレッチ領域)」が指定サイズになるようにRectTransformのサイズを計算する処理
+        /// Sliced Imageの「中央（完全透過部分）」が指定サイズになるようにRectTransformのサイズを計算する処理
         /// </summary>
         private static (float width, float height) CalculateCenterSize(Image slicedImage, float centerWidth, float centerHeight)
         {
@@ -146,5 +147,6 @@ namespace CommonUI.Tutorial
             return (centerWidth  + border.x + border.z,
                     centerHeight + border.y + border.w);
         }
+        private static float CalculateCenterSize(float centerDiameter) => centerDiameter * 2;
     }
 }
