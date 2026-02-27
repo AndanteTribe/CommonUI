@@ -147,6 +147,10 @@ namespace CommonUI.Tutorial
             return (centerWidth  + border.x + border.z,
                     centerHeight + border.y + border.w);
         }
+
+        /// <summary>
+        /// 透過用スプライトの「中央（完全透過部分）」が指定サイズになるように全体サイズを計算する処理
+        /// </summary>
         private static float CalculateCenterSize(float centerDiameter) => centerDiameter * 2;
     }
 }
