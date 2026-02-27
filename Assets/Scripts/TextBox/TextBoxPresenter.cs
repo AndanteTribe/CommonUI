@@ -1,4 +1,5 @@
 using System;
+using System.Threading;
 using UnityEngine;
 using TMPro;
 using CommonUI.Tutorial.Models;
@@ -33,7 +34,29 @@ namespace CommonUI.Tutorial
         /// <summary>
         /// 現在のtextModelモデルの番号
         /// </summary>
-        private int _index = 0;
+        private int _modelIndex = 0;
+
+        [SerializeField]
+        private float _textAnimDurationSec = 0.1f;
+
+        [SerializeField]
+        private bool _isPinEnabled = true;
+
+        [SerializeField]
+        private ForwardingIcon _forwardingIcon;
+
+        [SerializeField]
+        private SkipButton _skipButton;
+
+        [SerializeField]
+        private PageDotPresenter _pageDotPresenter;
+
+        private int _totalPages;
+        private int _pageIndex;
+
+        private CancellationTokenSource _cts;
+
+        private bool _isTextAnimating;
 
         /// <summary>
         /// UIの位置を取得しておくフィールド
@@ -42,24 +65,109 @@ namespace CommonUI.Tutorial
 
         private void Start()
         {
-            _index = 0;
+            _modelIndex = 0;
 
-            SetBasePosition(_textData.Models[_index].Position);
-            SetCoachMark(_textData.Models[_index].Models[0].CoachMark);
-            AdjustPosition(_textData.Models[_index]);
+            _cts = new CancellationTokenSource();
+
+            // スキップボタンの登録
+            _skipButton.OnSkip += OnSkip;
+
+            LoadModel(_modelIndex);
         }
 
         private void Update()
         {
-            //クリックしたら次のモデルを参照し、SetPositionを実行させる
-            if (Input.GetMouseButtonDown(0))
+            if (Input.GetMouseButtonDown(0) || Input.GetKeyDown(KeyCode.RightArrow))
             {
-                SetBasePosition(_textData.Models[_index].Position);
-                SetCoachMark(_textData.Models[_index].Models[0].CoachMark);
-                AdjustPosition(_textData.Models[_index]);
+                // 文字送り中にクリックされた場合は全文表示
+                if (_isTextAnimating)
+                {
+                    _cts.Cancel();
+                }
+                else
+                {
+                    // 次のページを表示する.
+                    if (_pageIndex < _totalPages - 1)
+                    {
+                        _pageIndex++;
+                        ResetToken();
+                        SetCoachMark(_textData.Models[_modelIndex].Models[_pageIndex].CoachMark);
+                        _ = ShowPage(_pageIndex);
 
-                _index++;
+                        _pageDotPresenter.Next();
+                    }
+                    //
+                    else if (_modelIndex < _textData.Models.Count - 1)
+                    {
+                        _modelIndex++;
+                        LoadModel(_modelIndex);
+                    }
+                }
             }
+            // 戻るボタンで前のページ表示
+            if (Input.GetKeyDown(KeyCode.LeftArrow))
+            {
+                if (_pageIndex <= 0)
+                {
+                    return;
+                }
+                _pageIndex--;
+                SetCoachMark(_textData.Models[_modelIndex].Models[_pageIndex].CoachMark);
+                _ = ShowPage(_pageIndex);
+                _pageDotPresenter.Prev();
+            }
+        }
+
+        /// <summary>
+        /// <see cref="modelIndex"/>番目のモデルを読み込む.
+        /// </summary>
+        /// <param name="modelIndex">モデルの番号</param>
+        private void LoadModel(int modelIndex)
+        {
+            var modelData = _textData.Models[modelIndex];
+            _totalPages = modelData.Models.Count;
+
+            _pageDotPresenter.Initialize(_totalPages);
+
+            SetBasePosition(modelData.Position);
+            SetCoachMark(modelData.Models[0].CoachMark);
+            AdjustPosition(modelData);
+
+            _pageIndex = 0;
+
+            _ = ShowPage(_pageIndex);
+        }
+
+        private async Awaitable ShowPage(int pageIndex)
+        {
+            var text = _textData.Models[_modelIndex].Models[pageIndex].Text;
+            _isTextAnimating = true;
+            try
+            {
+                ResetToken();
+                await _textMeshPro.AnimateTextAsync(text, TimeSpan.FromSeconds(_textAnimDurationSec), _cts.Token);
+            }
+            finally
+            {
+                _isTextAnimating = false;
+                if (_isPinEnabled)
+                {
+                    ResetToken();
+                    _ = _forwardingIcon.PlayAnimAsync(_cts.Token);
+                }
+            }
+        }
+
+        private void OnSkip()
+        {
+            _textBoxRectTransform.gameObject.SetActive(false);
+        }
+
+        private void ResetToken()
+        {
+            _cts?.Cancel();
+            _cts?.Dispose();
+            _cts =  new CancellationTokenSource();
         }
 
         /// <summary>
@@ -253,6 +361,14 @@ namespace CommonUI.Tutorial
 
             // 差分と指定したズレの分ズラす。
             _textBoxRectTransform.position += offset + new Vector3((float)model.RadiusHorizontalOffset, (float)model.RadiusVerticalOffset, 0);
+        }
+
+        private void OnDestroy()
+        {
+            _cts?.Cancel();
+            _cts?.Dispose();
+
+            _skipButton.OnSkip -= OnSkip;
         }
     }
 }
