@@ -2,7 +2,8 @@ using UnityEngine;
 
 namespace CommonUI.Tutorial.Views
 {
-    public class RectangleFrame : MonoBehaviour
+    [System.Serializable]
+    public class RectangleFrame : Frame
     {
         [SerializeField, Tooltip("自身のRectTransform")]
         private RectTransform _rectTransform;
@@ -23,11 +24,17 @@ namespace CommonUI.Tutorial.Views
         /// </summary>
         private const float AnimatedHeight = 100;
 
+        public void SetFrame(RectTransform coachMarkPos)
+        {
+            SetPosition(coachMarkPos);
+            SetSize(coachMarkPos);
+        }
+
         /// <summary>
         /// コーチマークの座標に合わせる。
         /// </summary>
         /// <param name="coachMarkPos">コーチマークの座標</param>
-        public void SetPosition(RectTransform coachMarkPos)
+        public override void SetPosition(RectTransform coachMarkPos)
         {
             _rectTransform.position = coachMarkPos.position;
         }
@@ -36,7 +43,7 @@ namespace CommonUI.Tutorial.Views
         /// コーチマークのサイズに合わせる。
         /// </summary>
         /// <param name="coachMarkPos"></param>
-        public void SetSize(RectTransform coachMarkPos)
+        public override void SetSize(RectTransform coachMarkPos)
         {
             // コーチマークのサイズを取得する。
             var width = coachMarkPos.sizeDelta.x;

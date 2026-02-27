@@ -2,7 +2,8 @@ using UnityEngine;
 
 namespace CommonUI.Tutorial.Views
 {
-    public class CircleFrame : MonoBehaviour
+    [System.Serializable]
+    public class CircleFrame : Frame
     {
         [SerializeField, Tooltip("自身のRectTransform")]
         private RectTransform _rectTransform;
@@ -21,9 +22,10 @@ namespace CommonUI.Tutorial.Views
         /// コーチマークの座標に合わせる。
         /// </summary>
         /// <param name="coachMarkPos">コーチマークの座標</param>
-        public void SetPosition(RectTransform coachMarkPos)
+        public override void SetPosition(RectTransform coachMarkPos)
         {
-            // ParticleEffectで行っているため、コーチマークの座標を取得した後、OverlayCanvasに置かれているエフェクトを調節する。
+            // ParticleEffectで行っているため、コーチマークの座標を取得した後、
+            // OverlayCanvasに置かれているエフェクトを調節する。
 
             // コーチマークのワールド座標を取得する。
             coachMarkPos.GetWorldCorners(_worldCorners);
@@ -36,7 +38,7 @@ namespace CommonUI.Tutorial.Views
         /// コーチマークのサイズに合わせる。
         /// </summary>
         /// <param name="coachMarkPos">コーチマークの座標</param>
-        public void SetSize(RectTransform coachMarkPos)
+        public override void SetSize(RectTransform coachMarkPos)
         {
             // フレームの大きさを設定する。
             // 円形の場合、ParticleEffectで作成されているので、コーチマークの大きさに合わせてscaleを変更する。
