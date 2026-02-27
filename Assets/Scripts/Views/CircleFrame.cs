@@ -2,12 +2,8 @@ using UnityEngine;
 
 namespace CommonUI.Tutorial.Views
 {
-    [System.Serializable]
     public class CircleFrame : Frame
     {
-        [SerializeField, Tooltip("自身のRectTransform")]
-        private RectTransform _rectTransform;
-
         /// <summary>
         /// アニメーションフレームの大きさの初期値
         /// </summary>

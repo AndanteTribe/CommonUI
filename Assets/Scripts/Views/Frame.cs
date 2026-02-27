@@ -4,6 +4,9 @@ namespace CommonUI.Tutorial.Views
 {
     public abstract class Frame : MonoBehaviour
     {
+        [Tooltip("自身のRectTransform")]
+        public RectTransform _rectTransform;
+
         /// <summary>
         /// コーチマークの座標に合わせる。
         /// </summary>

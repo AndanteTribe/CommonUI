@@ -2,12 +2,8 @@ using UnityEngine;
 
 namespace CommonUI.Tutorial.Views
 {
-    [System.Serializable]
     public class RectangleFrame : Frame
     {
-        [SerializeField, Tooltip("自身のRectTransform")]
-        private RectTransform _rectTransform;
-
         [SerializeField, Tooltip("ずっと表示されるフレームの座標")]
         private RectTransform _baseTransform;
 
@@ -23,12 +19,6 @@ namespace CommonUI.Tutorial.Views
         /// アニメーションフレームの大きさの初期値(縦)
         /// </summary>
         private const float AnimatedHeight = 100;
-
-        public void SetFrame(RectTransform coachMarkPos)
-        {
-            SetPosition(coachMarkPos);
-            SetSize(coachMarkPos);
-        }
 
         /// <summary>
         /// コーチマークの座標に合わせる。
