@@ -1,6 +1,7 @@
 using Coffee.UISoftMask;
 using Coffee.UISoftMaskInternal;
 using UnityEngine;
+using UnityEngine.Assertions;
 using UnityEngine.UI;
 
 namespace CommonUI.Tutorial
@@ -25,30 +26,21 @@ namespace CommonUI.Tutorial
         [SerializeField, Tooltip("SubtractオブジェクトのMaskingShape")]
         private MaskingShape _subtractMaskingShape;
 
-        /// <summary> 0に丸め込まれない小さな正の値 </summary>
-        private const float FloatMinNormal = 1e-7f;
-
         /// <summary>
         /// 四角形にマスクをくり抜く処理
         /// </summary>
         /// <param name="centerX">くり抜きの中心X座標</param>
         /// <param name="centerY">くり抜きの中心Y座標</param>
-        /// <param name="width">くり抜きの横幅</param>
-        /// <param name="height">くり抜きの縦幅</param>
-        /// <param name="paddingRatio">
-        ///     くり抜き部分からのパディング[0～1]
-        ///     paddingRatioとgradientRatioの合計値が1以下になるようにクランプされます。（paddingRatio優先）
-        /// </param>
-        /// <param name="gradientRatio">
-        ///     グラデーションの幅 [0～1]
-        ///     paddingRatioとgradientRatioの合計値が1以下になるようにクランプされます。
-        /// </param>
+        /// <param name="width">くり抜きの横幅（0以上）</param>
+        /// <param name="height">くり抜きの縦幅（0以上）</param>
+        /// <param name="paddingRatio">くり抜き部分からのパディング [0, 1]　※ 0 &lt; paddingRatio + gradientRatio &lt;= 1</param>
+        /// <param name="gradientRatio">グラデーションの幅 [0, 1]　※ 0 &lt; paddingRatio + gradientRatio &lt;= 1</param>
         public void SetRectangle(float centerX, float centerY, float width, float height,
             float paddingRatio, float gradientRatio)
         {
-            width  = Mathf.Max(width, 0);
-            height = Mathf.Max(height, 0);
-            ClampSoftnessParams(ref paddingRatio, ref gradientRatio);
+            Assert.IsTrue(width >= 0, $"[MaskCutout] width は 0 以上である必要があります: {width}");
+            Assert.IsTrue(height >= 0, $"[MaskCutout] height は 0 以上である必要があります: {height}");
+
 
             _subtractImage.sprite = _submaskRectangleSprite;
 
@@ -62,20 +54,13 @@ namespace CommonUI.Tutorial
         /// </summary>
         /// <param name="centerX">くり抜きの中心X座標</param>
         /// <param name="centerY">くり抜きの中心Y座標</param>
-        /// <param name="diameter">くり抜きの直径</param>
-        /// <param name="paddingRatio">
-        ///     くり抜き部分からのパディング[0～1]
-        ///     paddingRatioとgradientRatioの合計値が1以下になるようにクランプされます。（paddingRatio優先）
-        /// </param>
-        /// <param name="gradientRatio">
-        ///     グラデーションの幅 [0～1]
-        ///     paddingRatioとgradientRatioの合計値が1以下になるようにクランプされます。
-        /// </param>
+        /// <param name="diameter">くり抜きの直径（0以上）</param>
+        /// <param name="paddingRatio">くり抜き部分からのパディング [0, 1]　※ 0 &lt; paddingRatio + gradientRatio &lt;= 1</param>
+        /// <param name="gradientRatio">グラデーションの幅 [0, 1]　※ 0 &lt; paddingRatio + gradientRatio &lt;= 1</param>
         public void SetCircle(float centerX, float centerY, float diameter,
             float paddingRatio, float gradientRatio)
         {
-            diameter = Mathf.Max(diameter, 0);
-            ClampSoftnessParams(ref paddingRatio, ref gradientRatio);
+            Assert.IsTrue(diameter >= 0, $"[MaskCutout] diameter は 0 以上である必要があります: {diameter}");
 
             _subtractImage.sprite = _submaskCircleSprite;
 
@@ -106,16 +91,9 @@ namespace CommonUI.Tutorial
         /// </summary>
         private void ApplySoftnessRange(float paddingRatio, float gradientRatio)
         {
-            // paddingRatio と gradientRatio の合計が1を超えないようにクランプする
-            paddingRatio = Mathf.Clamp01(paddingRatio);
-            var gradientMax = 1f - paddingRatio;
-            if (gradientRatio > gradientMax)
-            {
-                Debug.LogWarning(
-                    $"[MaskCutout] paddingRatio({paddingRatio:F3}) + gradientRatio({gradientRatio:F3}) が 1 を超えています。" +
-                    $"gradientRatio を {gradientMax:F3} にクランプしました。");
-                gradientRatio = gradientMax;
-            }
+            Assert.IsTrue(paddingRatio >= 0f, $"[MaskCutout] paddingRatio は 0 以上である必要があります: {paddingRatio}");
+            Assert.IsTrue(gradientRatio >= 0f, $"[MaskCutout] gradientRatio は 0 以上である必要があります: {gradientRatio}");
+            Assert.IsTrue(paddingRatio + gradientRatio > 0f && paddingRatio + gradientRatio <= 1f, $"[MaskCutout] 0 < paddingRatio + gradientRatio <= 1 である必要があります: {paddingRatio + gradientRatio}");
 
             var softMax = 1f - paddingRatio;
             var softMin = 1f - paddingRatio - gradientRatio;
@@ -123,18 +101,6 @@ namespace CommonUI.Tutorial
             _subtractMaskingShape.softnessRange = new MinMax01(softMin, softMax);
         }
 
-        /// <summary>
-        /// ソフトマスクのパラメータのクランプ処理
-        /// </summary>
-        private static void ClampSoftnessParams(ref float paddingRatio, ref float gradientRatio)
-        {
-            paddingRatio  = Mathf.Max(paddingRatio, 0);
-            gradientRatio = Mathf.Max(gradientRatio, 0);
-            if (paddingRatio + gradientRatio <= 0f)
-            {
-                paddingRatio = FloatMinNormal;  // 合計値が0の場合はくり抜きが表示されないため最小値でクランプ
-            }
-        }
 
         /// <summary>
         /// Sliced Imageの「中央（完全透過部分）」が指定サイズになるようにRectTransformのサイズを計算する処理
