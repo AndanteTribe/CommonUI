@@ -27,7 +27,7 @@ namespace CommonUI.Tutorial.Views
             coachMarkPos.GetWorldCorners(_worldCorners);
 
             // ワールド座標に当てはめる。
-            _rectTransform.position = (_worldCorners[0] + _worldCorners[2]) / 2;
+            RectTransform.position = (_worldCorners[0] + _worldCorners[2]) / 2;
         }
 
         /// <summary>
@@ -46,7 +46,7 @@ namespace CommonUI.Tutorial.Views
 
             // 半径に合わせてアニメーションフレームの大きさを設定する。
             var scale = radius / AnimatedSize;
-            _rectTransform.localScale = new Vector3(scale, scale, 1);
+            RectTransform.localScale = new Vector3(scale, scale, 1);
         }
     }
 }

@@ -26,7 +26,7 @@ namespace CommonUI.Tutorial.Views
         /// <param name="coachMarkPos">コーチマークの座標</param>
         public override void SetPosition(RectTransform coachMarkPos)
         {
-            _rectTransform.position = coachMarkPos.position;
+            RectTransform.position = coachMarkPos.position;
         }
 
         /// <summary>
