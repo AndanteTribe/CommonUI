@@ -44,7 +44,6 @@ namespace CommonUI.Tutorial.Views
         {
             if (_currentStateIndex > 0)
             {
-                _currentStateIndex--;
                 await _allStates[_currentStateIndex].AnimateAsync(_allStates[--_currentStateIndex], _parts, cancellationToken);
             }
         }
@@ -55,8 +54,8 @@ namespace CommonUI.Tutorial.Views
         /// <param name="stateIndex">指定のステート.</param>
         public void SetState(int stateIndex)
         {
-            _allStates[_currentStateIndex].SetState(_parts);
             _currentStateIndex = stateIndex;
+            _allStates[_currentStateIndex].SetState(_parts);
         }
     }
 }
