@@ -9,6 +9,10 @@ namespace CommonUI.Tutorial.Models
     [System.Serializable]
     public class TextBoxModel
     {
+        public TextBoxModel()
+        {
+            _position = TextPositions.MiddleCenter;
+        }
         [SerializeField, Tooltip("大まかな位置")]
         private TextPositions _position;
         /// <summary>
