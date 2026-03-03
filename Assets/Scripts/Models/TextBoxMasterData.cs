@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -10,7 +11,7 @@ namespace CommonUI.Tutorial.Models
     public class TextBoxMasterData : ScriptableObject, ISerializationCallbackReceiver
     {
         [SerializeField, Tooltip("テキストボックスのモデル達")]
-        private TextBoxModel[] _models;
+        private TextBoxModel[] _models = Array.Empty<TextBoxModel>();
         /// <summary>
         /// テキストボックスのモデル達
         /// </summary>
@@ -27,17 +28,14 @@ namespace CommonUI.Tutorial.Models
         void ISerializationCallbackReceiver.OnAfterDeserialize()
         {
 #if UNITY_EDITOR
-            if (_models == null)
+            if (_models.Length > 0 && _models.Length > _previousCount)
             {
-                return;
+                for (var i = _previousCount; i < _models.Length; i++)
+                {
+                    _models[i] = new TextBoxModel();
+                }
             }
-
-            if (_models.Length > _previousCount)
-            {
-                _models[^1].ApplyDefaultPos();
-            }
-
-            _previousCount = _models.Length;
+            _previousCount = _models!.Length;
 #endif
         }
     }
