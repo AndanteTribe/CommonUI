@@ -11,54 +11,54 @@ namespace CommonUI.Tutorial.Models
         /// 左上
         /// </summary>
         [InspectorName("左上")]
-        TopLeft,
+        TopLeft = 1,
 
         /// <summary>
         /// 中央上
         /// </summary>
         [InspectorName("中央上")]
-        TopCenter,
+        TopCenter = 2,
 
         /// <summary>
         /// 右上
         /// </summary>
         [InspectorName("右上")]
-        TopRight,
+        TopRight = 3,
 
         /// <summary>
         /// 左中央
         /// </summary>
         [InspectorName("左中央")]
-        MiddleLeft,
+        MiddleLeft = 4,
 
         /// <summary>
         /// 中央
         /// </summary>
         [InspectorName("中央")]
-        MiddleCenter,
+        MiddleCenter = 0,
 
         /// <summary>
         /// 右中央
         /// </summary>
         [InspectorName("右中央")]
-        MiddleRight,
+        MiddleRight = 5,
 
         /// <summary>
         /// 左下
         /// </summary>
         [InspectorName("左下")]
-        BottomLeft,
+        BottomLeft = 6,
 
         /// <summary>
         /// 中心下
         /// </summary>
         [InspectorName("中央下")]
-        BottomCenter,
+        BottomCenter = 7,
 
         /// <summary>
         /// 右下
         /// </summary>
         [InspectorName("右下")]
-        BottomRight
+        BottomRight = 8
     }
 }
