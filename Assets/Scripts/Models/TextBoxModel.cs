@@ -36,5 +36,12 @@ namespace CommonUI.Tutorial.Models
         /// 表示するテキストモデルの一覧
         /// </summary>
         public IReadOnlyList<TextModel> Models => _models;
+
+#if UNITY_EDITOR
+        /// <summary>
+        /// inspector上で新しく追加されたmodelのpositionを上書きするためのメソッド.
+        /// </summary>
+        internal void ApplyDefaultPos() => _position = TextPositions.MiddleCenter;
+#endif
     }
 }
