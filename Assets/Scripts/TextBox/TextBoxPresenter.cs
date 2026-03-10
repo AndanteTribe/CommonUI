@@ -5,7 +5,6 @@ using TMPro;
 using CommonUI.Tutorial.Models;
 using CommonUI.Tutorial.Views;
 
-
 namespace CommonUI.Tutorial
 {
     /// <summary>
