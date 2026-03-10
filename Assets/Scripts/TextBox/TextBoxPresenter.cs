@@ -248,6 +248,9 @@ namespace CommonUI.Tutorial
                 throw new NullReferenceException("対象のオブジェクトが見つかりませんでした. 指定したオブジェクト名: " + model.TargetObjectName);
             }
 
+            // マスクの位置をキャッシュしておく
+            var anchoredPosition = _coachMaskView.MaskRectTransform.anchoredPosition;
+
             // 対象のゲームオブジェクトにRectTransformがある場合
             if (targetObject.transform is RectTransform targetRect)
             {
@@ -265,16 +268,23 @@ namespace CommonUI.Tutorial
                         case ShapeKinds.Rectangle:
                             var targetWidth = targetRect.rect.width + model.Radius;
                             var targetHeight = targetRect.rect.height + model.Radius;
-                            _maskCutout.SetRectangle(_coachMaskView.MaskRectTransform.anchoredPosition.x, _coachMaskView.MaskRectTransform.anchoredPosition.y,
-                                targetWidth, targetHeight,
-                                model.PaddingRadius, model.GradiateRadius);
+                            _maskCutout.SetRectangle(
+                                anchoredPosition.x,
+                                anchoredPosition.y,
+                                targetWidth,
+                                targetHeight,
+                                model.PaddingRadius,
+                                model.GradiateRadius);
                             SetAnimationFrame(ShapeKinds.Rectangle);
                             return;
 
                         case ShapeKinds.Circle:
-                            _maskCutout.SetCircle(_coachMaskView.MaskRectTransform.anchoredPosition.x, _coachMaskView.MaskRectTransform.anchoredPosition.y,
+                            _maskCutout.SetCircle(
+                                anchoredPosition.x,
+                                anchoredPosition.y,
                                 model.Radius,
-                                model.PaddingRadius, model.GradiateRadius);
+                                model.PaddingRadius,
+                                model.GradiateRadius);
                             SetAnimationFrame(ShapeKinds.Circle);
                             return;
                     }
@@ -318,9 +328,12 @@ namespace CommonUI.Tutorial
             // グラデ有りならば、グラデーション円形で対応する
             if (model.IsGradiate)
             {
-                _maskCutout.SetCircle(_coachMaskView.MaskRectTransform.anchoredPosition.x, _coachMaskView.MaskRectTransform.anchoredPosition.y,
+                _maskCutout.SetCircle(
+                    anchoredPosition.x,
+                    anchoredPosition.y,
                     model.Radius,
-                    model.PaddingRadius, model.GradiateRadius);
+                    model.PaddingRadius,
+                    model.GradiateRadius);
             }
             else
             {
