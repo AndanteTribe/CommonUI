@@ -17,6 +17,18 @@ namespace CommonUI.Tutorial.Models
         /// 円形
         /// </summary>
         [InspectorName("円形")]
-        Circle
+        Circle,
+
+        /// <summary>
+        /// グラデーションありの矩形
+        /// </summary>
+        [InspectorName("グラデーション長方形")]
+        GradiateRectangle,
+
+        /// <summary>
+        /// グラデーションありの円形
+        /// </summary>
+        [InspectorName("グラデーション円形")]
+        GradiateCircle
     }
 }

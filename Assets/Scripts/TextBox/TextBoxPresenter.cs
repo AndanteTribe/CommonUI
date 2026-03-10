@@ -5,6 +5,7 @@ using TMPro;
 using CommonUI.Tutorial.Models;
 using CommonUI.Tutorial.Views;
 
+
 namespace CommonUI.Tutorial
 {
     /// <summary>
@@ -30,6 +31,9 @@ namespace CommonUI.Tutorial
 
         [SerializeField, Tooltip("円のアニメーションフレーム")]
         private CircleFrame _circleFrame;
+
+        [SerializeField, Tooltip("マスクカットアウト")]
+        private MaskCutout _maskCutout;
 
         /// <summary>
         /// 現在のtextModelモデルの番号
@@ -254,6 +258,27 @@ namespace CommonUI.Tutorial
 
                 _coachMaskView.MaskRectTransform.position = targetPosition;
 
+                // グラデーションの場合、処理をして終了
+                switch (model.Shape)
+                {
+                    case ShapeKinds.GradiateRectangle:
+                        var targetWidth = targetRect.sizeDelta.x + model.Radius;
+                        var targetHeight = targetRect.sizeDelta.y + model.Radius;
+                        _maskCutout.SetRectangle(_coachMaskView.MaskRectTransform.anchoredPosition.x, _coachMaskView.MaskRectTransform.anchoredPosition.y,
+                            targetWidth, targetHeight,
+                            model.PaddingRadius, model.GradiateRadius);
+                        SetAnimationFrame(ShapeKinds.Rectangle);
+                        return;
+
+                    case ShapeKinds.GradiateCircle:
+                        _maskCutout.SetCircle(_coachMaskView.MaskRectTransform.anchoredPosition.x, _coachMaskView.MaskRectTransform.anchoredPosition.y,
+                            model.Radius,
+                            model.PaddingRadius, model.GradiateRadius);
+                        SetAnimationFrame(ShapeKinds.Circle);
+                        return;
+                }
+
+                // 通常コーチマークの処理
                 // コーチマークの形をモデルに合わせて変更する
                 _coachMaskView.SetSprite(model.Shape);
 
@@ -288,9 +313,20 @@ namespace CommonUI.Tutorial
             _coachMaskView.MaskRectTransform.position = screenPosition;
 
             // RectTransformがない場合、モデルに関係なく円形で対応する
-            _coachMaskView.SetSprite(ShapeKinds.Circle);
-            _coachMaskView.MaskRectTransform.SetSizeWithCurrentAnchors(RectTransform.Axis.Horizontal, model.Radius);
-            _coachMaskView.MaskRectTransform.SetSizeWithCurrentAnchors(RectTransform.Axis.Vertical, model.Radius);
+            // グラデーション円形の設定があるならばそれに対応する。そうでないならば全て円形で対応する。
+            if (model.Shape == ShapeKinds.GradiateCircle)
+            {
+                _maskCutout.SetCircle(_coachMaskView.MaskRectTransform.anchoredPosition.x, _coachMaskView.MaskRectTransform.anchoredPosition.y,
+                    model.Radius,
+                    model.PaddingRadius, model.GradiateRadius);
+            }
+            else
+            {
+                // 円形で対応する。
+                _coachMaskView.SetSprite(ShapeKinds.Circle);
+                _coachMaskView.MaskRectTransform.SetSizeWithCurrentAnchors(RectTransform.Axis.Horizontal, model.Radius);
+                _coachMaskView.MaskRectTransform.SetSizeWithCurrentAnchors(RectTransform.Axis.Vertical, model.Radius);
+            }
 
             // アニメーションフレームを設定する
             SetAnimationFrame(ShapeKinds.Circle);
