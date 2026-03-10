@@ -22,14 +22,14 @@ namespace CommonUI.Tutorial.Models
         /// </summary>
         public float Radius => _radius;
 
-        [Range(0f,1f), SerializeField, Tooltip("コーチマークの大きさに加えてどれくらい余白を取るかの割合(グラデ以外使用時無効)")]
+        [SerializeField, Tooltip("コーチマークの大きさに加えてどれくらい余白を取るかの割合(グラデ以外使用時無効)"), Range(0f,1f)]
         private float _paddingRadius;
         /// <summary>
         /// 余白の割合
         /// </summary>
         public float PaddingRadius => _paddingRadius;
 
-        [Range(0f,1f), SerializeField, Tooltip("グラデーションの割合(グラデ以外使用時無効)")]
+        [SerializeField, Tooltip("グラデーションの割合(グラデ以外使用時無効)"), Range(0f,1f)]
         private float _gradiateRadius;
         /// <summary>
         /// グラデーション用の半径
