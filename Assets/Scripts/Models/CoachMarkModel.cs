@@ -15,6 +15,13 @@ namespace CommonUI.Tutorial.Models
         /// </summary>
         public ShapeKinds Shape => _shape;
 
+        [SerializeField, Tooltip("グラデーションにするかどうか")]
+        private bool _isGradiate;
+        /// <summary>
+        /// グラデーションにするかどうか
+        /// </summary>
+        public bool IsGradiate => _isGradiate;
+
         [SerializeField, Tooltip("コーチマークの半径")]
         private float _radius;
         /// <summary>
