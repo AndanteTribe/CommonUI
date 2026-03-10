@@ -17,6 +17,6 @@ namespace CommonUI.Tutorial.Models
         /// 円形
         /// </summary>
         [InspectorName("円形")]
-        Circle,
+        Circle
     }
 }
