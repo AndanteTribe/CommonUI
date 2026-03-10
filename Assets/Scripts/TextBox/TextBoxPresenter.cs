@@ -263,8 +263,8 @@ namespace CommonUI.Tutorial
                     switch (model.Shape)
                     {
                         case ShapeKinds.Rectangle:
-                            var targetWidth = targetRect.sizeDelta.x + model.Radius;
-                            var targetHeight = targetRect.sizeDelta.y + model.Radius;
+                            var targetWidth = targetRect.rect.width + model.Radius;
+                            var targetHeight = targetRect.rect.height + model.Radius;
                             _maskCutout.SetRectangle(_coachMaskView.MaskRectTransform.anchoredPosition.x, _coachMaskView.MaskRectTransform.anchoredPosition.y,
                                 targetWidth, targetHeight,
                                 model.PaddingRadius, model.GradiateRadius);
@@ -289,8 +289,8 @@ namespace CommonUI.Tutorial
                 {
                     // 矩形の場合はその形のサイズに合わせる。対象のサイズにモデルの半径を加えたサイズを計算。
                     case ShapeKinds.Rectangle:
-                        var targetWidth = targetRect.sizeDelta.x + model.Radius;
-                        var targetHeight = targetRect.sizeDelta.y + model.Radius;
+                        var targetWidth = targetRect.rect.width + model.Radius;
+                        var targetHeight = targetRect.rect.height + model.Radius;
                         _coachMaskView.MaskRectTransform.SetSizeWithCurrentAnchors(RectTransform.Axis.Horizontal, targetWidth);
                         _coachMaskView.MaskRectTransform.SetSizeWithCurrentAnchors(RectTransform.Axis.Vertical, targetHeight);
 
