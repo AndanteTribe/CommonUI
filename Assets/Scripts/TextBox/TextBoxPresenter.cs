@@ -31,6 +31,9 @@ namespace CommonUI.Tutorial
         [SerializeField, Tooltip("円のアニメーションフレーム")]
         private CircleFrame _circleFrame;
 
+        [SerializeField, Tooltip("マスクカットアウト")]
+        private MaskCutout _maskCutout;
+
         /// <summary>
         /// 現在のtextModelモデルの番号
         /// </summary>
@@ -245,6 +248,9 @@ namespace CommonUI.Tutorial
                 throw new NullReferenceException("対象のオブジェクトが見つかりませんでした. 指定したオブジェクト名: " + model.TargetObjectName);
             }
 
+            // マスクの位置をキャッシュしておく
+            var anchoredPosition = _coachMaskView.MaskRectTransform.anchoredPosition;
+
             // 対象のゲームオブジェクトにRectTransformがある場合
             if (targetObject.transform is RectTransform targetRect)
             {
@@ -254,6 +260,37 @@ namespace CommonUI.Tutorial
 
                 _coachMaskView.MaskRectTransform.position = targetPosition;
 
+                // グラデーションの場合、処理をして終了
+                if (model.IsGradiate)
+                {
+                    switch (model.Shape)
+                    {
+                        case ShapeKinds.Rectangle:
+                            var targetWidth = targetRect.rect.width + model.Radius;
+                            var targetHeight = targetRect.rect.height + model.Radius;
+                            _maskCutout.SetRectangle(
+                                anchoredPosition.x,
+                                anchoredPosition.y,
+                                targetWidth,
+                                targetHeight,
+                                model.PaddingRadius,
+                                model.GradiateRadius);
+                            SetAnimationFrame(ShapeKinds.Rectangle);
+                            return;
+
+                        case ShapeKinds.Circle:
+                            _maskCutout.SetCircle(
+                                anchoredPosition.x,
+                                anchoredPosition.y,
+                                model.Radius,
+                                model.PaddingRadius,
+                                model.GradiateRadius);
+                            SetAnimationFrame(ShapeKinds.Circle);
+                            return;
+                    }
+                }
+
+                // 通常コーチマークの処理
                 // コーチマークの形をモデルに合わせて変更する
                 _coachMaskView.SetSprite(model.Shape);
 
@@ -262,8 +299,8 @@ namespace CommonUI.Tutorial
                 {
                     // 矩形の場合はその形のサイズに合わせる。対象のサイズにモデルの半径を加えたサイズを計算。
                     case ShapeKinds.Rectangle:
-                        var targetWidth = targetRect.sizeDelta.x + model.Radius;
-                        var targetHeight = targetRect.sizeDelta.y + model.Radius;
+                        var targetWidth = targetRect.rect.width + model.Radius;
+                        var targetHeight = targetRect.rect.height + model.Radius;
                         _coachMaskView.MaskRectTransform.SetSizeWithCurrentAnchors(RectTransform.Axis.Horizontal, targetWidth);
                         _coachMaskView.MaskRectTransform.SetSizeWithCurrentAnchors(RectTransform.Axis.Vertical, targetHeight);
 
@@ -288,9 +325,23 @@ namespace CommonUI.Tutorial
             _coachMaskView.MaskRectTransform.position = screenPosition;
 
             // RectTransformがない場合、モデルに関係なく円形で対応する
-            _coachMaskView.SetSprite(ShapeKinds.Circle);
-            _coachMaskView.MaskRectTransform.SetSizeWithCurrentAnchors(RectTransform.Axis.Horizontal, model.Radius);
-            _coachMaskView.MaskRectTransform.SetSizeWithCurrentAnchors(RectTransform.Axis.Vertical, model.Radius);
+            // グラデ有りならば、グラデーション円形で対応する
+            if (model.IsGradiate)
+            {
+                _maskCutout.SetCircle(
+                    anchoredPosition.x,
+                    anchoredPosition.y,
+                    model.Radius,
+                    model.PaddingRadius,
+                    model.GradiateRadius);
+            }
+            else
+            {
+                // 円形で対応する。
+                _coachMaskView.SetSprite(ShapeKinds.Circle);
+                _coachMaskView.MaskRectTransform.SetSizeWithCurrentAnchors(RectTransform.Axis.Horizontal, model.Radius);
+                _coachMaskView.MaskRectTransform.SetSizeWithCurrentAnchors(RectTransform.Axis.Vertical, model.Radius);
+            }
 
             // アニメーションフレームを設定する
             SetAnimationFrame(ShapeKinds.Circle);
