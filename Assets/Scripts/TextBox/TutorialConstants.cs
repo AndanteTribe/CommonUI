@@ -51,5 +51,13 @@ namespace CommonUI.Tutorial
             /// </summary>
             public static readonly Vector2 BottomRightVector = new Vector2(1, 0);
         }
+
+        public sealed class FingerRotations
+        {
+            public static readonly Quaternion UpperQuaternion = Quaternion.Euler(0, 0, 0);
+            public static readonly Quaternion BottomQuaternion = Quaternion.Euler(0, 0, 180);
+            public static readonly Quaternion LeftQuaternion = Quaternion.Euler(0, 0, 90);
+            public static readonly Quaternion RightQuaternion = Quaternion.Euler(0, 0, 270);
+        }
     }
 }
