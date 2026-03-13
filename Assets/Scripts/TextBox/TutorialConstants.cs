@@ -54,9 +54,24 @@ namespace CommonUI.Tutorial
 
         public sealed class FingerRotations
         {
+            /// <summary>
+            /// 上向きにするためのクォータニオン
+            /// </summary>
             public static readonly Quaternion UpperQuaternion = Quaternion.Euler(0, 0, 0);
+
+            /// <summary>
+            /// 下向きにするためのクォータニオン
+            /// </summary>
             public static readonly Quaternion BottomQuaternion = Quaternion.Euler(0, 0, 180);
+
+            /// <summary>
+            /// 左向きにするためのクォータニオン
+            /// </summary>
             public static readonly Quaternion LeftQuaternion = Quaternion.Euler(0, 0, 90);
+
+            /// <summary>
+            /// 右向きにするためのクォータニオン
+            /// </summary>
             public static readonly Quaternion RightQuaternion = Quaternion.Euler(0, 0, 270);
         }
     }

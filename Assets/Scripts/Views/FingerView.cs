@@ -8,7 +8,52 @@ namespace CommonUI.Tutorial.Views
         [SerializeField, Tooltip("指の位置")]
         private RectTransform _rectTransform;
 
-        public void SetDirection(FingerKinds kind)
+        /// <summary>
+        /// 指アイコンをコーチマークからどれくらい離すかのオフセット値
+        /// </summary>
+        private const float FingerOffset = 100f;
+
+        public void SetIcon(RectTransform maskRectTransform, FingerKinds kind)
+        {
+            SetPosition(maskRectTransform, kind);
+
+            SetDirection(kind);
+        }
+
+        void SetPosition(RectTransform maskRectTransform, FingerKinds kind)
+        {
+            // コーチマークの中心を取得
+            var resultPosition = maskRectTransform.anchoredPosition;
+
+            // コーチマークの大きさを取得
+            var width = maskRectTransform.rect.width;
+            var height = maskRectTransform.rect.height;
+
+            switch (kind)
+            {
+                case FingerKinds.Top:
+                    // コーチマークの中心から下に上向きの指アイコンを配置
+                    resultPosition.Set(resultPosition.x, resultPosition.y - (height / 2) - FingerOffset);
+                    break;
+                case FingerKinds.Bottom:
+                    // コーチマークの中心から上に下向きの指アイコンを配置
+                    resultPosition.Set(resultPosition.x, resultPosition.y + (height / 2) + FingerOffset);
+                    break;
+                case FingerKinds.Left:
+                    // コーチマークの中心から右に左向きの指アイコンを配置
+                    resultPosition.Set(resultPosition.x + (width / 2) + FingerOffset, resultPosition.y);
+                    break;
+                case FingerKinds.Right:
+                    // コーチマークの中心から左に右向きの指アイコンを配置
+                    resultPosition.Set(resultPosition.x - (width / 2) - FingerOffset, resultPosition.y);
+                    break;
+            }
+
+            // 計算結果に指アイコンを配置
+            _rectTransform.anchoredPosition = resultPosition;
+        }
+
+        void SetDirection(FingerKinds kind)
         {
             switch (kind)
             {

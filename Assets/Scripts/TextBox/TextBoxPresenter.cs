@@ -34,6 +34,9 @@ namespace CommonUI.Tutorial
         [SerializeField, Tooltip("マスクカットアウト")]
         private MaskCutout _maskCutout;
 
+        [SerializeField, Tooltip("指アイコン")]
+        private FingerView _fingerView;
+
         /// <summary>
         /// 現在のtextModelモデルの番号
         /// </summary>
@@ -95,6 +98,7 @@ namespace CommonUI.Tutorial
                         _pageIndex++;
                         ResetToken();
                         SetCoachMark(_textData.Models[_modelIndex].Models[_pageIndex].CoachMark);
+                        SetFingerIcon(_textData.Models[_modelIndex].Models[_pageIndex]);
                         _ = ShowPage(_pageIndex);
 
                         _pageDotPresenter.Next();
@@ -116,6 +120,8 @@ namespace CommonUI.Tutorial
                 }
                 _pageIndex--;
                 SetCoachMark(_textData.Models[_modelIndex].Models[_pageIndex].CoachMark);
+                SetFingerIcon(_textData.Models[_modelIndex].Models[_pageIndex]);
+
                 _ = ShowPage(_pageIndex);
                 _pageDotPresenter.Prev();
             }
@@ -135,6 +141,7 @@ namespace CommonUI.Tutorial
             SetBasePosition(modelData.Position);
             SetCoachMark(modelData.Models[0].CoachMark);
             AdjustPosition(modelData);
+            SetFingerIcon(_textData.Models[0].Models[0]);
 
             _pageIndex = 0;
 
@@ -412,6 +419,19 @@ namespace CommonUI.Tutorial
 
             // 差分と指定したズレの分ズラす。
             _textBoxRectTransform.position += offset + new Vector3((float)model.RadiusHorizontalOffset, (float)model.RadiusVerticalOffset, 0);
+        }
+
+        private void SetFingerIcon(TextModel model)
+        {
+            if (model.IsFingerIconEnabled)
+            {
+                _fingerView.gameObject.SetActive(true);
+                _fingerView.SetIcon(_coachMaskView.MaskRectTransform, model.FingerIconDirection);
+            }
+            else
+            {
+                _fingerView.gameObject.SetActive(false);
+            }
         }
 
         private void OnDestroy()
