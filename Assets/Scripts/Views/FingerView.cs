@@ -11,10 +11,8 @@ namespace CommonUI.Tutorial.Views
         [SerializeField, Tooltip("指の位置")]
         private RectTransform _rectTransform;
 
-        /// <summary>
-        /// 指アイコンをコーチマークからどれくらい離すかのオフセット値
-        /// </summary>
-        private const float FingerOffset = 100f;
+        [SerializeField, Tooltip("指アイコンをコーチマークからどれくらい離すかのオフセット値")]
+        private float _fingerOffset = 100f;
 
         /// <summary>
         /// 指アイコンを設定する
@@ -46,19 +44,19 @@ namespace CommonUI.Tutorial.Views
             {
                 case FingerKinds.Top:
                     // コーチマークの中心から下に上向きの指アイコンを配置
-                    resultPosition.Set(resultPosition.x, resultPosition.y - (height / 2) - FingerOffset);
+                    resultPosition += new Vector2(0, -(height / 2) - _fingerOffset);
                     break;
                 case FingerKinds.Bottom:
                     // コーチマークの中心から上に下向きの指アイコンを配置
-                    resultPosition.Set(resultPosition.x, resultPosition.y + (height / 2) + FingerOffset);
+                    resultPosition += new Vector2(0, (height / 2) + _fingerOffset);
                     break;
                 case FingerKinds.Left:
                     // コーチマークの中心から右に左向きの指アイコンを配置
-                    resultPosition.Set(resultPosition.x + (width / 2) + FingerOffset, resultPosition.y);
+                    resultPosition += new Vector2((width / 2) + _fingerOffset, 0);
                     break;
                 case FingerKinds.Right:
                     // コーチマークの中心から左に右向きの指アイコンを配置
-                    resultPosition.Set(resultPosition.x - (width / 2) - FingerOffset, resultPosition.y);
+                    resultPosition += new Vector2(-(width / 2) - _fingerOffset, 0);
                     break;
             }
 
