@@ -3,6 +3,9 @@ using UnityEngine;
 
 namespace CommonUI.Tutorial.Views
 {
+    /// <summary>
+    /// 指アイコンの見た目に関するクラス
+    /// </summary>
     public class FingerView : MonoBehaviour
     {
         [SerializeField, Tooltip("指の位置")]
@@ -13,6 +16,11 @@ namespace CommonUI.Tutorial.Views
         /// </summary>
         private const float FingerOffset = 100f;
 
+        /// <summary>
+        /// 指アイコンを設定する
+        /// </summary>
+        /// <param name="maskRectTransform">コーチマークのRectTransform</param>
+        /// <param name="kind">指アイコンの向き</param>
         public void SetIcon(RectTransform maskRectTransform, FingerKinds kind)
         {
             SetPosition(maskRectTransform, kind);
@@ -20,6 +28,11 @@ namespace CommonUI.Tutorial.Views
             SetDirection(kind);
         }
 
+        /// <summary>
+        /// 指アイコンの位置を設定する
+        /// </summary>
+        /// <param name="maskRectTransform">コーチマークのRectTransform</param>
+        /// <param name="kind">指アイコンの向き</param>
         void SetPosition(RectTransform maskRectTransform, FingerKinds kind)
         {
             // コーチマークの中心を取得
@@ -53,6 +66,10 @@ namespace CommonUI.Tutorial.Views
             _rectTransform.anchoredPosition = resultPosition;
         }
 
+        /// <summary>
+        /// 指アイコンの向きを設定する
+        /// </summary>
+        /// <param name="kind">指アイコンの向き</param>
         void SetDirection(FingerKinds kind)
         {
             switch (kind)

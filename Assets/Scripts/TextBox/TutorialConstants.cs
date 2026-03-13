@@ -52,6 +52,9 @@ namespace CommonUI.Tutorial
             public static readonly Vector2 BottomRightVector = new Vector2(1, 0);
         }
 
+        /// <summary>
+        /// 指アイコンの回転を設定するためのクラス
+        /// </summary>
         public sealed class FingerRotations
         {
             /// <summary>

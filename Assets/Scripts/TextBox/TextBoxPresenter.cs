@@ -421,6 +421,10 @@ namespace CommonUI.Tutorial
             _textBoxRectTransform.position += offset + new Vector3((float)model.RadiusHorizontalOffset, (float)model.RadiusVerticalOffset, 0);
         }
 
+        /// <summary>
+        /// 指アイコンを設定する
+        /// </summary>
+        /// <param name="model">あるページのモデル</param>
         private void SetFingerIcon(TextModel model)
         {
             if (model.IsFingerIconEnabled)
