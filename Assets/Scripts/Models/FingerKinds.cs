@@ -2,7 +2,10 @@ using UnityEngine;
 
 namespace CommonUI.Tutorial.Models
 {
-    public enum FingerKinds 
+    /// <summary>
+    /// 指の向きを設定する列挙型
+    /// </summary>
+    public enum FingerKinds
     {
         /// <summary>
         /// 指を上向きにする

@@ -136,14 +136,14 @@ namespace CommonUI.Tutorial
             var modelData = _textData.Models[modelIndex];
             _totalPages = modelData.Models.Count;
 
+            _pageIndex = 0;
+
             _pageDotPresenter.Initialize(_totalPages);
 
             SetBasePosition(modelData.Position);
-            SetCoachMark(modelData.Models[0].CoachMark);
+            SetCoachMark(modelData.Models[_pageIndex].CoachMark);
             AdjustPosition(modelData);
-            SetFingerIcon(_textData.Models[0].Models[0]);
-
-            _pageIndex = 0;
+            SetFingerIcon(modelData.Models[_pageIndex]);
 
             _ = ShowPage(_pageIndex);
         }
