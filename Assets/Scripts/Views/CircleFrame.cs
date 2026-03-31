@@ -4,6 +4,13 @@ namespace CommonUI.Tutorial.Views
 {
     public class CircleFrame : Frame
     {
+
+        [SerializeField, Tooltip("ずっと表示されるフレームの座標")]
+        private RectTransform _baseTransform;
+
+        [SerializeField, Tooltip("アニメーションのあるフレームの座標")]
+        private RectTransform _animatedRectTransform;
+
         /// <summary>
         /// アニメーションフレームの大きさの初期値
         /// </summary>
@@ -20,9 +27,6 @@ namespace CommonUI.Tutorial.Views
         /// <param name="coachMarkPos">コーチマークの座標</param>
         public override void SetPosition(RectTransform coachMarkPos)
         {
-            // ParticleEffectで行っているため、コーチマークの座標を取得した後、
-            // OverlayCanvasに置かれているエフェクトを調節する。
-
             // コーチマークのワールド座標を取得する。
             coachMarkPos.GetWorldCorners(_worldCorners);
 
@@ -37,16 +41,20 @@ namespace CommonUI.Tutorial.Views
         public override void SetSize(RectTransform coachMarkPos)
         {
             // フレームの大きさを設定する。
-            // 円形の場合、ParticleEffectで作成されているので、コーチマークの大きさに合わせてscaleを変更する。
             var width = coachMarkPos.rect.width;
             var height = coachMarkPos.rect.height;
 
             // デカイ方を半径とする。
             var radius = Mathf.Max(width, height);
 
-            // 半径に合わせてアニメーションフレームの大きさを設定する。
+            // ベースフレームの大きさを設定する。
+            _baseTransform.SetSizeWithCurrentAnchors(RectTransform.Axis.Horizontal, radius);
+            _baseTransform.SetSizeWithCurrentAnchors(RectTransform.Axis.Vertical, radius);
+
+            // アニメーションフレームの大きさを設定する。
+            // アニメーション内でsizeDeltaは使用されているため、scaleを変更することで大きさを合わせる。
             var scale = radius / AnimatedSize;
-            RectTransform.localScale = new Vector3(scale, scale, 1);
+            _animatedRectTransform.localScale = new Vector3(scale, scale, 1);
         }
     }
 }
