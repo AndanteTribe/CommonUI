@@ -1,14 +1,11 @@
-using UnityEngine;
+﻿using UnityEngine;
 
 namespace CommonUI.Tutorial.Views
 {
-    public class CircleFrame : Frame
+    public class RingEffect : MonoBehaviour
     {
-        [SerializeField, Tooltip("ずっと表示されるフレームの座標")]
-        private RectTransform _baseTransform;
-
-        [SerializeField, Tooltip("アニメーションのあるフレームの座標")]
-        private RectTransform _animatedRectTransform;
+        [SerializeField, Tooltip("エフェクトの中心座標を取得するためのRectTransform")]
+        private RectTransform _baseRectTransform;
 
         /// <summary>
         /// アニメーションフレームの大きさの初期値
@@ -24,36 +21,35 @@ namespace CommonUI.Tutorial.Views
         /// コーチマークの座標に合わせる。
         /// </summary>
         /// <param name="coachMarkPos">コーチマークの座標</param>
-        public override void SetPosition(RectTransform coachMarkPos)
+        public void SetPosition(RectTransform coachMarkPos)
         {
+            // ParticleEffectで行っているため、コーチマークの座標を取得した後、
+            // OverlayCanvasに置かれているエフェクトを調節する。
+
             // コーチマークのワールド座標を取得する。
             coachMarkPos.GetWorldCorners(_worldCorners);
 
             // ワールド座標に当てはめる。
-            RectTransform.position = (_worldCorners[0] + _worldCorners[2]) / 2;
+            _baseRectTransform.position = (_worldCorners[0] + _worldCorners[2]) / 2;
         }
 
         /// <summary>
         /// コーチマークのサイズに合わせる。
         /// </summary>
         /// <param name="coachMarkPos">コーチマークの座標</param>
-        public override void SetSize(RectTransform coachMarkPos)
+        public void SetSize(RectTransform coachMarkPos)
         {
             // フレームの大きさを設定する。
+            // 円形の場合、ParticleEffectで作成されているので、コーチマークの大きさに合わせてscaleを変更する。
             var width = coachMarkPos.rect.width;
             var height = coachMarkPos.rect.height;
 
             // デカイ方を半径とする。
             var radius = Mathf.Max(width, height);
 
-            // ベースフレームの大きさを設定する。
-            _baseTransform.SetSizeWithCurrentAnchors(RectTransform.Axis.Horizontal, radius);
-            _baseTransform.SetSizeWithCurrentAnchors(RectTransform.Axis.Vertical, radius);
-
-            // アニメーションフレームの大きさを設定する。
-            // アニメーション内でsizeDeltaは使用されているため、scaleを変更することで大きさを合わせる。
+            // 半径に合わせてアニメーションフレームの大きさを設定する。
             var scale = radius / AnimatedSize;
-            _animatedRectTransform.localScale = new Vector3(scale, scale, 1);
+            _baseRectTransform.localScale = new Vector3(scale, scale, 1);
         }
     }
 }

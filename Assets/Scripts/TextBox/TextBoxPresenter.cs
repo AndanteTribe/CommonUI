@@ -37,6 +37,9 @@ namespace CommonUI.Tutorial
         [SerializeField, Tooltip("指アイコン")]
         private FingerView _fingerView;
 
+        [SerializeField, Tooltip("円環状エフェクト")]
+        private RingEffect _ringEffect;
+
         /// <summary>
         /// 現在のtextModelモデルの番号
         /// </summary>
@@ -99,6 +102,7 @@ namespace CommonUI.Tutorial
                         ResetToken();
                         SetCoachMark(_textData.Models[_modelIndex].Models[_pageIndex].CoachMark);
                         SetFingerIcon(_textData.Models[_modelIndex].Models[_pageIndex]);
+                        SetRingEffect(_textData.Models[_modelIndex].Models[_pageIndex]);
                         _ = ShowPage(_pageIndex);
 
                         _pageDotPresenter.Next();
@@ -121,6 +125,7 @@ namespace CommonUI.Tutorial
                 _pageIndex--;
                 SetCoachMark(_textData.Models[_modelIndex].Models[_pageIndex].CoachMark);
                 SetFingerIcon(_textData.Models[_modelIndex].Models[_pageIndex]);
+                SetRingEffect(_textData.Models[_modelIndex].Models[_pageIndex]);
 
                 _ = ShowPage(_pageIndex);
                 _pageDotPresenter.Prev();
@@ -144,6 +149,7 @@ namespace CommonUI.Tutorial
             SetCoachMark(modelData.Models[_pageIndex].CoachMark);
             AdjustPosition(modelData);
             SetFingerIcon(modelData.Models[_pageIndex]);
+            SetRingEffect(modelData.Models[_pageIndex]);
 
             _ = ShowPage(_pageIndex);
         }
@@ -435,6 +441,23 @@ namespace CommonUI.Tutorial
             else
             {
                 _fingerView.gameObject.SetActive(false);
+            }
+        }
+
+        /// <summary>
+        /// エフェクトを配置する
+        /// </summary>
+        private void SetRingEffect(TextModel model)
+        {
+            if (model.IsEffectEnabled)
+            {
+                _ringEffect.gameObject.SetActive(true);
+                _ringEffect.SetPosition(_coachMaskView.MaskRectTransform);
+                _ringEffect.SetSize(_coachMaskView.MaskRectTransform);
+            }
+            else
+            {
+                _ringEffect.gameObject.SetActive(false);
             }
         }
 
