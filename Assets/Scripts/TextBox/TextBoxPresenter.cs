@@ -449,6 +449,11 @@ namespace CommonUI.Tutorial
         /// </summary>
         private void SetRingEffect(TextModel model)
         {
+            if(_ringEffect == null)
+            {
+                throw new NullReferenceException("円環状エフェクトが設定されていません。");
+            }
+
             if (model.IsEffectEnabled)
             {
                 _ringEffect.gameObject.SetActive(true);
