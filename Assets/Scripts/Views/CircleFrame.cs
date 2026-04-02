@@ -1,4 +1,7 @@
+using LitMotion;
+using LitMotion.Extensions;
 using UnityEngine;
+using UnityEngine.UI;
 
 namespace CommonUI.Tutorial.Views
 {
@@ -10,15 +13,38 @@ namespace CommonUI.Tutorial.Views
         [SerializeField, Tooltip("アニメーションのあるフレームの座標")]
         private RectTransform _animatedRectTransform;
 
+        [SerializeField, Tooltip("フレームのイメージ")]
+        private Image _animatedImage;
+
         /// <summary>
-        /// アニメーションフレームの大きさの初期値
+        /// モーションに使用する時間
         /// </summary>
-        private const float AnimatedSize = 100;
+        private const float AnimatedTime = 1f;
+
+        /// <summary>
+        /// アニメーションフレームの大きさをどれくらい大きくするかの倍率
+        /// </summary>
+        private const float AnimatedMultiplier = 1.3f;
+
+        /// <summary>
+        /// 半径を設定するフィールド
+        /// </summary>
+        private float _radius;
 
         /// <summary>
         /// UIの位置を取得しておくフィールド
         /// </summary>
         private readonly Vector3[] _worldCorners = new Vector3[4];
+
+        /// <summary>
+        /// 動きのあるフレームのモーションハンドル
+        /// </summary>
+        private MotionHandle _animatedMotionHandle;
+
+        /// <summary>
+        /// 透過アニメーションのモーションハンドル
+        /// </summary>
+        private MotionHandle _animatedAlphaMotionHandle;
 
         /// <summary>
         /// コーチマークの座標に合わせる。
@@ -44,16 +70,36 @@ namespace CommonUI.Tutorial.Views
             var height = coachMarkPos.rect.height;
 
             // デカイ方を半径とする。
-            var radius = Mathf.Max(width, height);
+            _radius = Mathf.Max(width, height);
 
             // ベースフレームの大きさを設定する。
-            _baseTransform.SetSizeWithCurrentAnchors(RectTransform.Axis.Horizontal, radius);
-            _baseTransform.SetSizeWithCurrentAnchors(RectTransform.Axis.Vertical, radius);
+            _baseTransform.SetSizeWithCurrentAnchors(RectTransform.Axis.Horizontal, _radius);
+            _baseTransform.SetSizeWithCurrentAnchors(RectTransform.Axis.Vertical, _radius);
 
+            // 以下、透過アニメーションを持つフレームについて扱う
+            // モーション再生中ならばキャンセルし、新たなモーションを作成する。
+            if (_animatedMotionHandle != null && _animatedMotionHandle.IsActive())
+            {
+                _animatedMotionHandle.Cancel();
+            }
+
+            // モーションを作成する
             // アニメーションフレームの大きさを設定する。
-            // アニメーション内でsizeDeltaは使用されているため、scaleを変更することで大きさを合わせる。
-            var scale = radius / AnimatedSize;
-            _animatedRectTransform.localScale = new Vector3(scale, scale, 1);
+            var radiusSize = Vector2.one * _radius;
+            _animatedMotionHandle = LMotion.Create(radiusSize, radiusSize * AnimatedMultiplier, AnimatedTime)
+                .WithEase(Ease.OutQuad)
+                .WithLoops(-1, LoopType.Restart)
+                .BindToSizeDelta(_animatedRectTransform);
+
+            // 透過アニメーションも同様に実装する
+            if(_animatedAlphaMotionHandle != null && _animatedAlphaMotionHandle.IsActive())
+            {
+                _animatedAlphaMotionHandle.Cancel();
+            }
+            _animatedAlphaMotionHandle = LMotion.Create(1f, 0f, AnimatedTime)
+                .WithEase(Ease.OutQuad)
+                .WithLoops(-1, LoopType.Restart)
+                .BindToColorA(_animatedImage);
         }
     }
 }

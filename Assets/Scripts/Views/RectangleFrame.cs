@@ -1,4 +1,7 @@
 using UnityEngine;
+using LitMotion;
+using LitMotion.Extensions;
+using UnityEngine.UI;
 
 namespace CommonUI.Tutorial.Views
 {
@@ -10,15 +13,33 @@ namespace CommonUI.Tutorial.Views
         [SerializeField, Tooltip("アニメーションのあるフレームの座標")]
         private RectTransform _animatedRectTransform;
 
-        /// <summary>
-        /// アニメーションフレームの大きさの初期値(横)
-        /// </summary>
-        private const float AnimatedWidth = 300;
+        [SerializeField, Tooltip("アニメーションフレームのImageコンポーネント")]
+        private Image _animatedImage;
 
         /// <summary>
-        /// アニメーションフレームの大きさの初期値(縦)
+        /// モーションに使用する時間
         /// </summary>
-        private const float AnimatedHeight = 100;
+        private const float AnimatedTime = 1f;
+
+        /// <summary>
+        /// アニメーションフレームの大きさをどれくらい大きくするかの倍率
+        /// </summary>
+        private const float AnimatedMultiplier = 1.3f;
+
+        /// <summary>
+        /// 動きのあるフレームのモーションハンドル(width)
+        /// </summary>
+        private MotionHandle _animatedWidthMotionHandle;
+
+        /// <summary>
+        /// 動きのあるフレームのモーションハンドル(height)
+        /// </summary>
+        private MotionHandle _animatedHeightMotionHandle;
+
+        /// <summary>
+        /// 透過アニメーションのモーションハンドル
+        /// </summary>
+        private MotionHandle _animatedAlphaMotionHandle;
 
         /// <summary>
         /// コーチマークの座標に合わせる。
@@ -44,10 +65,40 @@ namespace CommonUI.Tutorial.Views
             _baseTransform.SetSizeWithCurrentAnchors(RectTransform.Axis.Vertical, height);
 
             // アニメーションフレームの大きさを設定する。
-            // アニメーション内でsizeDeltaは使用されているため、scaleを変更することで大きさを合わせる。
-            var scaleX = width / AnimatedWidth;
-            var scaleY = height / AnimatedHeight;
-            _animatedRectTransform.localScale = new Vector3(scaleX, scaleY, 1);
+            // 以下、透過アニメーションを持つフレームについて扱う
+            // モーション再生中ならばキャンセルし、新たなモーションを作成する。
+            if (_animatedWidthMotionHandle != null && _animatedWidthMotionHandle.IsActive())
+            {
+                _animatedWidthMotionHandle.Cancel();
+            }
+
+            // モーションを作成する
+            // アニメーションフレームの大きさを設定する。
+            _animatedWidthMotionHandle = LMotion.Create(width, width * AnimatedMultiplier, AnimatedTime)
+                .WithEase(Ease.OutQuad)
+                .WithLoops(-1, LoopType.Restart)
+                .BindToSizeDeltaX(_animatedRectTransform);
+
+            // 同様に高さのモーションも作成する。
+            if(_animatedHeightMotionHandle != null && _animatedHeightMotionHandle.IsActive())
+            {
+                _animatedHeightMotionHandle.Cancel();
+            }
+
+            _animatedHeightMotionHandle = LMotion.Create(height, height * AnimatedMultiplier, AnimatedTime)
+                .WithEase(Ease.OutQuad)
+                .WithLoops(-1, LoopType.Restart)
+                .BindToSizeDeltaY(_animatedRectTransform);
+
+            // 透過アニメーションも同様に実装する
+            if(_animatedAlphaMotionHandle != null && _animatedAlphaMotionHandle.IsActive())
+            {
+                _animatedAlphaMotionHandle.Cancel();
+            }
+            _animatedAlphaMotionHandle = LMotion.Create(1f, 0f, AnimatedTime)
+                .WithEase(Ease.OutQuad)
+                .WithLoops(-1, LoopType.Restart)
+                .BindToColorA(_animatedImage);
         }
     }
 }

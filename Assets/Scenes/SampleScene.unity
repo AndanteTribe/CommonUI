@@ -227,6 +227,17 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &349203970 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 1600033748532630554, guid: 60eb2f9d1c3e22c4ea019d169aaaa529, type: 3}
+  m_PrefabInstance: {fileID: 3614371038035430154}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 37855e1b2ccf4c19b12c912276814442, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!224 &543137089 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 2970606497712631656, guid: 60eb2f9d1c3e22c4ea019d169aaaa529, type: 3}
@@ -550,6 +561,17 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1509127826 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 4508916500706718504, guid: 60eb2f9d1c3e22c4ea019d169aaaa529, type: 3}
+  m_PrefabInstance: {fileID: 3614371038035430154}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1672539174
 GameObject:
   m_ObjectHideFlags: 0
@@ -908,11 +930,21 @@ PrefabInstance:
       propertyPath: m_Name
       value: Tutorial
       objectReference: {fileID: 0}
+    - target: {fileID: 6330359610933938847, guid: 60eb2f9d1c3e22c4ea019d169aaaa529, type: 3}
+      propertyPath: _animatedImage
+      value: 
+      objectReference: {fileID: 1509127826}
+    - target: {fileID: 7373898075119141445, guid: 60eb2f9d1c3e22c4ea019d169aaaa529, type: 3}
+      propertyPath: _ringEffect
+      value: 
+      objectReference: {fileID: 349203970}
     - target: {fileID: 7373898075119141445, guid: 60eb2f9d1c3e22c4ea019d169aaaa529, type: 3}
       propertyPath: _circleFrame
       value: 
       objectReference: {fileID: 6664659322631912158}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 1971230800724477103, guid: 60eb2f9d1c3e22c4ea019d169aaaa529, type: 3}
+    - {fileID: 1673771231597053837, guid: 60eb2f9d1c3e22c4ea019d169aaaa529, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects:
     - targetCorrespondingSourceObject: {fileID: 8485921048470335645, guid: 60eb2f9d1c3e22c4ea019d169aaaa529, type: 3}
