@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 using LitMotion;
 using LitMotion.Extensions;
@@ -63,11 +64,21 @@ namespace CommonUI.Tutorial.Views
             // ベースフレームの大きさを設定する。
             _baseTransform.SetSizeWithCurrentAnchors(RectTransform.Axis.Horizontal, width);
             _baseTransform.SetSizeWithCurrentAnchors(RectTransform.Axis.Vertical, height);
+        }
+
+        /// <summary>
+        /// アニメーションフレームの用意をする
+        /// </summary>
+        /// <param name="coachMarkPos"></param>
+        public void SetAnimation(RectTransform coachMarkPos)
+        {
+            var width = coachMarkPos.sizeDelta.x;
+            var height = coachMarkPos.sizeDelta.y;
 
             // アニメーションフレームの大きさを設定する。
             // 以下、透過アニメーションを持つフレームについて扱う
             // モーション再生中ならばキャンセルし、新たなモーションを作成する。
-            if (_animatedWidthMotionHandle != null && _animatedWidthMotionHandle.IsActive())
+            if (_animatedWidthMotionHandle.IsActive())
             {
                 _animatedWidthMotionHandle.Cancel();
             }
@@ -80,7 +91,7 @@ namespace CommonUI.Tutorial.Views
                 .BindToSizeDeltaX(_animatedRectTransform);
 
             // 同様に高さのモーションも作成する。
-            if(_animatedHeightMotionHandle != null && _animatedHeightMotionHandle.IsActive())
+            if(_animatedHeightMotionHandle.IsActive())
             {
                 _animatedHeightMotionHandle.Cancel();
             }
@@ -91,7 +102,7 @@ namespace CommonUI.Tutorial.Views
                 .BindToSizeDeltaY(_animatedRectTransform);
 
             // 透過アニメーションも同様に実装する
-            if(_animatedAlphaMotionHandle != null && _animatedAlphaMotionHandle.IsActive())
+            if(_animatedAlphaMotionHandle.IsActive())
             {
                 _animatedAlphaMotionHandle.Cancel();
             }
@@ -99,6 +110,27 @@ namespace CommonUI.Tutorial.Views
                 .WithEase(Ease.OutQuad)
                 .WithLoops(-1, LoopType.Restart)
                 .BindToColorA(_animatedImage);
+        }
+
+        /// <summary>
+        /// 非表示になった際にモーションをキャンセルする
+        /// </summary>
+        public void OnDisable()
+        {
+            // モーションが再生されている場合はキャンセルする。
+            if (_animatedWidthMotionHandle.IsActive())
+            {
+                _animatedWidthMotionHandle.Cancel();
+            }
+            if (_animatedHeightMotionHandle.IsActive())
+            {
+                _animatedHeightMotionHandle.Cancel();
+            }
+
+            if (_animatedAlphaMotionHandle.IsActive())
+            {
+                _animatedAlphaMotionHandle.Cancel();
+            }
         }
     }
 }

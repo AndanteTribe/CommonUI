@@ -276,6 +276,9 @@ namespace CommonUI.Tutorial
                 // グラデーションの場合、処理をして終了
                 if (model.IsGradiate)
                 {
+                    // コーチマークの位置に移動されるため再キャッシュ
+                    anchoredPosition = _coachMaskView.MaskRectTransform.anchoredPosition;
+
                     switch (model.Shape)
                     {
                         case ShapeKinds.Rectangle:
@@ -384,6 +387,7 @@ namespace CommonUI.Tutorial
                     _circleFrame.gameObject.SetActive(false);
                     _rectangleFrame.SetPosition(_coachMaskView.MaskRectTransform);
                     _rectangleFrame.SetSize(_coachMaskView.MaskRectTransform);
+                    _rectangleFrame.SetAnimation(_coachMaskView.MaskRectTransform);
                     break;
 
                 // 円形の場合
@@ -392,6 +396,7 @@ namespace CommonUI.Tutorial
                     _circleFrame.gameObject.SetActive(true);
                     _circleFrame.SetPosition(_coachMaskView.MaskRectTransform);
                     _circleFrame.SetSize(_coachMaskView.MaskRectTransform);
+                    _circleFrame.SetAnimation(_coachMaskView.MaskRectTransform);
                     break;
             }
         }

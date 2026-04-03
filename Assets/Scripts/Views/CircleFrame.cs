@@ -1,3 +1,4 @@
+using System;
 using LitMotion;
 using LitMotion.Extensions;
 using UnityEngine;
@@ -25,11 +26,6 @@ namespace CommonUI.Tutorial.Views
         /// アニメーションフレームの大きさをどれくらい大きくするかの倍率
         /// </summary>
         private const float AnimatedMultiplier = 1.3f;
-
-        /// <summary>
-        /// 半径を設定するフィールド
-        /// </summary>
-        private float _radius;
 
         /// <summary>
         /// UIの位置を取得しておくフィールド
@@ -70,29 +66,42 @@ namespace CommonUI.Tutorial.Views
             var height = coachMarkPos.rect.height;
 
             // デカイ方を半径とする。
-            _radius = Mathf.Max(width, height);
+            var radius = Mathf.Max(width, height);
 
             // ベースフレームの大きさを設定する。
-            _baseTransform.SetSizeWithCurrentAnchors(RectTransform.Axis.Horizontal, _radius);
-            _baseTransform.SetSizeWithCurrentAnchors(RectTransform.Axis.Vertical, _radius);
+            _baseTransform.SetSizeWithCurrentAnchors(RectTransform.Axis.Horizontal, radius);
+            _baseTransform.SetSizeWithCurrentAnchors(RectTransform.Axis.Vertical, radius);
+        }
 
-            // 以下、透過アニメーションを持つフレームについて扱う
+        /// <summary>
+        /// アニメーションの設定をする
+        /// </summary>
+        /// <param name="coachMarkPos"></param>
+        public void SetAnimation(RectTransform coachMarkPos)
+        {
+            // フレームの大きさを設定する。
+            var width = coachMarkPos.rect.width;
+            var height = coachMarkPos.rect.height;
+
+            // デカイ方を半径とする。
+            var radius = Mathf.Max(width, height);
+
             // モーション再生中ならばキャンセルし、新たなモーションを作成する。
-            if (_animatedMotionHandle != null && _animatedMotionHandle.IsActive())
+            if (_animatedMotionHandle.IsActive())
             {
                 _animatedMotionHandle.Cancel();
             }
 
             // モーションを作成する
             // アニメーションフレームの大きさを設定する。
-            var radiusSize = Vector2.one * _radius;
+            var radiusSize = Vector2.one * radius;
             _animatedMotionHandle = LMotion.Create(radiusSize, radiusSize * AnimatedMultiplier, AnimatedTime)
                 .WithEase(Ease.OutQuad)
                 .WithLoops(-1, LoopType.Restart)
                 .BindToSizeDelta(_animatedRectTransform);
 
             // 透過アニメーションも同様に実装する
-            if(_animatedAlphaMotionHandle != null && _animatedAlphaMotionHandle.IsActive())
+            if(_animatedAlphaMotionHandle.IsActive())
             {
                 _animatedAlphaMotionHandle.Cancel();
             }
@@ -100,6 +109,23 @@ namespace CommonUI.Tutorial.Views
                 .WithEase(Ease.OutQuad)
                 .WithLoops(-1, LoopType.Restart)
                 .BindToColorA(_animatedImage);
+        }
+
+        /// <summary>
+        /// 非表示にする際はモーションをキャンセルする。
+        /// </summary>
+        public void OnDisable()
+        {
+            // モーションが再生されている場合はキャンセルする。
+            if (_animatedMotionHandle.IsActive())
+            {
+                _animatedMotionHandle.Cancel();
+            }
+
+            if (_animatedAlphaMotionHandle.IsActive())
+            {
+                _animatedAlphaMotionHandle.Cancel();
+            }
         }
     }
 }
