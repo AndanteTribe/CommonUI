@@ -1,4 +1,3 @@
-using System;
 using LitMotion;
 using LitMotion.Extensions;
 using UnityEngine;
