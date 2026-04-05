@@ -1,5 +1,3 @@
-using System.Threading;
-using AndanteTribe.Utils;
 using UnityEngine;
 using LitMotion;
 using LitMotion.Extensions;
