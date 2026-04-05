@@ -15,12 +15,33 @@ namespace CommonUI.Tutorial.Models
         /// </summary>
         public ShapeKinds Shape => _shape;
 
+        [SerializeField, Tooltip("グラデーションにするかどうか")]
+        private bool _isGradiate;
+        /// <summary>
+        /// グラデーションにするかどうか
+        /// </summary>
+        public bool IsGradiate => _isGradiate;
+
         [SerializeField, Tooltip("コーチマークの半径")]
         private float _radius;
         /// <summary>
         /// コーチマークの半径
         /// </summary>
         public float Radius => _radius;
+
+        [SerializeField, Tooltip("コーチマークの大きさに加えてどれくらい余白を取るかの割合(グラデ以外使用時無効)"), Range(0f,1f)]
+        private float _paddingRadius;
+        /// <summary>
+        /// 余白の割合
+        /// </summary>
+        public float PaddingRadius => _paddingRadius;
+
+        [SerializeField, Tooltip("グラデーションの割合(グラデ以外使用時無効)"), Range(0f,1f)]
+        private float _gradiateRadius;
+        /// <summary>
+        /// グラデーション用の半径
+        /// </summary>
+        public float GradiateRadius => _gradiateRadius;
 
         [SerializeField, Tooltip("コーチマークの対象になるオブジェクトの名前")]
         private string _targetObjectName;
