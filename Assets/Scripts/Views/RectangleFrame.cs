@@ -1,3 +1,5 @@
+using System.Threading;
+using AndanteTribe.Utils;
 using UnityEngine;
 using LitMotion;
 using LitMotion.Extensions;
@@ -27,19 +29,15 @@ namespace CommonUI.Tutorial.Views
         private const float AnimatedMultiplier = 1.3f;
 
         /// <summary>
-        /// 動きのあるフレームのモーションハンドル(width)
+        /// 動きのあるフレームのモーションハンドル
         /// </summary>
-        private MotionHandle _animatedWidthMotionHandle;
-
-        /// <summary>
-        /// 動きのあるフレームのモーションハンドル(height)
-        /// </summary>
-        private MotionHandle _animatedHeightMotionHandle;
+        private MotionHandle _animatedSizeMotionHandle;
 
         /// <summary>
         /// 透過アニメーションのモーションハンドル
         /// </summary>
         private MotionHandle _animatedAlphaMotionHandle;
+
 
         /// <summary>
         /// コーチマークの座標に合わせる。
@@ -57,8 +55,8 @@ namespace CommonUI.Tutorial.Views
         public override void SetSize(RectTransform coachMarkPos)
         {
             // コーチマークのサイズを取得する。
-            var width = coachMarkPos.sizeDelta.x;
-            var height = coachMarkPos.sizeDelta.y;
+            var width = coachMarkPos.rect.width;
+            var height = coachMarkPos.rect.height;
 
             // ベースフレームの大きさを設定する。
             _baseTransform.SetSizeWithCurrentAnchors(RectTransform.Axis.Horizontal, width);
@@ -71,34 +69,30 @@ namespace CommonUI.Tutorial.Views
         /// <param name="coachMarkPos"></param>
         public void SetAnimation(RectTransform coachMarkPos)
         {
-            var width = coachMarkPos.sizeDelta.x;
-            var height = coachMarkPos.sizeDelta.y;
+            var width = coachMarkPos.rect.width;
+            var height = coachMarkPos.rect.height;
+
+            var size = new Vector2(width, height);
 
             // アニメーションフレームの大きさを設定する。
             // 以下、透過アニメーションを持つフレームについて扱う
             // モーション再生中ならばキャンセルし、新たなモーションを作成する。
-            if (_animatedWidthMotionHandle.IsActive())
+            if (_animatedSizeMotionHandle.IsActive())
             {
-                _animatedWidthMotionHandle.Cancel();
+                _animatedSizeMotionHandle.Cancel();
             }
 
             // モーションを作成する
             // アニメーションフレームの大きさを設定する。
-            _animatedWidthMotionHandle = LMotion.Create(width, width * AnimatedMultiplier, AnimatedTime)
+            _animatedSizeMotionHandle = LMotion.Create(size, size * AnimatedMultiplier, AnimatedTime)
                 .WithEase(Ease.OutQuad)
                 .WithLoops(-1, LoopType.Restart)
-                .BindToSizeDeltaX(_animatedRectTransform);
-
-            // 同様に高さのモーションも作成する。
-            if(_animatedHeightMotionHandle.IsActive())
-            {
-                _animatedHeightMotionHandle.Cancel();
-            }
-
-            _animatedHeightMotionHandle = LMotion.Create(height, height * AnimatedMultiplier, AnimatedTime)
-                .WithEase(Ease.OutQuad)
-                .WithLoops(-1, LoopType.Restart)
-                .BindToSizeDeltaY(_animatedRectTransform);
+                .Bind(value =>
+                {
+                    _animatedRectTransform.SetSizeWithCurrentAnchors(RectTransform.Axis.Horizontal, value.x);
+                    _animatedRectTransform.SetSizeWithCurrentAnchors(RectTransform.Axis.Vertical, value.y);
+                })
+                .AddTo(this);
 
             // 透過アニメーションも同様に実装する
             if(_animatedAlphaMotionHandle.IsActive())
@@ -117,13 +111,9 @@ namespace CommonUI.Tutorial.Views
         public void OnDisable()
         {
             // モーションが再生されている場合はキャンセルする。
-            if (_animatedWidthMotionHandle.IsActive())
+            if (_animatedSizeMotionHandle.IsActive())
             {
-                _animatedWidthMotionHandle.Cancel();
-            }
-            if (_animatedHeightMotionHandle.IsActive())
-            {
-                _animatedHeightMotionHandle.Cancel();
+                _animatedSizeMotionHandle.Cancel();
             }
 
             if (_animatedAlphaMotionHandle.IsActive())

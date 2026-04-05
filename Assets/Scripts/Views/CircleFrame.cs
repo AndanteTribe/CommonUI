@@ -34,7 +34,7 @@ namespace CommonUI.Tutorial.Views
         /// <summary>
         /// 動きのあるフレームのモーションハンドル
         /// </summary>
-        private MotionHandle _animatedMotionHandle;
+        private MotionHandle _animatedSizeMotionHandle;
 
         /// <summary>
         /// 透過アニメーションのモーションハンドル
@@ -73,31 +73,35 @@ namespace CommonUI.Tutorial.Views
         }
 
         /// <summary>
-        /// アニメーションの設定をする
+        /// アニメーションフレームの用意をする
         /// </summary>
         /// <param name="coachMarkPos"></param>
         public void SetAnimation(RectTransform coachMarkPos)
         {
-            // フレームの大きさを設定する。
             var width = coachMarkPos.rect.width;
             var height = coachMarkPos.rect.height;
 
-            // デカイ方を半径とする。
-            var radius = Mathf.Max(width, height);
+            var diameter = Mathf.Max(width, height);
 
+            // アニメーションフレームの大きさを設定する。
+            // 以下、透過アニメーションを持つフレームについて扱う
             // モーション再生中ならばキャンセルし、新たなモーションを作成する。
-            if (_animatedMotionHandle.IsActive())
+            if (_animatedSizeMotionHandle.IsActive())
             {
-                _animatedMotionHandle.Cancel();
+                _animatedSizeMotionHandle.Cancel();
             }
 
             // モーションを作成する
             // アニメーションフレームの大きさを設定する。
-            var radiusSize = Vector2.one * radius;
-            _animatedMotionHandle = LMotion.Create(radiusSize, radiusSize * AnimatedMultiplier, AnimatedTime)
+            _animatedSizeMotionHandle = LMotion.Create(diameter, diameter * AnimatedMultiplier, AnimatedTime)
                 .WithEase(Ease.OutQuad)
                 .WithLoops(-1, LoopType.Restart)
-                .BindToSizeDelta(_animatedRectTransform);
+                .Bind(value =>
+                {
+                    _animatedRectTransform.SetSizeWithCurrentAnchors(RectTransform.Axis.Horizontal, value);
+                    _animatedRectTransform.SetSizeWithCurrentAnchors(RectTransform.Axis.Vertical, value);
+                })
+                .AddTo(this);
 
             // 透過アニメーションも同様に実装する
             if(_animatedAlphaMotionHandle.IsActive())
@@ -116,9 +120,9 @@ namespace CommonUI.Tutorial.Views
         public void OnDisable()
         {
             // モーションが再生されている場合はキャンセルする。
-            if (_animatedMotionHandle.IsActive())
+            if (_animatedSizeMotionHandle.IsActive())
             {
-                _animatedMotionHandle.Cancel();
+                _animatedSizeMotionHandle.Cancel();
             }
 
             if (_animatedAlphaMotionHandle.IsActive())
