@@ -37,6 +37,9 @@ namespace CommonUI.Tutorial
         [SerializeField, Tooltip("指アイコン")]
         private FingerView _fingerView;
 
+        [SerializeField, Tooltip("円環状エフェクト")]
+        private RingEffect _ringEffect;
+
         /// <summary>
         /// 現在のtextModelモデルの番号
         /// </summary>
@@ -99,6 +102,7 @@ namespace CommonUI.Tutorial
                         ResetToken();
                         SetCoachMark(_textData.Models[_modelIndex].Models[_pageIndex].CoachMark);
                         SetFingerIcon(_textData.Models[_modelIndex].Models[_pageIndex]);
+                        SetRingEffect(_textData.Models[_modelIndex].Models[_pageIndex]);
                         _ = ShowPage(_pageIndex);
 
                         _pageDotPresenter.Next();
@@ -121,6 +125,7 @@ namespace CommonUI.Tutorial
                 _pageIndex--;
                 SetCoachMark(_textData.Models[_modelIndex].Models[_pageIndex].CoachMark);
                 SetFingerIcon(_textData.Models[_modelIndex].Models[_pageIndex]);
+                SetRingEffect(_textData.Models[_modelIndex].Models[_pageIndex]);
 
                 _ = ShowPage(_pageIndex);
                 _pageDotPresenter.Prev();
@@ -144,6 +149,7 @@ namespace CommonUI.Tutorial
             SetCoachMark(modelData.Models[_pageIndex].CoachMark);
             AdjustPosition(modelData);
             SetFingerIcon(modelData.Models[_pageIndex]);
+            SetRingEffect(modelData.Models[_pageIndex]);
 
             _ = ShowPage(_pageIndex);
         }
@@ -270,6 +276,9 @@ namespace CommonUI.Tutorial
                 // グラデーションの場合、処理をして終了
                 if (model.IsGradiate)
                 {
+                    // コーチマークの位置に移動されるため再キャッシュ
+                    anchoredPosition = _coachMaskView.MaskRectTransform.anchoredPosition;
+
                     switch (model.Shape)
                     {
                         case ShapeKinds.Rectangle:
@@ -378,6 +387,7 @@ namespace CommonUI.Tutorial
                     _circleFrame.gameObject.SetActive(false);
                     _rectangleFrame.SetPosition(_coachMaskView.MaskRectTransform);
                     _rectangleFrame.SetSize(_coachMaskView.MaskRectTransform);
+                    _rectangleFrame.SetAnimation(_coachMaskView.MaskRectTransform);
                     break;
 
                 // 円形の場合
@@ -386,6 +396,7 @@ namespace CommonUI.Tutorial
                     _circleFrame.gameObject.SetActive(true);
                     _circleFrame.SetPosition(_coachMaskView.MaskRectTransform);
                     _circleFrame.SetSize(_coachMaskView.MaskRectTransform);
+                    _circleFrame.SetAnimation(_coachMaskView.MaskRectTransform);
                     break;
             }
         }
@@ -435,6 +446,28 @@ namespace CommonUI.Tutorial
             else
             {
                 _fingerView.gameObject.SetActive(false);
+            }
+        }
+
+        /// <summary>
+        /// エフェクトを配置する
+        /// </summary>
+        private void SetRingEffect(TextModel model)
+        {
+            if(_ringEffect == null)
+            {
+                throw new NullReferenceException("円環状エフェクトが設定されていません。");
+            }
+
+            if (model.IsEffectEnabled)
+            {
+                _ringEffect.gameObject.SetActive(true);
+                _ringEffect.SetPosition(_coachMaskView.MaskRectTransform);
+                _ringEffect.SetSize(_coachMaskView.MaskRectTransform);
+            }
+            else
+            {
+                _ringEffect.gameObject.SetActive(false);
             }
         }
 
