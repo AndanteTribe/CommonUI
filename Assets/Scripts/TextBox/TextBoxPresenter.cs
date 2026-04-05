@@ -19,9 +19,6 @@ namespace CommonUI.Tutorial
         [SerializeField, Tooltip("テキストボックスのRectTransform")]
         private RectTransform _textBoxRectTransform;
 
-        [SerializeField, Tooltip("テキストボックスのマスターデータ")]
-        private TextBoxMasterData _textData;
-
         [SerializeField, Tooltip("マスクのRectTransform")]
         private CoachMarkView _coachMaskView;
 
@@ -31,30 +28,24 @@ namespace CommonUI.Tutorial
         [SerializeField, Tooltip("円のアニメーションフレーム")]
         private CircleFrame _circleFrame;
 
-        /// <summary>
-        /// 現在のtextModelモデルの番号
-        /// </summary>
-        private int _modelIndex = 0;
-
-        [SerializeField]
+        [SerializeField, Tooltip("表示にかかる1文字あたりの秒.")]
         private float _textAnimDurationSec = 0.1f;
 
-        [SerializeField]
+        [SerializeField, Tooltip("ピンを表示するかどうか.")]
         private bool _isPinEnabled = true;
 
-        [SerializeField]
+        [SerializeField, Tooltip("ピンのViewクラス")]
         private ForwardingIcon _forwardingIcon;
 
-        [SerializeField]
-        private SkipButton _skipButton;
-
-        [SerializeField]
+        [SerializeField, Tooltip("ページドットのPresenter")]
         private PageDotPresenter _pageDotPresenter;
 
-        private int _totalPages;
-        private int _pageIndex;
+        /// <summary>
+        /// 現在表示中のテキストのモデル.
+        /// </summary>
+        private TextBoxModel _model;
 
-        private CancellationTokenSource _cts;
+        private CancellationTokenSource _cts = new();
 
         private bool _isTextAnimating;
 
@@ -63,84 +54,66 @@ namespace CommonUI.Tutorial
         /// </summary>
         private readonly Vector3[] _corners = new Vector3[4];
 
-        private void Start()
+        /// <summary>
+        /// モデルのページを表示する.
+        /// </summary>
+        /// <param name="modelData">テキストボックスのデータ.</param>
+        /// <param name="cancellationToken">キャンセレーショントークン.</param>
+        public async Awaitable ShowModelAsync(TextBoxModel modelData, CancellationToken cancellationToken)
         {
-            _modelIndex = 0;
+            _model = modelData;
+            var maxPageCount = _model.Models.Count;
 
-            _cts = new CancellationTokenSource();
-
-            // スキップボタンの登録
-            _skipButton.OnSkip += OnSkip;
-
-            LoadModel(_modelIndex);
-        }
-
-        private void Update()
-        {
-            if (Input.GetMouseButtonDown(0) || Input.GetKeyDown(KeyCode.RightArrow))
+            // テキストが１ページもない場合は処理を終了する.
+            if (maxPageCount == 0)
             {
-                // 文字送り中にクリックされた場合は全文表示
-                if (_isTextAnimating)
-                {
-                    _cts.Cancel();
-                }
-                else
-                {
-                    // 次のページを表示する.
-                    if (_pageIndex < _totalPages - 1)
-                    {
-                        _pageIndex++;
-                        ResetToken();
-                        SetCoachMark(_textData.Models[_modelIndex].Models[_pageIndex].CoachMark);
-                        _ = ShowPage(_pageIndex);
-
-                        _pageDotPresenter.Next();
-                    }
-                    //
-                    else if (_modelIndex < _textData.Models.Count - 1)
-                    {
-                        _modelIndex++;
-                        LoadModel(_modelIndex);
-                    }
-                }
+                return;
             }
-            // 戻るボタンで前のページ表示
-            if (Input.GetKeyDown(KeyCode.LeftArrow))
+
+            var pageIndex = 0;
+            _pageDotPresenter.Initialize(maxPageCount);
+            SetBasePosition(_model.Position);
+            AdjustPosition(_model);
+
+            while (pageIndex < maxPageCount)
             {
-                if (_pageIndex <= 0)
+                cancellationToken.ThrowIfCancellationRequested();
+
+                _ = ShowPageAsync(pageIndex);
+
+                PageTurn turn;
+                // 進むか戻るの入力があるまで待ち、前にページがないときは再度入力を待つ.
+                do
                 {
-                    return;
+                    turn = await WaitUntilInputAsync(cancellationToken);
+                } while (turn == PageTurn.Prev && pageIndex == 0);
+
+                switch (turn)
+                {
+                    case PageTurn.Next:
+                        pageIndex++;
+                        _pageDotPresenter.Next();
+                        break;
+                    case PageTurn.Prev when pageIndex > 0:
+                        pageIndex--;
+                        _pageDotPresenter.Prev();
+                        break;
+                    default:
+                        throw new InvalidOperationException();
                 }
-                _pageIndex--;
-                SetCoachMark(_textData.Models[_modelIndex].Models[_pageIndex].CoachMark);
-                _ = ShowPage(_pageIndex);
-                _pageDotPresenter.Prev();
             }
         }
 
         /// <summary>
-        /// <see cref="modelIndex"/>番目のモデルを読み込む.
+        /// 指定されたインデックスのページを表示するメソッド.
         /// </summary>
-        /// <param name="modelIndex">モデルの番号</param>
-        private void LoadModel(int modelIndex)
+        /// <param name="pageIndex">表示するページ</param>
+        private async Awaitable ShowPageAsync(int pageIndex)
         {
-            var modelData = _textData.Models[modelIndex];
-            _totalPages = modelData.Models.Count;
+            var currentPage = _model.Models[pageIndex];
+            var text = currentPage.Text;
+            // SetCoachMark(currentPage.CoachMark);
 
-            _pageDotPresenter.Initialize(_totalPages);
-
-            SetBasePosition(modelData.Position);
-            SetCoachMark(modelData.Models[0].CoachMark);
-            AdjustPosition(modelData);
-
-            _pageIndex = 0;
-
-            _ = ShowPage(_pageIndex);
-        }
-
-        private async Awaitable ShowPage(int pageIndex)
-        {
-            var text = _textData.Models[_modelIndex].Models[pageIndex].Text;
             _isTextAnimating = true;
             try
             {
@@ -153,21 +126,52 @@ namespace CommonUI.Tutorial
                 if (_isPinEnabled)
                 {
                     ResetToken();
-                    _ = _forwardingIcon.PlayAnimAsync(_cts.Token);
+                    await _forwardingIcon.PlayAnimAsync(_cts.Token);
                 }
             }
         }
 
-        private void OnSkip()
+        /// <summary>
+        /// 進む戻るの入力を受け取るまで待つ.
+        /// </summary>
+        /// <param name="cancellationToken">キャンセレーショントークン</param>
+        /// <returns><see cref="PageTurn"/>を返す.</returns>
+        private async Awaitable<PageTurn> WaitUntilInputAsync(CancellationToken cancellationToken)
         {
-            _textBoxRectTransform.gameObject.SetActive(false);
+            await Awaitable.NextFrameAsync(cancellationToken);
+
+            while (true)
+            {
+                if (Input.GetMouseButtonDown(0) || Input.GetKeyDown(KeyCode.RightArrow))
+                {
+                    // 文字送り中にクリックされた場合は全文表示
+                    if (_isTextAnimating)
+                    {
+                        _cts.Cancel();
+                        await Awaitable.NextFrameAsync(cancellationToken);
+                        continue;
+                    }
+
+                    return PageTurn.Next;
+                }
+                // 戻るボタンで前のページ表示
+                if (Input.GetKeyDown(KeyCode.LeftArrow))
+                {
+                    return PageTurn.Prev;
+                }
+
+                await Awaitable.NextFrameAsync(cancellationToken);
+            }
         }
 
+        /// <summary>
+        /// キャンセレーショントークンをリセットする.
+        /// </summary>
         private void ResetToken()
         {
             _cts?.Cancel();
             _cts?.Dispose();
-            _cts =  new CancellationTokenSource();
+            _cts = new CancellationTokenSource();
         }
 
         /// <summary>
@@ -264,8 +268,10 @@ namespace CommonUI.Tutorial
                     case ShapeKinds.Rectangle:
                         var targetWidth = targetRect.sizeDelta.x + model.Radius;
                         var targetHeight = targetRect.sizeDelta.y + model.Radius;
-                        _coachMaskView.MaskRectTransform.SetSizeWithCurrentAnchors(RectTransform.Axis.Horizontal, targetWidth);
-                        _coachMaskView.MaskRectTransform.SetSizeWithCurrentAnchors(RectTransform.Axis.Vertical, targetHeight);
+                        _coachMaskView.MaskRectTransform.SetSizeWithCurrentAnchors(RectTransform.Axis.Horizontal,
+                            targetWidth);
+                        _coachMaskView.MaskRectTransform.SetSizeWithCurrentAnchors(RectTransform.Axis.Vertical,
+                            targetHeight);
 
                         // アニメーションフレームを設定する
                         SetAnimationFrame(model.Shape);
@@ -273,8 +279,10 @@ namespace CommonUI.Tutorial
 
                     // 円形の場合はモデルの半径の大きさに合わせる
                     case ShapeKinds.Circle:
-                        _coachMaskView.MaskRectTransform.SetSizeWithCurrentAnchors(RectTransform.Axis.Horizontal, model.Radius);
-                        _coachMaskView.MaskRectTransform.SetSizeWithCurrentAnchors(RectTransform.Axis.Vertical, model.Radius);
+                        _coachMaskView.MaskRectTransform.SetSizeWithCurrentAnchors(RectTransform.Axis.Horizontal,
+                            model.Radius);
+                        _coachMaskView.MaskRectTransform.SetSizeWithCurrentAnchors(RectTransform.Axis.Vertical,
+                            model.Radius);
 
                         // アニメーションフレームを設定する
                         SetAnimationFrame(model.Shape);
@@ -307,7 +315,8 @@ namespace CommonUI.Tutorial
             {
                 throw new NullReferenceException("矩形アニメーションフレームが設定されていません。");
             }
-            if(_circleFrame == null)
+
+            if (_circleFrame == null)
             {
                 throw new NullReferenceException("円形アニメーションフレームが設定されていません。");
             }
@@ -360,15 +369,23 @@ namespace CommonUI.Tutorial
             var offset = targetPosition - textBoxPosition;
 
             // 差分と指定したズレの分ズラす。
-            _textBoxRectTransform.position += offset + new Vector3((float)model.RadiusHorizontalOffset, (float)model.RadiusVerticalOffset, 0);
+            _textBoxRectTransform.position += offset + new Vector3((float)model.RadiusHorizontalOffset,
+                (float)model.RadiusVerticalOffset, 0);
         }
 
         private void OnDestroy()
         {
             _cts?.Cancel();
             _cts?.Dispose();
+        }
 
-            _skipButton.OnSkip -= OnSkip;
+        /// <summary>
+        /// 入力結果が進むか戻すかを表す列挙型.
+        /// </summary>
+        private enum PageTurn : byte
+        {
+            Next = 0,
+            Prev = 1,
         }
     }
 }

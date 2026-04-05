@@ -14,12 +14,13 @@ namespace CommonUI.Tutorial.Models
             _position = TextPositions.MiddleCenter;
         }
         [SerializeField, Tooltip("表示するキャラクター(設定がない場合には表示なし)")]
-        private GameObject _character;
+        private Sprite _character;
         /// <summary>
         /// 表示するキャラクター
         /// <remarks>設定がない場合には表示なし</remarks>
         /// </summary>
-        public GameObject Character => _character;
+        public Sprite Character => _character;
+
         [SerializeField, Tooltip("大まかな位置")]
         private TextPositions _position;
         /// <summary>
