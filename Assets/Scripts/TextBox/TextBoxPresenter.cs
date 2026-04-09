@@ -53,6 +53,7 @@ namespace CommonUI.Tutorial
 
         private CancellationTokenSource _cts = new();
 
+        [SerializeField]
         private bool _isTextAnimating;
 
         /// <summary>
@@ -73,7 +74,7 @@ namespace CommonUI.Tutorial
             // テキストが１ページもない場合は処理を終了する.
             if (maxPageCount == 0)
             {
-                return;
+                throw new InvalidOperationException("テキストが1ページもありません");
             }
 
             var pageIndex = 0;
@@ -116,25 +117,46 @@ namespace CommonUI.Tutorial
         /// <param name="pageIndex">表示するページ</param>
         private async Awaitable ShowPageAsync(int pageIndex)
         {
-            var currentPage = _model.Models[pageIndex];
-            var text = currentPage.Text;
-            SetCoachMark(currentPage.CoachMark);
-            SetFingerIcon(currentPage);
-
-            _isTextAnimating = true;
             try
             {
-                ResetToken();
-                await _textMeshPro.AnimateTextAsync(text, TimeSpan.FromSeconds(_textAnimDurationSec), _cts.Token);
-            }
-            finally
-            {
-                _isTextAnimating = false;
-                if (_isPinEnabled)
+                var currentPage = _model.Models[pageIndex];
+                var text = currentPage.Text;
+                if (text == null)
+                {
+                    throw new InvalidOperationException("テキストが設定されていません. ページ数: " + (pageIndex + 1));
+                }
+
+                SetCoachMark(currentPage.CoachMark);
+                SetFingerIcon(currentPage);
+
+                _isTextAnimating = true;
+
+                try
                 {
                     ResetToken();
-                    await _forwardingIcon.PlayAnimAsync(_cts.Token);
+                    await _textMeshPro.AnimateTextAsync(text, TimeSpan.FromSeconds(_textAnimDurationSec), _cts.Token);
                 }
+                finally
+                {
+                    _isTextAnimating = false;
+                    if (_isPinEnabled)
+                    {
+                        ResetToken();
+                        await _forwardingIcon.PlayAnimAsync(_cts.Token);
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                // キャンセルは正常系（ユーザーの早送り等）なのでログしたくない。
+                if (ex is OperationCanceledException)
+                {
+                    return;
+                }
+
+                // それ以外は例外をログして再スローする
+                Debug.LogException(ex);
+                throw;
             }
         }
 
@@ -459,3 +481,4 @@ namespace CommonUI.Tutorial
         }
     }
 }
+
