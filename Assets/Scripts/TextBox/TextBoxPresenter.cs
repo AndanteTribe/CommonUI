@@ -293,6 +293,9 @@ namespace CommonUI.Tutorial
 
                 _coachMaskView.MaskRectTransform.position = targetPosition;
 
+                // 元のコーチマークの位置のままなので再キャッシュ
+                anchoredPosition = _coachMaskView.MaskRectTransform.anchoredPosition;
+
                 // グラデーションの場合、処理をして終了
                 if (model.IsGradiate)
                 {
@@ -358,6 +361,9 @@ namespace CommonUI.Tutorial
             // オブジェクトの場所からUIの位置を計算する。計算した結果にUIを位置させる。
             var screenPosition = Camera.main.WorldToScreenPoint(targetObject.transform.position);
             _coachMaskView.MaskRectTransform.position = screenPosition;
+
+            // 元のコーチマークの位置のままなので再キャッシュ
+            anchoredPosition = _coachMaskView.MaskRectTransform.anchoredPosition;
 
             // RectTransformがない場合、モデルに関係なく円形で対応する
             // グラデ有りならば、グラデーション円形で対応する
