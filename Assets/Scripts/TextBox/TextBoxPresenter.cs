@@ -53,7 +53,6 @@ namespace CommonUI.Tutorial
 
         private CancellationTokenSource _cts = new();
 
-        [SerializeField]
         private bool _isTextAnimating;
 
         /// <summary>
@@ -404,6 +403,7 @@ namespace CommonUI.Tutorial
                     _circleFrame.gameObject.SetActive(false);
                     _rectangleFrame.SetPosition(_coachMaskView.MaskRectTransform);
                     _rectangleFrame.SetSize(_coachMaskView.MaskRectTransform);
+                    _rectangleFrame.SetAnimation(_coachMaskView.MaskRectTransform);
                     break;
 
                 // 円形の場合
@@ -412,6 +412,7 @@ namespace CommonUI.Tutorial
                     _circleFrame.gameObject.SetActive(true);
                     _circleFrame.SetPosition(_coachMaskView.MaskRectTransform);
                     _circleFrame.SetSize(_coachMaskView.MaskRectTransform);
+                    _circleFrame.SetAnimation(_coachMaskView.MaskRectTransform);
                     break;
             }
         }
