@@ -41,11 +41,11 @@ namespace CommonUI.Tutorial
             Assert.IsTrue(width >= 0, $"[MaskCutout] width は 0 以上である必要があります: {width}");
             Assert.IsTrue(height >= 0, $"[MaskCutout] height は 0 以上である必要があります: {height}");
 
-
+            // ここは大丈夫
             _subtractImage.sprite = _submaskRectangleSprite;
 
             (width, height) = CalculateCenterSize(_subtractImage, width, height);
-            // これはコミットしたくない
+            // コンフリクトさせるぞ
             SetupRectTransform(centerX, centerY, width, height);
             ApplySoftnessRange(paddingRatio, gradientRatio);
 
