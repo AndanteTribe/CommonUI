@@ -36,6 +36,15 @@ namespace CommonUI.Tutorial
             // スキップボタンの登録
             _skipButton.OnSkip += OnSkip;
 
+            gameObject.SetActive(false);
+        }
+
+        /// <summary>
+        /// チュートリアルの表示を開始する
+        /// </summary>
+        public void StartTutorial()
+        {
+            gameObject.SetActive(true);
             _ = ShowTutorialAsync(_cts.Token);
         }
 

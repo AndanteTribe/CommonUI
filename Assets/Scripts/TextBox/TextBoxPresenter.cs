@@ -46,6 +46,9 @@ namespace CommonUI.Tutorial
         [SerializeField, Tooltip("ページドットのPresenter")]
         private PageDotPresenter _pageDotPresenter;
 
+        [SerializeField, Tooltip("円環状エフェクト")]
+        private RingEffect _ringEffect;
+
         /// <summary>
         /// 現在表示中のテキストのモデル.
         /// </summary>
@@ -127,6 +130,7 @@ namespace CommonUI.Tutorial
 
                 SetCoachMark(currentPage.CoachMark);
                 SetFingerIcon(currentPage);
+                SetRingEffect(currentPage);
 
                 _isTextAnimating = true;
 
@@ -463,6 +467,28 @@ namespace CommonUI.Tutorial
             else
             {
                 _fingerView.gameObject.SetActive(false);
+            }
+        }
+
+        /// <summary>
+        /// エフェクトを配置する
+        /// </summary>
+        private void SetRingEffect(TextModel model)
+        {
+            if(_ringEffect == null)
+            {
+                throw new NullReferenceException("円環状エフェクトが設定されていません。");
+            }
+
+            if (model.IsEffectEnabled)
+            {
+                _ringEffect.gameObject.SetActive(true);
+                _ringEffect.SetPosition(_coachMaskView.MaskRectTransform);
+                _ringEffect.SetSize(_coachMaskView.MaskRectTransform);
+            }
+            else
+            {
+                _ringEffect.gameObject.SetActive(false);
             }
         }
 
