@@ -11,7 +11,6 @@ GameObject:
   - component: {fileID: 5456599501413542463}
   - component: {fileID: 9204028371542915605}
   - component: {fileID: 8229188960811613609}
-  - component: {fileID: 6601008734223517964}
   m_Layer: 5
   m_Name: FrameAnime
   m_TagString: Untagged
@@ -76,28 +75,6 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
---- !u!95 &6601008734223517964
-Animator:
-  serializedVersion: 7
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1161809370074092615}
-  m_Enabled: 1
-  m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: 8790ac70ce21a4819aef98854cabb77e, type: 2}
-  m_CullingMode: 0
-  m_UpdateMode: 0
-  m_ApplyRootMotion: 0
-  m_LinearVelocityBlending: 0
-  m_StabilizeFeet: 0
-  m_AnimatePhysics: 0
-  m_WarningMessage: 
-  m_HasTransformHierarchy: 1
-  m_AllowConstantClipSamplingOptimization: 1
-  m_KeepAnimatorStateOnDisable: 0
-  m_WriteDefaultValuesOnDisable: 0
 --- !u!1 &2174947103153768536
 GameObject:
   m_ObjectHideFlags: 0
@@ -151,6 +128,7 @@ MonoBehaviour:
   RectTransform: {fileID: 6466991911390783413}
   _baseTransform: {fileID: 8585492800740205928}
   _animatedRectTransform: {fileID: 5456599501413542463}
+  _animatedImage: {fileID: 0}
 --- !u!1 &5923401252893284376
 GameObject:
   m_ObjectHideFlags: 0

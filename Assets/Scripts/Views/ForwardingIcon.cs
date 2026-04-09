@@ -27,12 +27,19 @@ namespace CommonUI.Tutorial.Views
         {
             gameObject.SetActive(true);
 
-            await LMotion.Create(_basePosX, _basePosX + _amplitude, _animDuration)
-                .WithLoops(-1, LoopType.Yoyo)
-                .WithEase(Ease.Linear)
-                .WithOnCancel(() => gameObject.SetActive(false))
-                .BindToAnchoredPositionY(_rectTransform)
-                .ToAwaitable(cancellationToken);
+            try
+            {
+                await LMotion.Create(_basePosX, _basePosX + _amplitude, _animDuration)
+                    .WithLoops(-1, LoopType.Yoyo)
+                    .WithEase(Ease.Linear)
+                    .WithOnCancel(() => gameObject.SetActive(false))
+                    .BindToAnchoredPositionY(_rectTransform)
+                    .ToAwaitable(cancellationToken);
+            }
+            finally
+            {
+                gameObject.SetActive(false);
+            }
         }
     }
 }

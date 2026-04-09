@@ -29,22 +29,19 @@ namespace CommonUI.Tutorial
 
         private CancellationTokenSource _cts;
 
-        private void Start()
-        {
-            _pool = new ObjectPool<PageDot>(
-                createFunc: () => Instantiate(_dotPrefab, _dotRoot),
-                actionOnGet: dot => dot.gameObject.SetActive(true),
-                actionOnRelease: dot => dot.gameObject.SetActive(false),
-                defaultCapacity: 8
-                );
-        }
-
         /// <summary>
         /// 全体ページ数に合わせてページドットを初期化する.
         /// </summary>
         /// <param name="totalPages">全体ページ数.</param>
         public void Initialize(int totalPages)
         {
+            _pool ??= new ObjectPool<PageDot>(
+                createFunc: () => Instantiate(_dotPrefab, _dotRoot),
+                actionOnGet: dot => dot.gameObject.SetActive(true),
+                actionOnRelease: dot => dot.gameObject.SetActive(false),
+                defaultCapacity: 8
+            );
+
             for (var dot = _head; dot != null; dot = dot.NextDot)
             {
                 _pool.Release(dot);
