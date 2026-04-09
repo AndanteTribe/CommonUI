@@ -45,7 +45,7 @@ namespace CommonUI.Tutorial
             _subtractImage.sprite = _submaskRectangleSprite;
 
             (width, height) = CalculateCenterSize(_subtractImage, width, height);
-            // これはコミットしたくない
+            // 迷惑かけるマン
             SetupRectTransform(centerX, centerY, width, height);
             ApplySoftnessRange(paddingRatio, gradientRatio);
 
