@@ -32,7 +32,10 @@ namespace CommonUI.Tutorial.Models
             {
                 for (var i = _previousCount; i < _models.Length; i++)
                 {
-                    _models[i] = new TextBoxModel();
+                    if (_models[i] == null)
+                    {
+                        _models[i] = new TextBoxModel();
+                    }
                 }
             }
             _previousCount = _models!.Length;
