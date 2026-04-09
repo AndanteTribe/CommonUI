@@ -36,6 +36,13 @@ namespace CommonUI.Tutorial.Models
         /// </summary>
         public FingerKinds FingerIconDirection => _fingerIconDirection;
 
+        [SerializeField, Tooltip("エフェクトを有効にするか")]
+        private bool _isEffectEnabled;
+        /// <summary>
+        /// エフェクトを有効にするか
+        /// </summary>
+        public bool IsEffectEnabled => _isEffectEnabled;
+
         [SerializeField, Tooltip("テキストボックスを配置する対象のオブジェクトの名前")]
         private string _targetObjectName;
         /// <summary>
