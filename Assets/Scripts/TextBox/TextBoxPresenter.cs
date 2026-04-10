@@ -170,30 +170,39 @@ namespace CommonUI.Tutorial
         /// <returns><see cref="PageTurn"/>を返す.</returns>
         private async Awaitable<PageTurn> WaitUntilInputAsync(CancellationToken cancellationToken)
         {
-            await Awaitable.NextFrameAsync(cancellationToken);
-
-            while (true)
+            try
             {
-                if (Input.GetMouseButtonDown(0) || Input.GetKeyDown(KeyCode.RightArrow))
+                await Awaitable.NextFrameAsync(cancellationToken);
+
+                while (true)
                 {
-                    // 文字送り中にクリックされた場合は全文表示
-                    if (_isTextAnimating)
+                    if (Input.GetMouseButtonDown(0) || Input.GetKeyDown(KeyCode.RightArrow))
                     {
-                        _cts.Cancel();
-                        await Awaitable.NextFrameAsync(cancellationToken);
-                        continue;
+                        // 文字送り中にクリックされた場合は全文表示
+                        if (_isTextAnimating)
+                        {
+                            _cts.Cancel();
+                            await Awaitable.NextFrameAsync(cancellationToken);
+                            continue;
+                        }
+
+                        return PageTurn.Next;
                     }
 
-                    return PageTurn.Next;
-                }
-                // 戻るボタンで前のページ表示
-                if (Input.GetKeyDown(KeyCode.LeftArrow))
-                {
-                    return PageTurn.Prev;
-                }
+                    // 戻るボタンで前のページ表示
+                    if (Input.GetKeyDown(KeyCode.LeftArrow))
+                    {
+                        return PageTurn.Prev;
+                    }
 
-                await Awaitable.NextFrameAsync(cancellationToken);
+                    await Awaitable.NextFrameAsync(cancellationToken);
+                }
             }
+            catch
+            {
+
+            }
+            return PageTurn.Invalid;
         }
 
         /// <summary>
@@ -293,6 +302,9 @@ namespace CommonUI.Tutorial
 
                 _coachMaskView.MaskRectTransform.position = targetPosition;
 
+                // 元のコーチマークの位置のままなので再キャッシュ
+                anchoredPosition = _coachMaskView.MaskRectTransform.anchoredPosition;
+
                 // グラデーションの場合、処理をして終了
                 if (model.IsGradiate)
                 {
@@ -358,6 +370,9 @@ namespace CommonUI.Tutorial
             // オブジェクトの場所からUIの位置を計算する。計算した結果にUIを位置させる。
             var screenPosition = Camera.main.WorldToScreenPoint(targetObject.transform.position);
             _coachMaskView.MaskRectTransform.position = screenPosition;
+
+            // 元のコーチマークの位置のままなので再キャッシュ
+            anchoredPosition = _coachMaskView.MaskRectTransform.anchoredPosition;
 
             // RectTransformがない場合、モデルに関係なく円形で対応する
             // グラデ有りならば、グラデーション円形で対応する
@@ -505,6 +520,7 @@ namespace CommonUI.Tutorial
         {
             Next = 0,
             Prev = 1,
+            Invalid = 255
         }
     }
 }

@@ -54,6 +54,12 @@ namespace CommonUI.Tutorial
         /// <param name="cancellationToken">キャンセレーショントークン.</param>
         private async Awaitable ShowTutorialAsync(CancellationToken cancellationToken)
         {
+            if(_textData.Models.Count == 0)
+            {
+                Debug.LogWarning("テキストデータが設定されていません。");
+                return;
+            }
+
             foreach (var model in _textData.Models)
             {
                 cancellationToken.ThrowIfCancellationRequested();
@@ -71,7 +77,14 @@ namespace CommonUI.Tutorial
 
                 _currentTextBox.gameObject.SetActive(true);
 
-                await _currentTextBox.ShowModelAsync(model, cancellationToken);
+                try
+                {
+                    await _currentTextBox.ShowModelAsync(model, cancellationToken);
+                }
+                catch(Exception exception)
+                {
+                    Debug.LogException(exception);
+                }
 
                 _currentTextBox.gameObject.SetActive(false);
             }
