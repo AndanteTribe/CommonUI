@@ -21,3 +21,5 @@ UIデザイナー
 - やぎ
 
 ## ライセンス
+- [IBM Plex Sans JP](https://fonts.google.com/specimen/IBM+Plex+Sans+JP)
+- [SoftMaskForUGUI](https://github.com/mob-sakai/SoftMaskForUGUI?tab=readme-ov-file#usage-with-canvas-shadergraph)
