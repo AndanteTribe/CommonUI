@@ -17,28 +17,29 @@
    - ゲームの世界観を破綻しない汎用的なデザイン
 
 ## 使い方
-
+本ライブラリを任意のプロジェクトに追加した後、'Tutorial'PrefabをCanvas上に配置してください。
+どっかのスクリプトで呼び出せば使えまっせ。さぁ。頑張ってくださいな。
 
 ## 生産者表記
 
 Githubアカウント載せる
 
 ディレクター
-- 胡蝶の夢
-- やげっち
+- [胡蝶の夢](https://github.com/kochounoyume)
+- [やげっち](https://github.com/tachu105)
 
 プランナー
-- Core
+- [Core](https://fori.io/atsutoshi-kodama0629)
 - [ロペ](https://x.com/Ropera_88)
 
 エンジニア
 - [ロペ](https://x.com/Ropera_88)
-- ぬー
+- [ぬー](https://github.com/asahinnnure)
 
 UIデザイナー
-- ANEHATA
+- [ANEHATA](https://github.com/ANEHATA)
 - Rinbou
-- やぎ
+- [やぎ](https://github.com/Goatee888)
 
 ## ライセンス
 このライブラリはMITライセンスの下、公開されています。
