@@ -18,11 +18,12 @@
 
 ## 使い方
 本ライブラリを任意のプロジェクトに追加した後、'Tutorial'PrefabをCanvas上に配置してください。
-どっかのスクリプトで呼び出せば使えまっせ。さぁ。頑張ってくださいな。
+任意のスクリプトに'TextBoxPresenter'の変数を追加し、'StartTutorial()'を実行することでチュートリアルを開始します。
+コード貼りたいね。
+
+チュートリアルの要素として'TextBoxMasterData'があります。以下の項目で設定が可能です。
 
 ## 生産者表記
-
-Githubアカウント載せる
 
 ディレクター
 - [胡蝶の夢](https://github.com/kochounoyume)
@@ -38,7 +39,7 @@ Githubアカウント載せる
 
 UIデザイナー
 - [ANEHATA](https://github.com/ANEHATA)
-- Rinbou
+- [Rinbou](https://github.com/Rinbou-0001)
 - [やぎ](https://github.com/Goatee888)
 
 ## ライセンス
