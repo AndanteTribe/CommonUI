@@ -43,7 +43,6 @@
 | Models - CoachMark - Shape | コーチマークの形です。長方形・円形の2種類が選択できます。 |
 | Models - CoachMark - Is Gradiate | コーチマークのグラデーションを有効にするか設定できます。 |
 | Models - CoachMark - Radius | 長方形: UIに完全に当てはまる、最小の大きさからさらに大きさを増やすか、半径の値で設定できます。<br>円形: コーチマークの半径の設定ができます。 |
-| Models - CoachMark - Is Gradiate | コーチマークのグラデーションを有効にするか設定できます。 |
 | Models - CoachMark - Padding Radius | グラデーション有効時のみ使用可能 <br>グラデーションの余白部分の割合を増やします(0 ~ 1) |
 | Models - CoachMark - Gradiate Radius | グラデーション有効時のみ使用可能 <br>グラデーション部分の割合を増やします(0 ~ 1) |
 | Models - CoachMark - Target Object Name | オブジェクトの名前を指定します。指定するとコーチマークがそのオブジェクトにフォーカスをします。 |
@@ -51,7 +50,7 @@
 | Models - Finger Icon Direction | 指アイコンの向きを設定できます。 |
 | Models - Is Effect Enabled | エフェクトを表示するか選択できます。 |
 
-設定後、任意のスクリプトに'TextBoxPresenter'の変数を追加し、'StartTutorial()'を実行することでチュートリアルを開始します。
+設定後、任意のスクリプトに'TextBasePresenter'の変数を追加し、'StartTutorial()'を実行することでチュートリアルを開始します。
 
 ```c#
 using UnityEngine;
