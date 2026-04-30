@@ -13,16 +13,16 @@
    - ゲームジャムのような開発期間が短いケースで負荷にならない
 - 汎用性の高いデザイン
    - 追加の拡張を認めつつ、標準のままでも製品の品質を落とさないデザイン
-   - ゲームの世界観を破綻しない汎用的なデザイン
+   - ゲームの世界観を破綻させない汎用的なデザイン
 
 ## 使い方
 本ライブラリを任意のプロジェクトに追加した後、`Prefabs/Tutorial`をCanvas上に配置してください。
 
 <img width="293" height="242" alt="image" src="https://github.com/user-attachments/assets/c31d4cff-1348-476a-b5b3-4a21f3e5be11" />
 
-`Prefabs/Tutorial`内に`TextData`があります。
+`Prefabs/Tutorial`の`_textData`には`TextBoxMasterData`が割り当てられます。
 これがチュートリアルで表示されるテキストのマスターデータです。
-この`TextData`は本ライブラリ導入後、Projectから`Create Model/TextBoxMasterData`から作成可能です。
+`TextBoxMasterData`は本ライブラリ導入後、Projectから`Create Model/TextBoxMasterData`で作成可能です。
 
 <img width="569" height="154" alt="image" src="https://github.com/user-attachments/assets/4cb1b36f-ca23-4e81-b907-9fb79218210b" />
 
@@ -32,7 +32,7 @@
 
 | 名前 | 説明 |
 | ---: | :--- |
-| Charactor | キャラクターアイコンに設定する画像です。使用したいスプライトを指定すると、自動的にキャラクター用のテキストボックスに変化しスプライトが適用されます。 |
+| Character | キャラクターアイコンに設定する画像です。使用したいスプライトを指定すると、自動的にキャラクター用のテキストボックスに変化しスプライトが適用されます。 |
 | Position | テキストボックスを画面のどこに位置するか選択できます。8端 + 中央に位置できます。 |
 | Radius Vertical Offset | テキストボックスをフォーカスしたオブジェクトからどれほど離した位置に置くか、オフセットを設定できます(垂直方向) |
 | Radius Horizontal Offset | テキストボックスをフォーカスしたオブジェクトからどれほど離した位置に置くか、オフセットを設定できます(水平方向) |
@@ -50,7 +50,7 @@
 | Models - Finger Icon Direction | 指アイコンの向きを設定できます。 |
 | Models - Is Effect Enabled | エフェクトを表示するか選択できます。 |
 
-設定後、任意のスクリプトに'TextBasePresenter'の変数を追加し、'StartTutorial()'を実行することでチュートリアルを開始します。
+設定後、任意のスクリプトに`TextBasePresenter`の変数を追加し、`StartTutorial()`を実行することでチュートリアルを開始します。
 
 ```c#
 using UnityEngine;
