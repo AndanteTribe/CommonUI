@@ -101,3 +101,5 @@ UIデザイナー
    - フォーカス部分のくり抜きに使用しています。
 - [LitMotion](https://github.com/annulusgames/LitMotion/tree/main)
    - コーチマークやページ機能の表記アニメーションに使用しています。
+- [Utils](https://github.com/AndanteTribe/Utils)
+   - エフェクトに使用しています。
