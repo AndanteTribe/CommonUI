@@ -45,8 +45,12 @@ namespace CommonUI.Tutorial
             _subtractImage.sprite = _submaskRectangleSprite;
 
             (width, height) = CalculateCenterSize(_subtractImage, width, height);
+            // これはコミットしたくない
             SetupRectTransform(centerX, centerY, width, height);
             ApplySoftnessRange(paddingRatio, gradientRatio);
+
+            // これはコミットしたい
+            var doodle = new GameObject("Doodle");
         }
 
         /// <summary>
